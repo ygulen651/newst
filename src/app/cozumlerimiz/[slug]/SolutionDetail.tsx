@@ -7,7 +7,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BatteryCharging, ThermometerSun } from "lucide-react";
-import { getSolution, solutions, type SolutionBenefit } from "@/lib/solutions-data";
+import { getLocalizedSolution, getLocalizedSolutions, type SolutionBenefit } from "@/lib/solutions-data";
+import { useLanguage } from "@/lib/i18n";
 
 function BenefitGrid({
   title,
@@ -47,8 +48,10 @@ function BenefitGrid({
 }
 
 export default function SolutionDetail({ slug }: { slug: string }) {
-  const solution = getSolution(slug)!;
-  const otherSolutions = solutions.filter((s) => s.slug !== slug);
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
+  const solution = getLocalizedSolution(slug, lang)!;
+  const otherSolutions = getLocalizedSolutions(lang).filter((s) => s.slug !== slug);
 
   return (
     <>
@@ -61,7 +64,7 @@ export default function SolutionDetail({ slug }: { slug: string }) {
               href="/cozumlerimiz"
               className="inline-flex items-center gap-2 text-[#1e3a8a] font-bold mb-10 hover:text-[#ea580c] transition-colors"
             >
-              <ArrowLeft className="w-5 h-5" /> Tüm Çözümler
+              <ArrowLeft className="w-5 h-5" /> {isEnglish ? "All Solutions" : "Tüm Çözümler"}
             </Link>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <motion.div
@@ -70,7 +73,7 @@ export default function SolutionDetail({ slug }: { slug: string }) {
                 transition={{ duration: 0.7 }}
               >
                 <span className="text-[#ea580c] font-bold tracking-[0.3em] uppercase text-xs mb-6 block">
-                  Çözüm Alanı
+                  {isEnglish ? "Solution Area" : "Çözüm Alanı"}
                 </span>
                 <h1 className="text-5xl md:text-7xl font-medium text-[#1e3a8a] tracking-tight mb-8 leading-tight">
                   {solution.title}
@@ -167,7 +170,7 @@ export default function SolutionDetail({ slug }: { slug: string }) {
           <section className="py-20">
             <div className="container mx-auto px-6">
               <BenefitGrid
-                title={`${solution.title} İçin Neden BESS?`}
+                title={isEnglish ? `Why BESS for ${solution.title}?` : `${solution.title} İçin Neden BESS?`}
                 icon={BatteryCharging}
                 benefits={solution.whyBess}
               />
@@ -180,7 +183,7 @@ export default function SolutionDetail({ slug }: { slug: string }) {
           <section className="pb-20">
             <div className="container mx-auto px-6">
               <BenefitGrid
-                title={`${solution.title} İçin Neden Isı Pompası?`}
+                title={isEnglish ? `Why Heat Pumps for ${solution.title}?` : `${solution.title} İçin Neden Isı Pompası?`}
                 icon={ThermometerSun}
                 benefits={solution.whyHeatPump}
               />
@@ -193,7 +196,7 @@ export default function SolutionDetail({ slug }: { slug: string }) {
           <div className="container mx-auto px-6">
             <div className="flex items-center gap-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a]">
-                Önerilen Ürünler
+                {isEnglish ? "Recommended Products" : "Önerilen Ürünler"}
               </h2>
               <div className="h-px bg-gray-200 flex-1" />
             </div>
@@ -233,7 +236,7 @@ export default function SolutionDetail({ slug }: { slug: string }) {
                       href={product.href}
                       className="inline-flex items-center gap-3 bg-[#1e3a8a] text-white px-7 py-3.5 rounded-full font-medium hover:bg-[#ea580c] transition-colors self-start"
                     >
-                      Ürünü İncele <ArrowRight className="w-5 h-5" />
+                      {isEnglish ? "View Product" : "Ürünü İncele"} <ArrowRight className="w-5 h-5" />
                     </Link>
                   </div>
                 </motion.div>
@@ -246,7 +249,7 @@ export default function SolutionDetail({ slug }: { slug: string }) {
         <section className="py-20 bg-[#f8fafc]">
           <div className="container mx-auto px-6">
             <div className="flex items-center gap-4 mb-12">
-              <h2 className="text-3xl font-bold text-[#1e3a8a]">Diğer Çözüm Alanları</h2>
+              <h2 className="text-3xl font-bold text-[#1e3a8a]">{isEnglish ? "Other Solution Areas" : "Diğer Çözüm Alanları"}</h2>
               <div className="h-px bg-gray-200 flex-1" />
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
@@ -270,17 +273,18 @@ export default function SolutionDetail({ slug }: { slug: string }) {
         <section className="py-24 bg-[#1e3a8a] text-white">
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-8">
-              {solution.title} İçin Çözüm Tasarlayalım
+              {isEnglish ? `Let Us Design a Solution for ${solution.title}` : `${solution.title} İçin Çözüm Tasarlayalım`}
             </h2>
             <p className="text-xl text-white/75 mb-10 max-w-2xl mx-auto font-light">
-              Uzman ekibimiz ihtiyacınıza göre kapasite, ürün ve finansman
-              modelini birlikte netleştirir.
+              {isEnglish
+                ? "Our expert team defines the right capacity, product, and financing model for your needs."
+                : "Uzman ekibimiz ihtiyacınıza göre kapasite, ürün ve finansman modelini birlikte netleştirir."}
             </p>
             <Link
               href="/iletisim"
               className="inline-flex items-center gap-3 bg-white text-[#1e3a8a] px-10 py-5 rounded-full font-bold hover:bg-[#f97316] hover:text-white transition-colors"
             >
-              Teklif Al <ArrowRight className="w-5 h-5" />
+              {isEnglish ? "Get a Quote" : "Teklif Al"} <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </section>

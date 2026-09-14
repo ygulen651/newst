@@ -5,13 +5,14 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, Layers, Package } from "lucide-react";
 import Link from "next/link";
-import { solutions } from "@/lib/solutions-data";
+import { getLocalizedSolutions } from "@/lib/solutions-data";
 import { useLanguage } from "@/lib/i18n";
 
 export default function Scenarios() {
-  const [activeSlug, setActiveSlug] = useState(solutions[0].slug);
-  const { t } = useLanguage();
-  const active = solutions.find((s) => s.slug === activeSlug) ?? solutions[0];
+  const { lang, t } = useLanguage();
+  const pageSolutions = getLocalizedSolutions(lang);
+  const [activeSlug, setActiveSlug] = useState(pageSolutions[0].slug);
+  const active = pageSolutions.find((s) => s.slug === activeSlug) ?? pageSolutions[0];
   const primaryBessProduct = active.products.find((product) =>
     product.href.startsWith("/bess/"),
   );
@@ -102,7 +103,7 @@ export default function Scenarios() {
       <div className="relative z-20 w-full px-6 pb-8 md:absolute md:bottom-12 md:left-0 md:pb-0">
         <div className="container mx-auto">
           <div className="grid grid-cols-2 gap-1 rounded-[32px] border border-white/10 bg-black/40 p-2 shadow-2xl backdrop-blur-2xl md:grid-cols-4 xl:grid-cols-7">
-            {solutions.map((s) => (
+            {pageSolutions.map((s) => (
               <button
                 key={s.slug}
                 onClick={() => setActiveSlug(s.slug)}

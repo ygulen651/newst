@@ -24,6 +24,7 @@ import {
   Zap,
 } from "lucide-react";
 import { bessProducts } from "@/lib/product-data";
+import { useLanguage } from "@/lib/i18n";
 
 const productCardImages: Record<string, string> = {
   "ev-tipi-bess": "/images/residential-solutions.png",
@@ -31,6 +32,34 @@ const productCardImages: Record<string, string> = {
   "sivi-sogutmali-kabinet-bess": "/images/car.png",
   "flexcube-konteyner-bess": "/images/limited-grid-quarry.png",
   "konteyner-tipi-bess": "/images/12121.png",
+};
+
+const bessProductCopyEn: Record<string, { title: string; category: string; summary: string }> = {
+  "ev-tipi-bess": {
+    title: "Home Energy Storage",
+    category: "Residential Solutions",
+    summary: "A modular home battery that stores solar or low-tariff grid energy, lowers electricity costs, and protects critical loads during outages.",
+  },
+  "tasinabilir-bess": {
+    title: "Portable Energy Storage",
+    category: "Mobile Power Solutions",
+    summary: "A compact, lightweight, multi-purpose portable power source for outdoor events, field work, and emergency scenarios.",
+  },
+  "sivi-sogutmali-kabinet-bess": {
+    title: "Outdoor Liquid-Cooled Cabinet BESS",
+    category: "Industrial and Commercial Facilities",
+    summary: "A plug-and-play single-cabinet energy storage system for industrial and commercial sites, expandable through parallel connection.",
+  },
+  "flexcube-konteyner-bess": {
+    title: "FlexCube Container BESS",
+    category: "Limited Grid and Off-Grid",
+    summary: "A 10 ft integrated, portable, plug-and-play storage solution for locations with weak grid, no grid, or sudden high-power demand.",
+  },
+  "konteyner-tipi-bess": {
+    title: "20 ft Container BESS",
+    category: "Power Plants and Grid-Scale Projects",
+    summary: "A liquid-cooled, MWh-class modular energy storage system for power plants, grids, and high-power industrial facilities.",
+  },
 };
 
 const flowSteps = [
@@ -173,6 +202,49 @@ const investSteps = [
   },
 ];
 
+const flowStepsEn = [
+  { title: "Solar / Grid", desc: "Generated or low-tariff energy enters the system.", icon: Sun, align: "lg:col-start-1 lg:row-start-1" },
+  { title: "PCS", desc: "AC/DC conversion is managed within milliseconds.", icon: Cable, align: "lg:col-start-2 lg:row-start-2" },
+  { title: "Battery", desc: "Energy is stored safely and scalably in LFP cells.", icon: BatteryCharging, align: "lg:col-start-3 lg:row-start-1" },
+  { title: "EMS / BMS", desc: "Software optimizes battery health and energy flow.", icon: Cpu, align: "lg:col-start-4 lg:row-start-2" },
+  { title: "Load / Grid", desc: "Energy is delivered to the facility or grid when needed.", icon: Zap, align: "lg:col-start-5 lg:row-start-1" },
+];
+
+const benefitsEn = [
+  { title: "Energy Arbitrage", desc: "Charge when energy is cheaper and use or sell stored energy when prices are higher.", icon: LineChart },
+  { title: "Peak Shaving", desc: "Cover sudden high-power demand with BESS and reduce demand charges and capacity pressure.", icon: Gauge },
+  { title: "Operational Continuity", desc: "Respond within milliseconds to support uninterrupted production and avoid downtime costs.", icon: ShieldCheck },
+  { title: "Solar PV Complement", desc: "Store daytime solar generation and use it later to increase self-consumption and reduce curtailment losses.", icon: Sun },
+  { title: "Capacity Flexibility", desc: "Use stored energy when grid capacity is limited and postpone transformer or connection upgrades.", icon: BatteryCharging },
+  { title: "Reactive Power Compensation", desc: "Reduce penalty risk with dynamic reactive power balancing and voltage regulation.", icon: PlugZap },
+  { title: "Harmonic Compensation", desc: "Protect equipment and reduce transmission losses with active harmonic filtering.", icon: Cable },
+  { title: "Generator Replacement", desc: "Use a quiet, clean, and economical backup power source instead of fuel-heavy generators.", icon: Zap },
+  { title: "Frequency Control", desc: "Create additional value through fast primary and secondary frequency response services.", icon: Power },
+  { title: "Critical Investment for Power Plants", desc: "Manage renewable generation imbalance, grid constraints, and ancillary service revenue.", icon: Building2 },
+  { title: "Off-Grid Operation", desc: "Provide reliable and scalable power in no-grid locations, alone or together with solar PV.", icon: Globe2 },
+];
+
+const inspurStatsEn = [
+  { value: "$31B+", label: "Annual Revenue (USD)" },
+  { value: "Top 3", label: "Global Server Manufacturer" },
+  { value: "120", label: "Countries with Active Operations" },
+  { value: "31,000+", label: "Global Patent Portfolio" },
+];
+
+const inspurReasonsEn = [
+  { title: "A Global IT Leader", desc: "Founded in 1945, Inspur is a major technology group listed on three stock exchanges and a global leader in AI servers.", icon: Globe2 },
+  { title: "Strong R&D and Engineering", desc: "About 60% of Inspur's 36,000 employees work in R&D and engineering, bringing deep software capability into BESS.", icon: Cpu },
+  { title: "Proven Field Experience", desc: "Close to 1 GWh of installation experience, including a 200 MW / 400 MWh single-site power plant project.", icon: BatteryCharging },
+  { title: "Safety and Long Life", desc: "8,000+ cycle life, liquid cooling that extends product lifetime, integrated fire protection, and cell-level monitoring.", icon: ShieldCheck },
+];
+
+const investStepsEn = [
+  { title: "Energy Arbitrage", desc: "Charge from low-cost tariffs and discharge during expensive hours to create measurable value." },
+  { title: "Additional Revenue", desc: "Capture value from peak shaving, generator replacement, reactive power management, and frequency control." },
+  { title: "Leasing and Incentive Models", desc: "Use incentive, leasing, credit, or ESCO models to reduce the initial investment burden." },
+  { title: "Transparent Cost per Cycle", desc: "8,000+ cycle life and preventive maintenance reduce total cost of ownership compared with alternatives." },
+];
+
 function EnergyConnector({ color, label }: { color: "green" | "blue"; label?: string }) {
   const lineColor = color === "green" ? "bg-emerald-400/35" : "bg-sky-400/35";
   const pulseColor = color === "green" ? "bg-emerald-300" : "bg-sky-300";
@@ -263,15 +335,23 @@ function EnergyNode({
   );
 }
 
-function SourceStack({ color }: { color: "green" | "blue" }) {
+function SourceStack({ color, isEnglish }: { color: "green" | "blue"; isEnglish: boolean }) {
   const items =
     color === "green"
-      ? [
+      ? isEnglish ? [
+          { icon: Wind, label: "Wind" },
+          { icon: Sun, label: "Solar" },
+          { icon: Zap, label: "Grid" },
+        ] : [
           { icon: Wind, label: "Rüzgâr" },
           { icon: Sun, label: "Güneş" },
           { icon: Zap, label: "Şebeke" },
         ]
-      : [
+      : isEnglish ? [
+          { icon: Zap, label: "Grid" },
+          { icon: Factory, label: "Factory" },
+          { icon: Building2, label: "Commercial Building" },
+        ] : [
           { icon: Zap, label: "Şebeke" },
           { icon: Factory, label: "Fabrika" },
           { icon: Building2, label: "Ticari Bina" },
@@ -295,6 +375,14 @@ function SourceStack({ color }: { color: "green" | "blue" }) {
 }
 
 export default function BessPage() {
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
+  const pageFlowSteps = isEnglish ? flowStepsEn : flowSteps;
+  const pageBenefits = isEnglish ? benefitsEn : benefits;
+  const pageInspurStats = isEnglish ? inspurStatsEn : inspurStats;
+  const pageInspurReasons = isEnglish ? inspurReasonsEn : inspurReasons;
+  const pageInvestSteps = isEnglish ? investStepsEn : investSteps;
+
   return (
     <>
       <Navbar />
@@ -309,31 +397,28 @@ export default function BessPage() {
                 transition={{ duration: 0.8 }}
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ea580c]/10 text-[#ea580c] font-bold text-sm mb-8 uppercase tracking-widest">
-                  <BatteryCharging className="w-4 h-4" /> Batarya Enerji Depolama Sistemi
+                  <BatteryCharging className="w-4 h-4" /> {isEnglish ? "Battery Energy Storage System" : "Batarya Enerji Depolama Sistemi"}
                 </div>
                 <h1 className="text-5xl md:text-7xl font-bold mb-8 text-[#1e3a8a]">
                   Inspur <span className="text-[#ea580c]">BESS</span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed mb-10 max-w-xl font-light">
-                  Enerji güvenliğinin ana oyuncusu. BESS; elektrik enerjisini
-                  bataryalarda depolayan ve ihtiyaç anında şebekeye, tesise veya
-                  kritik yüklere geri veren enerji depolama sistemidir. GES,
-                  şebeke, jeneratör ve tüketim altyapısı arasında esneklik
-                  sağlayarak maliyet, süreklilik ve güç kalitesini aynı anda
-                  yönetir.
+                  {isEnglish
+                    ? "A key player in energy security. BESS stores electrical energy in batteries and delivers it back to the grid, facility, or critical loads when needed. It creates flexibility between solar PV, the grid, generators, and consumption infrastructure while managing cost, continuity, and power quality."
+                    : "Enerji güvenliğinin ana oyuncusu. BESS; elektrik enerjisini bataryalarda depolayan ve ihtiyaç anında şebekeye, tesise veya kritik yüklere geri veren enerji depolama sistemidir. GES, şebeke, jeneratör ve tüketim altyapısı arasında esneklik sağlayarak maliyet, süreklilik ve güç kalitesini aynı anda yönetir."}
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Link
                     href="#urunler"
                     className="inline-flex items-center gap-3 rounded-full bg-[#1e3a8a] px-8 py-4 font-bold text-white transition-colors hover:bg-[#152e73]"
                   >
-                    Ürünleri İncele <ArrowRight className="h-5 w-5" />
+                    {isEnglish ? "View Products" : "Ürünleri İncele"} <ArrowRight className="h-5 w-5" />
                   </Link>
                   <Link
                     href="/markalar/inspur"
                     className="inline-flex items-center gap-3 rounded-full border border-blue-100 bg-white px-8 py-4 font-bold text-[#1e3a8a] transition-colors hover:border-[#ea580c] hover:text-[#ea580c]"
                   >
-                    Markayı Tanı <ArrowRight className="h-5 w-5" />
+                    {isEnglish ? "Meet the Brand" : "Markayı Tanı"} <ArrowRight className="h-5 w-5" />
                   </Link>
                 </div>
               </motion.div>
@@ -346,7 +431,7 @@ export default function BessPage() {
               >
                 <Image
                   src="/images/12121.png"
-                  alt="Inspur konteyner tipi BESS"
+                  alt={isEnglish ? "Inspur container BESS" : "Inspur konteyner tipi BESS"}
                   fill
                   className="object-cover"
                   priority
@@ -367,15 +452,15 @@ export default function BessPage() {
           <div className="container relative z-10 mx-auto px-6">
             <div className="mx-auto mb-14 max-w-3xl text-center">
               <span className="mb-4 block text-xs font-bold uppercase tracking-[0.45em] text-[#f97316]">
-                Enerji Akış Haritası
+                {isEnglish ? "Energy Flow Map" : "Enerji Akış Haritası"}
               </span>
               <h2 className="mb-6 text-4xl font-bold md:text-6xl">
-                BESS Nasıl Çalışır?
+                {isEnglish ? "How Does BESS Work?" : "BESS Nasıl Çalışır?"}
               </h2>
               <p className="text-lg font-light leading-relaxed text-white/70">
-                Enerji önce kaynaktan alınır, güç elektroniğiyle dönüştürülür,
-                bataryada saklanır ve akıllı kontrol katmanı tarafından doğru
-                anda sahaya geri verilir.
+                {isEnglish
+                  ? "Energy is collected from the source, converted through power electronics, stored in the battery, and delivered back to the field at the right time by the intelligent control layer."
+                  : "Enerji önce kaynaktan alınır, güç elektroniğiyle dönüştürülür, bataryada saklanır ve akıllı kontrol katmanı tarafından doğru anda sahaya geri verilir."}
               </p>
             </div>
 
@@ -391,9 +476,9 @@ export default function BessPage() {
                 <div className="rounded-[24px] border border-emerald-400/15 bg-emerald-400/[0.025] p-5 md:p-7">
                   <div className="mb-7 flex flex-wrap items-center justify-between gap-3">
                     <div>
-                      <h3 className="text-xl font-bold text-emerald-300">ŞARJ DÖNGÜSÜ</h3>
+                      <h3 className="text-xl font-bold text-emerald-300">{isEnglish ? "CHARGE CYCLE" : "ŞARJ DÖNGÜSÜ"}</h3>
                       <p className="mt-1 text-sm text-white/50">
-                        Kaynaklardan gelen enerji EMS kararıyla bataryaya depolanır.
+                        {isEnglish ? "Energy from the sources is stored in the battery according to EMS decisions." : "Kaynaklardan gelen enerji EMS kararıyla bataryaya depolanır."}
                       </p>
                     </div>
                     <motion.div
@@ -401,27 +486,27 @@ export default function BessPage() {
                       transition={{ repeat: Infinity, duration: 1.8 }}
                       className="flex items-center gap-3 rounded-xl border border-emerald-400/25 bg-emerald-400/10 px-4 py-2 text-xs font-bold text-emerald-300"
                     >
-                      ŞARJ EDİLİYOR
+                      {isEnglish ? "CHARGING" : "ŞARJ EDİLİYOR"}
                       <BatteryCharging className="h-5 w-5" />
                     </motion.div>
                   </div>
                   <div className="overflow-hidden pb-2">
                     <div className="grid grid-cols-1 items-center gap-4 sm:grid-cols-2 lg:flex lg:gap-2">
-                      <SourceStack color="green" />
+                      <SourceStack color="green" isEnglish={isEnglish} />
                       <EnergyConnector color="green" label="AC" />
                       <EnergyNode
                         icon={Cpu}
                         title="EMS"
-                        subtitle="Enerji Yönetim Sistemi"
-                        details={["Talep tahmini", "Piyasa verisi", "Hava tahmini", "Sistem durumu"]}
+                        subtitle={isEnglish ? "Energy Management System" : "Enerji Yönetim Sistemi"}
+                        details={isEnglish ? ["Demand forecast", "Market data", "Weather forecast", "System status"] : ["Talep tahmini", "Piyasa verisi", "Hava tahmini", "Sistem durumu"]}
                         color="green"
                       />
-                      <EnergyConnector color="green" label="EMS Kararı" />
-                      <EnergyNode icon={Cable} title="PCS" subtitle="Güç dönüştürücü; AC enerjiyi DC enerjiye çevirir." details={["AC → DC", "Güç ve frekans kontrolü"]} color="green" />
+                      <EnergyConnector color="green" label={isEnglish ? "EMS Decision" : "EMS Kararı"} />
+                      <EnergyNode icon={Cable} title="PCS" subtitle={isEnglish ? "Power converter; converts AC energy into DC energy." : "Güç dönüştürücü; AC enerjiyi DC enerjiye çevirir."} details={isEnglish ? ["AC -> DC", "Power and frequency control"] : ["AC → DC", "Güç ve frekans kontrolü"]} color="green" />
                       <EnergyConnector color="green" label="DC" />
-                      <EnergyNode icon={BatteryCharging} title="Batarya Sistemi" subtitle="Enerjiyi güvenli LFP hücrelerde depolar." details={["Modüler hücre mimarisi", "Ölçeklenebilir kapasite"]} battery color="green" />
-                      <EnergyConnector color="green" label="İzleme" />
-                      <EnergyNode icon={ShieldCheck} title="BMS" subtitle="Batarya Yönetim Sistemi" details={["Voltaj ve akım izleme", "Sıcaklık kontrolü", "SOC / SOH", "Koruma yönetimi"]} color="green" />
+                      <EnergyNode icon={BatteryCharging} title={isEnglish ? "Battery System" : "Batarya Sistemi"} subtitle={isEnglish ? "Stores energy safely in LFP cells." : "Enerjiyi güvenli LFP hücrelerde depolar."} details={isEnglish ? ["Modular cell architecture", "Scalable capacity"] : ["Modüler hücre mimarisi", "Ölçeklenebilir kapasite"]} battery color="green" />
+                      <EnergyConnector color="green" label={isEnglish ? "Monitoring" : "İzleme"} />
+                      <EnergyNode icon={ShieldCheck} title="BMS" subtitle={isEnglish ? "Battery Management System" : "Batarya Yönetim Sistemi"} details={isEnglish ? ["Voltage and current monitoring", "Temperature control", "SOC / SOH", "Protection management"] : ["Voltaj ve akım izleme", "Sıcaklık kontrolü", "SOC / SOH", "Koruma yönetimi"]} color="green" />
                     </div>
                   </div>
                 </div>
@@ -429,9 +514,9 @@ export default function BessPage() {
                 <div className="rounded-[24px] border border-sky-400/15 bg-sky-400/[0.025] p-5 md:p-7">
                   <div className="mb-7 flex flex-wrap items-center justify-between gap-3">
                     <div>
-                      <h3 className="text-xl font-bold text-sky-300">DEŞARJ DÖNGÜSÜ</h3>
+                      <h3 className="text-xl font-bold text-sky-300">{isEnglish ? "DISCHARGE CYCLE" : "DEŞARJ DÖNGÜSÜ"}</h3>
                       <p className="mt-1 text-sm text-white/50">
-                        Depolanan enerji EMS kontrolünde ihtiyaç noktalarına aktarılır.
+                        {isEnglish ? "Stored energy is delivered to demand points under EMS control." : "Depolanan enerji EMS kontrolünde ihtiyaç noktalarına aktarılır."}
                       </p>
                     </div>
                     <motion.div
@@ -439,32 +524,32 @@ export default function BessPage() {
                       transition={{ repeat: Infinity, duration: 1.8 }}
                       className="flex items-center gap-3 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-2 text-xs font-bold text-sky-300"
                     >
-                      DEŞARJ EDİLİYOR
+                      {isEnglish ? "DISCHARGING" : "DEŞARJ EDİLİYOR"}
                       <BatteryCharging className="h-5 w-5" />
                     </motion.div>
                   </div>
                   <div className="overflow-hidden pb-2">
                     <div className="grid grid-cols-1 items-center gap-4 sm:grid-cols-2 lg:flex lg:gap-2">
-                      <EnergyNode icon={ShieldCheck} title="BMS" subtitle="Batarya Yönetim Sistemi" details={["Voltaj ve akım izleme", "Sıcaklık kontrolü", "SOC / SOH", "Çok katmanlı koruma"]} color="blue" />
-                      <EnergyConnector color="blue" label="İzin" />
-                      <EnergyNode icon={BatteryCharging} title="Batarya Sistemi" subtitle="Depolanan DC enerjiyi güvenli biçimde sisteme verir." details={["LFP hücre teknolojisi", "Uzun çevrim ömrü"]} battery color="blue" />
+                      <EnergyNode icon={ShieldCheck} title="BMS" subtitle={isEnglish ? "Battery Management System" : "Batarya Yönetim Sistemi"} details={isEnglish ? ["Voltage and current monitoring", "Temperature control", "SOC / SOH", "Multi-layer protection"] : ["Voltaj ve akım izleme", "Sıcaklık kontrolü", "SOC / SOH", "Çok katmanlı koruma"]} color="blue" />
+                      <EnergyConnector color="blue" label={isEnglish ? "Permission" : "İzin"} />
+                      <EnergyNode icon={BatteryCharging} title={isEnglish ? "Battery System" : "Batarya Sistemi"} subtitle={isEnglish ? "Safely delivers stored DC energy back to the system." : "Depolanan DC enerjiyi güvenli biçimde sisteme verir."} details={isEnglish ? ["LFP cell technology", "Long cycle life"] : ["LFP hücre teknolojisi", "Uzun çevrim ömrü"]} battery color="blue" />
                       <EnergyConnector color="blue" label="DC" />
-                      <EnergyNode icon={Cable} title="PCS" subtitle="Güç dönüştürücü; DC enerjiyi AC enerjiye çevirir." details={["DC → AC", "Güç kalitesi yönetimi"]} color="blue" />
-                      <EnergyConnector color="blue" label="EMS Kararı" />
-                      <EnergyNode icon={Cpu} title="EMS" subtitle="Enerjiyi doğru zamanda doğru tüketim noktasına yönlendirir." details={["Talep optimizasyonu", "Anlık sistem izleme"]} color="blue" />
+                      <EnergyNode icon={Cable} title="PCS" subtitle={isEnglish ? "Power converter; converts DC energy into AC energy." : "Güç dönüştürücü; DC enerjiyi AC enerjiye çevirir."} details={isEnglish ? ["DC -> AC", "Power quality management"] : ["DC → AC", "Güç kalitesi yönetimi"]} color="blue" />
+                      <EnergyConnector color="blue" label={isEnglish ? "EMS Decision" : "EMS Kararı"} />
+                      <EnergyNode icon={Cpu} title="EMS" subtitle={isEnglish ? "Routes energy to the right consumption point at the right time." : "Enerjiyi doğru zamanda doğru tüketim noktasına yönlendirir."} details={isEnglish ? ["Demand optimization", "Real-time system monitoring"] : ["Talep optimizasyonu", "Anlık sistem izleme"]} color="blue" />
                       <EnergyConnector color="blue" label="AC" />
-                      <SourceStack color="blue" />
+                      <SourceStack color="blue" isEnglish={isEnglish} />
                     </div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 md:grid-cols-5">
                   {[
-                    ["Çift Yönlü Enerji Akışı", "Esnek şarj / deşarj"],
-                    ["Maksimum Verimlilik", "Yüksek verimli PCS"],
-                    ["Akıllı Kontrol", "EMS ve BMS entegrasyonu"],
-                    ["Güvenlik", "Çok katmanlı koruma"],
-                    ["Ölçeklenebilirlik", "Modüler batarya mimarisi"],
+                    isEnglish ? ["Bidirectional Energy Flow", "Flexible charge / discharge"] : ["Çift Yönlü Enerji Akışı", "Esnek şarj / deşarj"],
+                    isEnglish ? ["Maximum Efficiency", "High-efficiency PCS"] : ["Maksimum Verimlilik", "Yüksek verimli PCS"],
+                    isEnglish ? ["Smart Control", "EMS and BMS integration"] : ["Akıllı Kontrol", "EMS ve BMS entegrasyonu"],
+                    isEnglish ? ["Safety", "Multi-layer protection"] : ["Güvenlik", "Çok katmanlı koruma"],
+                    isEnglish ? ["Scalability", "Modular battery architecture"] : ["Ölçeklenebilirlik", "Modüler batarya mimarisi"],
                   ].map(([title, desc]) => (
                       <div key={title} className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 text-center">
                         <p className="text-xs font-bold text-white/75">{title}</p>
@@ -542,7 +627,7 @@ export default function BessPage() {
               </svg>
 
               <div className="relative z-10 grid grid-cols-1 gap-0 lg:grid-cols-5 lg:grid-rows-[auto_auto] lg:gap-x-6 lg:gap-y-12">
-                {flowSteps.map((step, index) => (
+                {pageFlowSteps.map((step, index) => (
                   <motion.div
                     key={step.title}
                     initial={{ opacity: 0, y: 28 }}
@@ -556,7 +641,7 @@ export default function BessPage() {
                         <div className="h-2.5 w-2.5 rounded-full bg-[#f97316] shadow-[0_0_18px_rgba(249,115,22,0.9)]" />
                       </div>
                     )}
-                    {index < flowSteps.length - 1 && (
+                    {index < pageFlowSteps.length - 1 && (
                       <div className="absolute -right-3 top-1/2 z-20 hidden h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-[#f97316]/60 bg-[#07152f] lg:flex">
                         <div className="h-2.5 w-2.5 rounded-full bg-[#f97316] shadow-[0_0_18px_rgba(249,115,22,0.9)]" />
                       </div>
@@ -589,7 +674,7 @@ export default function BessPage() {
                         className="absolute -right-10 -top-10 h-28 w-28 rounded-full border border-[#f97316]/40"
                       />
                     </div>
-                    {index < flowSteps.length - 1 && (
+                    {index < pageFlowSteps.length - 1 && (
                       <div className="absolute bottom-0 left-1/2 flex h-10 -translate-x-1/2 flex-col items-center lg:hidden">
                         <div className="h-full w-3 rounded-full bg-white/15" />
                         <motion.div
@@ -611,12 +696,12 @@ export default function BessPage() {
           <div className="container mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] mb-6">
-                BESS ile Elde Edilen Faydalar
+                {isEnglish ? "Benefits of BESS" : "BESS ile Elde Edilen Faydalar"}
               </h2>
               <div className="w-20 h-1.5 bg-[#ea580c] mx-auto rounded-full" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {benefits.map((benefit, index) => (
+              {pageBenefits.map((benefit, index) => (
                 <motion.div
                   key={benefit.title}
                   initial={{ opacity: 0, y: 24 }}
@@ -640,18 +725,18 @@ export default function BessPage() {
           <div className="container mx-auto px-6 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-[#f97316] text-xs font-bold uppercase tracking-[0.4em] mb-4 block">
-                Global Teknoloji Ortağımız
+                {isEnglish ? "Our Global Technology Partner" : "Global Teknoloji Ortağımız"}
               </span>
-              <h2 className="text-4xl md:text-6xl font-bold mb-6">Neden Inspur?</h2>
+              <h2 className="text-4xl md:text-6xl font-bold mb-6">{isEnglish ? "Why Inspur?" : "Neden Inspur?"}</h2>
               <p className="text-white/70 text-lg font-light leading-relaxed">
-                Bilişim altyapısı, bulut çözümleri ve yapay zeka sunucularında
-                küresel bir otorite olan Inspur, bu birikimini enerji depolama
-                sistemlerine taşıyor.
+                {isEnglish
+                  ? "A global authority in IT infrastructure, cloud solutions, and AI servers, Inspur brings this engineering experience into energy storage systems."
+                  : "Bilişim altyapısı, bulut çözümleri ve yapay zeka sunucularında küresel bir otorite olan Inspur, bu birikimini enerji depolama sistemlerine taşıyor."}
               </p>
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-              {inspurStats.map((stat, i) => (
+              {pageInspurStats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
                   initial={{ opacity: 0, y: 20 }}
@@ -669,7 +754,7 @@ export default function BessPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {inspurReasons.map((reason, i) => (
+              {pageInspurReasons.map((reason, i) => (
                 <motion.div
                   key={reason.title}
                   initial={{ opacity: 0, y: 20 }}
@@ -690,7 +775,7 @@ export default function BessPage() {
                 href="/markalar/inspur"
                 className="inline-flex items-center gap-3 rounded-full border border-white/30 px-8 py-4 font-bold text-white transition-colors hover:bg-white hover:text-[#0b1f4e]"
               >
-                Inspur Markasını Tanıyın
+                {isEnglish ? "Meet the Inspur Brand" : "Inspur Markasını Tanıyın"}
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
@@ -702,15 +787,16 @@ export default function BessPage() {
           <div className="container mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] mb-6">
-                Maliyet Değil; Sürekli Kazanç ve Enerji Güvenliği
+                {isEnglish ? "Not Just a Cost: Continuous Value and Energy Security" : "Maliyet Değil; Sürekli Kazanç ve Enerji Güvenliği"}
               </h2>
               <p className="text-gray-500 text-lg font-light">
-                Şartların uygun olduğu noktalarda 5 yılın altında geri dönüş
-                süresi ve %40&apos;ın üzerinde iç verim oranı (IRR) mümkün.
+                {isEnglish
+                  ? "Where project conditions are suitable, payback under 5 years and an internal rate of return above 40% may be possible."
+                  : "Şartların uygun olduğu noktalarda 5 yılın altında geri dönüş süresi ve %40'ın üzerinde iç verim oranı (IRR) mümkün."}
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {investSteps.map((step, index) => (
+              {pageInvestSteps.map((step, index) => (
                 <motion.div
                   key={step.title}
                   initial={{ opacity: 0, y: 20 }}
@@ -735,12 +821,16 @@ export default function BessPage() {
           <div className="container mx-auto px-6">
             <div className="flex items-center gap-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a]">
-                Inspur BESS Ürün Portföyü
+                {isEnglish ? "Inspur BESS Product Portfolio" : "Inspur BESS Ürün Portföyü"}
               </h2>
               <div className="h-px bg-gray-200 flex-1" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {bessProducts.map((product) => (
+              {bessProducts.map((product) => {
+                const displayProduct = isEnglish && bessProductCopyEn[product.slug]
+                  ? { ...product, ...bessProductCopyEn[product.slug] }
+                  : product;
+                return (
                 <Link
                   key={product.slug}
                   id={`urun-${product.slug}`}
@@ -750,19 +840,19 @@ export default function BessPage() {
                   <div className="relative aspect-[16/10] rounded-3xl overflow-hidden mb-7 bg-gray-50">
                     <Image
                       src={productCardImages[product.slug] ?? product.image}
-                      alt={product.title}
+                      alt={displayProduct.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <span className="text-[#ea580c] text-xs font-bold uppercase tracking-widest">
-                    {product.category}
+                    {displayProduct.category}
                   </span>
                   <h3 className="text-2xl md:text-3xl font-bold text-[#1e3a8a] mt-3 mb-4">
-                    {product.title}
+                    {displayProduct.title}
                   </h3>
                   <p className="text-gray-500 font-light leading-relaxed mb-5">
-                    {product.summary}
+                    {displayProduct.summary}
                   </p>
                   {product.options && (
                     <div className="flex flex-wrap gap-2 mb-6">
@@ -777,10 +867,11 @@ export default function BessPage() {
                     </div>
                   )}
                   <span className="inline-flex items-center gap-2 font-bold text-[#1e3a8a] group-hover:text-[#ea580c]">
-                    Detayları İncele <ArrowRight className="w-5 h-5" />
+                    {isEnglish ? "View Details" : "Detayları İncele"} <ArrowRight className="w-5 h-5" />
                   </span>
                 </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -790,17 +881,18 @@ export default function BessPage() {
           <div className="container mx-auto px-6 text-center">
             <Building2 className="w-12 h-12 text-[#f97316] mx-auto mb-8" />
             <h2 className="text-4xl md:text-5xl font-bold mb-8">
-              Projeniz İçin BESS Konfigürasyonu
+              {isEnglish ? "BESS Configuration for Your Project" : "Projeniz İçin BESS Konfigürasyonu"}
             </h2>
             <p className="text-xl text-white/75 mb-10 max-w-2xl mx-auto font-light">
-              Uygulama alanınıza göre kapasite, güç, soğutma, güvenlik ve
-              kontrol mimarisini birlikte netleştirelim.
+              {isEnglish
+                ? "Let us define the right capacity, power, cooling, safety, and control architecture for your application."
+                : "Uygulama alanınıza göre kapasite, güç, soğutma, güvenlik ve kontrol mimarisini birlikte netleştirelim."}
             </p>
             <Link
               href="/iletisim"
               className="inline-flex items-center gap-3 bg-white text-[#1e3a8a] px-10 py-5 rounded-full font-bold hover:bg-[#f97316] hover:text-white transition-colors"
             >
-              Teklif Al <ArrowRight className="w-5 h-5" />
+              {isEnglish ? "Get a Quote" : "Teklif Al"} <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </section>

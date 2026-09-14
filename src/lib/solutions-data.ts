@@ -598,3 +598,212 @@ export const solutions: Solution[] = [
 export function getSolution(slug: string) {
   return solutions.find((s) => s.slug === slug);
 }
+
+const solutionEn: Record<string, Partial<Solution>> = {
+  "enerji-santralleri": {
+    title: "Power Plants",
+    navTitle: "Power Plants",
+    shortDesc: "Grid-scale storage for renewable plants, imbalance management, and ancillary service revenue.",
+    intro: [
+      "As renewable generation grows, power plants need smarter systems to manage intermittency, grid stability, and revenue.",
+      "BESS stores unused energy, reduces imbalance costs, and supports new revenue models through ancillary services.",
+    ],
+    highlight: "Battery storage is a key technology for supply security, frequency support, reactive power management, and microgrid capability.",
+    segmentsTitle: "Storage opportunities across renewable power plants",
+  },
+  "sanayi-tesisleri": {
+    title: "Industrial Facilities",
+    navTitle: "Industrial Facilities",
+    shortDesc: "BESS and industrial heat pump integration for production continuity, peak load control, and process heat.",
+    intro: [
+      "For industrial facilities, energy transformation is now a core requirement for competitiveness, supply security, and efficiency.",
+      "Rising electricity and natural gas costs, production continuity expectations, and carbon pressure are pushing facilities toward smarter energy infrastructure.",
+    ],
+    highlight: "Combining solar power with BESS and heat pumps creates a cleaner and more economical operating model for industry.",
+    segmentsTitle: "Transformation areas for energy-intensive production lines",
+  },
+  "ticari-isletmeler": {
+    title: "Commercial Facilities",
+    navTitle: "Commercial Facilities",
+    shortDesc: "Energy solutions that lower costs and strengthen supply security for malls, hotels, offices, and retail chains.",
+    intro: [
+      "Energy costs are becoming a heavier burden for commercial facilities every day.",
+      "Shopping malls, hotels, office buildings, and retail chains need solutions that reduce costs, shrink carbon footprint, improve efficiency, and protect supply security.",
+    ],
+    highlight: "BESS and heat pump systems help commercial facilities grow with a healthier and more sustainable energy model.",
+    segmentsTitle: "A tailored approach for every commercial building type",
+  },
+  konutlar: {
+    title: "Residential",
+    navTitle: "Residential",
+    shortDesc: "Integrated energy solutions for villas and housing sites: electricity, heating, cooling, hot water, and pool heating.",
+    intro: [
+      "As renewable energy solutions become more accessible, homes can produce, store, and use their own energy more effectively.",
+      "With BESS and heat pumps, residential projects can manage electricity, heating, cooling, and domestic hot water from one efficient infrastructure.",
+    ],
+    highlight: "For homes with pools, heat pump systems can extend the pool season and provide comfortable warm water for much of the year.",
+    segmentsTitle: "Smart energy use for homes and shared residential sites",
+  },
+  "veri-merkezleri": {
+    title: "Data Centers",
+    navTitle: "Data Centers",
+    shortDesc: "24/7 operation with fast-response storage and precise, efficient climate control.",
+    intro: [
+      "Data centers run around the clock and cannot tolerate power interruptions.",
+      "High-power battery systems and efficient heat pump solutions support uptime, energy quality, and controlled cooling loads.",
+    ],
+    highlight: "BESS and heat pump solutions support operational continuity while lowering energy cost and carbon impact.",
+    segmentsTitle: "Energy resilience for critical digital infrastructure",
+  },
+  "arac-sarj-noktalari": {
+    title: "EV Charging Locations",
+    navTitle: "EV Charging",
+    shortDesc: "Deploy fast charging where grid capacity is limited, with lower infrastructure cost and faster rollout.",
+    intro: [
+      "Ultra-fast charging is becoming a basic expectation, but many locations do not have enough grid capacity for sudden high-power demand.",
+      "BESS-supported charging stores limited grid power and delivers high power to chargers when needed.",
+    ],
+    highlight: "Expand your charging network without waiting for grid upgrades, while reducing infrastructure cost and rollout time.",
+    segmentsTitle: "Flexible infrastructure for high-power charging",
+  },
+  "sinirli-sebeke": {
+    title: "Limited Grid Locations",
+    navTitle: "Limited Grid",
+    shortDesc: "Fast-deployed, portable, and modular power solutions for locations with no grid or weak grid access.",
+    intro: [
+      "Remote or grid-limited sites need reliable power without heavy infrastructure delays.",
+      "Portable and modular BESS systems can support operations, events, charging points, and field equipment with clean and quiet power.",
+    ],
+    highlight: "Battery storage makes operations possible where grid access is weak, delayed, or unavailable.",
+    segmentsTitle: "Reliable power for grid-limited use cases",
+  },
+};
+
+const productEn: Record<string, Pick<SolutionProduct, "eyebrow" | "title" | "desc">> = {
+  "/bess/konteyner-tipi-bess": {
+    eyebrow: "Energy Storage",
+    title: "Inspur 20 ft Container BESS",
+    desc: "Liquid-cooled, MWh-class modular energy storage for power plants, grids, and industrial-scale projects.",
+  },
+  "/bess/sivi-sogutmali-kabinet-bess": {
+    eyebrow: "Energy Storage",
+    title: "Inspur Liquid-Cooled Cabinet BESS",
+    desc: "A plug-and-play single-cabinet solution for industrial and commercial facilities, expandable through parallel connection.",
+  },
+  "/bess/flexcube-konteyner-bess": {
+    eyebrow: "Limited Grid and Off-Grid",
+    title: "FlexCube Container BESS",
+    desc: "A 10 ft integrated, portable, plug-and-play off-grid solution for weak-grid or no-grid locations.",
+  },
+  "/bess/tasinabilir-bess": {
+    eyebrow: "Mobile Power Solutions",
+    title: "Portable Energy Storage",
+    desc: "A compact and lightweight portable power source for outdoor events and emergency scenarios.",
+  },
+  "/bess/ev-tipi-bess": {
+    eyebrow: "Energy Storage",
+    title: "Inspur Home Energy Storage",
+    desc: "A 5-10 kWh modular home battery integrated with rooftop solar, EV charging, and critical home loads.",
+  },
+  "/isi-pompasi#urunler": {
+    eyebrow: "Heat Pump",
+    title: "Thermaplus Heat Pump Series",
+    desc: "Efficient heat pump solutions for residential, pool, commercial hot water, and industrial process water needs.",
+  },
+};
+
+const phraseEn: Record<string, string> = {
+  "Enerji Arbitrajı": "Energy Arbitrage",
+  "Arbitraj ile Tasarruf": "Savings Through Energy Arbitrage",
+  "Dengesizlik Yönetimi": "Imbalance Management",
+  "Kısıtlama Yönetimi": "Curtailment Management",
+  "Frekans Regülasyonu": "Frequency Regulation",
+  "Reaktif Güç Desteği": "Reactive Power Support",
+  "Mikro Şebeke": "Microgrid",
+  "Demir-Çelik": "Iron and Steel",
+  "Çimento": "Cement",
+  "Otomotiv": "Automotive",
+  "Beyaz Eşya": "White Goods",
+  "Atık Isı Değerlendirme": "Waste Heat Recovery",
+  "Proses Isısı": "Process Heat",
+  "Alışveriş Merkezleri": "Shopping Malls",
+  "Oteller": "Hotels",
+  "Plazalar": "Office Buildings",
+  "Perakende Zincirleri": "Retail Chains",
+  "Yüksek HVAC Yükü": "High HVAC Load",
+  "Yüksek Enerji Fiyatları": "High Energy Prices",
+  "Enerji Verimliliği": "Energy Efficiency",
+  "Tek Sistem": "Single System",
+  "Çevrecilik": "Sustainability",
+  "Çatı GES Tamamlayıcısı": "Rooftop Solar Complement",
+  "Kesinti Önleme": "Outage Protection",
+  "Jeneratör İkamesi": "Generator Replacement",
+  "Pik Yük Dengeleme": "Peak Load Balancing",
+  "Kapasite Esnekliği": "Capacity Flexibility",
+  "Havuz Isıtması": "Pool Heating",
+  "Entegre Çözüm": "Integrated Solution",
+  "Güç Kalitesi": "Power Quality",
+  "Harmonik Kompanzasyonu": "Harmonic Compensation",
+  "Kapasite Kısıtını Aşma": "Overcoming Capacity Limits",
+  "Hassas İklimlendirme": "Precision Climate Control",
+  "Ultra Hızlı Şarj Gücü": "Ultra-Fast Charging Power",
+  "Şebeke Kısıtını Aşma": "Overcoming Grid Limits",
+  "Daha Düşük İlk Yatırım": "Lower Initial Investment",
+  "Taşınabilir Yatırım": "Portable Investment",
+  "Pik Güç Yönetimi": "Peak Power Management",
+  "GES Entegrasyonu": "Solar PV Integration",
+  "Maden ve Taş Ocakları": "Mines and Quarries",
+  "Konserler ve Kamp Alanları": "Concerts and Campsites",
+  "Telekom Sistemleri": "Telecom Systems",
+  "Şebeke Kısıtlarını Aşma": "Overcoming Grid Constraints",
+  "Bağlantı Sürecini Beklememe": "No Waiting for Grid Connection",
+  "Yatırım Maliyetini Azaltma": "Lower Investment Cost",
+  "Pik Talep Yönetimi": "Peak Demand Management",
+  "Jeneratör Maliyetinden Tasarruf": "Lower Generator Cost",
+  "Güç Olmayan Noktada Faaliyet": "Operation Without Grid Power",
+};
+
+function simpleEnglishDesc(title: string, fallback: string) {
+  const cleanTitle = phraseEn[title] ?? title;
+  if (cleanTitle !== title) {
+    return `${cleanTitle} for lower energy costs, stronger operational continuity, and cleaner infrastructure.`;
+  }
+  return fallback;
+}
+
+export function localizeSolution(solution: Solution, lang: "tr" | "en"): Solution {
+  if (lang !== "en") return solution;
+  const base = solutionEn[solution.slug] ?? {};
+  return {
+    ...solution,
+    ...base,
+    segments: solution.segments?.map((segment) => ({
+      ...segment,
+      title: phraseEn[segment.title] ?? segment.title,
+      desc: simpleEnglishDesc(segment.title, segment.desc),
+    })),
+    whyBess: solution.whyBess?.map((benefit) => ({
+      ...benefit,
+      title: phraseEn[benefit.title] ?? benefit.title,
+      desc: simpleEnglishDesc(benefit.title, benefit.desc),
+    })),
+    whyHeatPump: solution.whyHeatPump?.map((benefit) => ({
+      ...benefit,
+      title: phraseEn[benefit.title] ?? benefit.title,
+      desc: simpleEnglishDesc(benefit.title, benefit.desc),
+    })),
+    products: solution.products.map((product) => ({
+      ...product,
+      ...(productEn[product.href] ?? {}),
+    })),
+  };
+}
+
+export function getLocalizedSolutions(lang: "tr" | "en") {
+  return solutions.map((solution) => localizeSolution(solution, lang));
+}
+
+export function getLocalizedSolution(slug: string, lang: "tr" | "en") {
+  const solution = getSolution(slug);
+  return solution ? localizeSolution(solution, lang) : undefined;
+}

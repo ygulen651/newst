@@ -15,7 +15,7 @@ function LanguageSwitch({ compact = false }: { compact?: boolean }) {
       className={`inline-flex items-center gap-1.5 rounded-full border border-gray-200 text-gray-600 hover:text-[#ea580c] hover:border-[#ea580c] transition-colors font-bold uppercase tracking-wider ${
         compact ? "px-3 py-1.5 text-xs" : "px-3 py-1.5 text-[11px]"
       }`}
-      aria-label={lang === "tr" ? "Switch to English" : "Türkçe'ye geç"}
+      aria-label={lang === "tr" ? "Switch to English" : "Switch to Turkish"}
     >
       <Globe className="w-3.5 h-3.5" />
       {lang === "tr" ? "EN" : "TR"}
@@ -25,7 +25,7 @@ function LanguageSwitch({ compact = false }: { compact?: boolean }) {
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   const navLinks = [
     { name: t.nav.home, href: "/" },
@@ -119,7 +119,7 @@ export default function Navbar() {
             className="fixed inset-0 z-[100] flex h-[100svh] w-screen flex-col gap-5 overflow-y-auto bg-white p-6 sm:gap-6 sm:p-8"
           >
             <div className="flex justify-between items-center mb-8">
-              <div className="text-xl font-bold text-[#ea580c]">NEWSTAG ENERJİ</div>
+              <div className="text-xl font-bold text-[#ea580c]">{lang === "tr" ? "NEWSTAG ENERJİ" : "NEWSTAG ENERGY"}</div>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 aria-label="Menüyü kapat"

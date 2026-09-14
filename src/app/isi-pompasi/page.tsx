@@ -22,6 +22,81 @@ import {
   Wind,
 } from "lucide-react";
 import { heatPumpCategories, heatPumpProducts } from "@/lib/product-data";
+import { useLanguage } from "@/lib/i18n";
+
+const productCopyEn: Record<string, { title: string; category: string; summary: string; description: string; specs: string[]; tableLabels?: Record<string, string> }> = {
+  "thermaplus-up-serisi": {
+    title: "Thermaplus Up Series",
+    category: "Residential Series",
+    summary: "8-35 kW capacity, R32 refrigerant, DC inverter control, and Wi-Fi support.",
+    description: "Thermaplus Up Series is designed for efficient year-round heating and cooling in homes, villas, and small commercial spaces. R32 refrigerant, DC inverter control, and Wi-Fi supported smart control combine comfort with balanced energy consumption.",
+    specs: ["8-35 kW capacity range", "Heating, cooling, and domestic hot water support", "R32 refrigerant and DC inverter compressor", "-30~43 °C operating temperature", "COP 4.2-4.9", "Wi-Fi supported smart control", "IPX4 protection class"],
+  },
+  "thermaplus-boost-serisi": {
+    title: "Thermaplus Boost Series",
+    category: "Residential Series",
+    summary: "8-22 kW capacity, natural R290 refrigerant, high-temperature support, and Wi-Fi control.",
+    description: "Thermaplus Boost Series is developed for efficient heating, cooling, and domestic hot water in homes, villas, and small commercial spaces with high-temperature needs. R290 refrigerant, DC inverter control, and Wi-Fi support deliver strong performance with balanced energy use.",
+    specs: ["8, 11, 15, and 22 kW model options", "Natural R290 refrigerant", "Heating, cooling, and domestic hot water", "-25~43 °C operating temperature", "Up to 70 °C heating water", "Wi-Fi supported smart control", "IPX4 protection class"],
+  },
+  "thermaplus-all": {
+    title: "Thermaplus All Series",
+    category: "Residential Series",
+    summary: "200 and 300 L tank, R290 refrigerant, Wi-Fi control, and hot water support up to 75 °C.",
+    description: "Thermaplus All Series is designed for domestic hot water needs in homes, villas, hotels, and businesses. With 200 and 300 liter tank options, R290 refrigerant, Wi-Fi control, and backup heater support, it provides hot water up to 75 °C.",
+    specs: ["200 and 300 liter tank options", "Natural R290 refrigerant", "A+ energy class", "COP 3.65-3.75", "Hot water up to 75 °C with backup heater", "Wi-Fi supported control", "-7~45 °C operating range"],
+  },
+  "thermaplus-silent-pool-serisi": {
+    title: "Thermaplus Silent Pool Series",
+    category: "Pool Series",
+    summary: "10-33 kW capacity, R32 refrigerant, silent operation, and Wi-Fi controlled pool comfort.",
+    description: "Thermaplus Silent Pool Series is designed to keep water temperature balanced in villa, garden, and outdoor pool projects. R32 refrigerant, quiet operation, titanium heat exchanger, and Wi-Fi supported control provide pool comfort across seasons.",
+    specs: ["10-33 kW capacity range", "20-130 m³ pool volumes", "Heating and cooling support", "R32 refrigerant", "Titanium heat exchanger and ABS casing", "Wi-Fi supported control"],
+  },
+  "thermaplus-commercial-pool": {
+    title: "Thermaplus Commercial Pool Series",
+    category: "Pool Series",
+    summary: "26-145 kW capacity, titanium heat exchanger, and commercial pool water up to 43 °C.",
+    description: "Thermaplus Commercial Pool Series is developed for hotels, sports facilities, social facilities, and large-volume pool projects. Six capacity options, R410A refrigerant, and a titanium heat exchanger inside a PVC shell heat pool water in a controlled and efficient way.",
+    specs: ["R410A refrigerant", "26-145 kW capacity range", "Pool water up to 43 °C", "Titanium heat exchanger inside PVC shell", "IPX4 protection class", "-7~43 °C operating environment"],
+  },
+  "thermaplus-commercial-duo": {
+    title: "Thermaplus Commercial Duo Series",
+    category: "Industrial Series",
+    summary: "50 and 92 kW capacity, R290 refrigerant, high temperature, and Wi-Fi controlled commercial performance.",
+    description: "Thermaplus Commercial Duo Series is developed for high-capacity heating, cooling, and domestic hot water in hotels, apartments, commercial facilities, and central system projects. R290 refrigerant, Wi-Fi control, and water temperatures up to 78 °C deliver strong commercial performance.",
+    specs: ["50 and 92 kW model options", "Natural R290 refrigerant", "Heating, cooling, and domestic hot water", "20-78 °C operating water support", "-25~43 °C operating environment", "Wi-Fi supported control", "380-415V / 3Ph power supply"],
+  },
+};
+
+const tableLabelEn: Record<string, string> = {
+  "Isıtma kapasitesi (kW)": "Heating capacity (kW)",
+  "COP aralığı": "COP range",
+  "Güç kaynağı": "Power supply",
+  "Ses seviyesi, 1 m": "Sound level, 1 m",
+  "Nominal ısıtma kapasitesi": "Nominal heating capacity",
+  "Enerji sınıfı": "Energy class",
+  "Net ağırlık": "Net weight",
+  "Tavsiye edilen havuz (m³)": "Recommended pool volume (m³)",
+  "Gürültü": "Noise level",
+  "Sıcak su kapasitesi (kW)": "Hot water capacity (kW)",
+  "Ses basınç seviyesi": "Sound pressure level",
+};
+
+const categoryCopyEn: Record<string, { title: string; desc: string }> = {
+  "Konut Serileri": {
+    title: "Residential Series",
+    desc: "6-16 kW inverter monoblock solutions and boiler-compatible series for heating, cooling, and domestic hot water.",
+  },
+  "Havuz Serileri": {
+    title: "Pool Series",
+    desc: "Quiet, corrosion-resistant heating solutions from 15 m³ villa pools to 500 m³ commercial pools.",
+  },
+  "Endüstriyel Seriler": {
+    title: "Industrial Series",
+    desc: "Large-scale projects with 80 °C process water, commercial hot water, and 328 kW - 1,066 kW cascade systems.",
+  },
+};
 
 const copStats = [
   { value: "3-5", label: "COP: 1 birim elektrikten 3-5 birim ısı" },
@@ -74,6 +149,8 @@ const sources = [
 type HeatMode = "heating" | "cooling" | "water";
 
 function HeatPumpCycleDiagram() {
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
   const [mode, setMode] = useState<HeatMode>("heating");
   const [outsideTemp, setOutsideTemp] = useState(7);
   const isCooling = mode === "cooling";
@@ -92,19 +169,25 @@ function HeatPumpCycleDiagram() {
   ).toFixed(1);
   const hotColor = "#f97316";
   const coldColor = "#38bdf8";
-  const outsideTitle = isCooling ? "Dış Ünite · Kondenser" : "Dış Ünite · Evaporatör";
+  const outsideTitle = isEnglish
+    ? isCooling ? "Outdoor Unit · Condenser" : "Outdoor Unit · Evaporator"
+    : isCooling ? "Dış Ünite · Kondenser" : "Dış Ünite · Evaporatör";
   const insideTitle = isCooling
-    ? "İç Ünite · Evaporatör"
+    ? isEnglish ? "Indoor Unit · Evaporator" : "İç Ünite · Evaporatör"
     : isWater
-      ? "Boyler Eşanjörü"
-      : "İç Ünite · Kondenser";
-  const outsideAction = isCooling ? "Dış ortama ısı verir" : "Havadan ısı alır";
-  const insideAction = isCooling ? "İç ortamdan ısı alır" : "Isıyı aktarır";
+      ? isEnglish ? "Boiler Heat Exchanger" : "Boyler Eşanjörü"
+      : isEnglish ? "Indoor Unit · Condenser" : "İç Ünite · Kondenser";
+  const outsideAction = isEnglish
+    ? isCooling ? "Releases heat outdoors" : "Captures heat from air"
+    : isCooling ? "Dış ortama ısı verir" : "Havadan ısı alır";
+  const insideAction = isEnglish
+    ? isCooling ? "Captures heat from indoors" : "Transfers heat"
+    : isCooling ? "İç ortamdan ısı alır" : "Isıyı aktarır";
 
   const modes: { id: HeatMode; label: string; icon: React.ElementType }[] = [
-    { id: "heating", label: "Isıtma", icon: ThermometerSun },
-    { id: "cooling", label: "Soğutma", icon: Wind },
-    { id: "water", label: "Kullanım Suyu", icon: Droplets },
+    { id: "heating", label: isEnglish ? "Heating" : "Isıtma", icon: ThermometerSun },
+    { id: "cooling", label: isEnglish ? "Cooling" : "Soğutma", icon: Wind },
+    { id: "water", label: isEnglish ? "Domestic Hot Water" : "Kullanım Suyu", icon: Droplets },
   ];
 
   return (
@@ -116,8 +199,10 @@ function HeatPumpCycleDiagram() {
     >
       <div className="mb-6 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h3 className="text-xl font-bold">Soğutucu Akışkan Döngüsü</h3>
-          <p className="mt-1 text-sm text-white/40">Modu değiştirerek enerji akış yönünü inceleyin</p>
+          <h3 className="text-xl font-bold">{isEnglish ? "Refrigerant Cycle" : "Soğutucu Akışkan Döngüsü"}</h3>
+          <p className="mt-1 text-sm text-white/40">
+            {isEnglish ? "Switch modes to review the energy flow direction" : "Modu değiştirerek enerji akış yönünü inceleyin"}
+          </p>
         </div>
         <div className="flex flex-wrap gap-2">
           {modes.map(({ id, label, icon: Icon }) => (
@@ -140,8 +225,8 @@ function HeatPumpCycleDiagram() {
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
         {[
           [cop, "COP"],
-          [`${outsideTemp}°C`, "Dış Sıcaklık"],
-          [`${targetTemp}°C`, isWater ? "Su Sıcaklığı" : "İç Ortam"],
+          [`${outsideTemp}°C`, isEnglish ? "Outdoor Temperature" : "Dış Sıcaklık"],
+          [`${targetTemp}°C`, isWater ? (isEnglish ? "Water Temperature" : "Su Sıcaklığı") : (isEnglish ? "Indoor Space" : "İç Ortam")],
         ].map(([value, label], index) => (
           <div key={label} className="rounded-xl border border-white/10 bg-white/[0.035] p-4 text-center">
             <p className={`text-2xl font-bold ${index === 1 ? "text-sky-400" : index === 2 ? "text-[#f97316]" : "text-amber-400"}`}>{value}</p>
@@ -151,7 +236,7 @@ function HeatPumpCycleDiagram() {
       </div>
 
       <label className="mb-5 flex items-center gap-4 text-xs text-white/45">
-        Dış sıcaklık
+        {isEnglish ? "Outdoor temperature" : "Dış sıcaklık"}
         <input
           type="range"
           min="-25"
@@ -164,12 +249,22 @@ function HeatPumpCycleDiagram() {
       </label>
 
       <div className="mb-5 rounded-xl border border-white/10 bg-white/[0.035] p-4 text-sm leading-relaxed text-white/55">
-        <strong className="text-white">{isCooling ? "Soğutma" : isWater ? "Kullanım suyu" : "Isıtma"} döngüsü:</strong>{" "}
-        {isCooling
-          ? "İç üniteden alınan ısı soğutucu akışkana aktarılır, kompresör ve dış ünite üzerinden dış ortama bırakılır."
-          : isWater
-            ? "Dış havadan alınan düşük sıcaklıklı enerji kompresörle yükseltilir ve kullanım suyuna aktarılır."
-            : "Dış evaporatör havadan ısı çeker, kompresör akışkan sıcaklığını yükseltir ve iç kondenser ısıyı ortama aktarır."}
+        <strong className="text-white">
+          {isEnglish
+            ? `${isCooling ? "Cooling" : isWater ? "Domestic hot water" : "Heating"} cycle:`
+            : `${isCooling ? "Soğutma" : isWater ? "Kullanım suyu" : "Isıtma"} döngüsü:`}
+        </strong>{" "}
+        {isEnglish
+          ? isCooling
+            ? "Heat collected from the indoor unit is transferred to the refrigerant, compressed, and released outdoors through the outdoor unit."
+            : isWater
+              ? "Low-temperature energy collected from outdoor air is raised by the compressor and transferred to domestic hot water."
+              : "The outdoor evaporator absorbs heat from the air, the compressor raises refrigerant temperature, and the indoor condenser transfers heat into the space."
+          : isCooling
+            ? "İç üniteden alınan ısı soğutucu akışkana aktarılır, kompresör ve dış ünite üzerinden dış ortama bırakılır."
+            : isWater
+              ? "Dış havadan alınan düşük sıcaklıklı enerji kompresörle yükseltilir ve kullanım suyuna aktarılır."
+              : "Dış evaporatör havadan ısı çeker, kompresör akışkan sıcaklığını yükseltir ve iç kondenser ısıyı ortama aktarır."}
       </div>
 
       <div className="relative overflow-hidden rounded-2xl border border-white/5 bg-[#060c17] p-5 md:p-7">
@@ -191,7 +286,7 @@ function HeatPumpCycleDiagram() {
 
         <div className="relative z-10 grid grid-cols-1 gap-5 lg:grid-cols-[1fr_220px_1fr] lg:grid-rows-[1fr_auto] lg:items-center lg:gap-10">
           <div className={`rounded-[24px] border p-6 lg:row-start-1 ${isCooling ? "border-orange-400/30 bg-orange-400/[0.07]" : "border-sky-400/30 bg-sky-400/[0.07]"}`}>
-            <p className={`text-xs font-bold uppercase tracking-widest ${isCooling ? "text-orange-300" : "text-sky-300"}`}>Dış Ortam</p>
+            <p className={`text-xs font-bold uppercase tracking-widest ${isCooling ? "text-orange-300" : "text-sky-300"}`}>{isEnglish ? "Outdoor Air" : "Dış Ortam"}</p>
             <h4 className="mt-2 text-xl font-bold">{outsideTitle}</h4>
             <div className="my-5 space-y-2">
               {[1, 2, 3].map((line) => <div key={line} className={`h-2 rounded-full border ${isCooling ? "border-orange-400/30" : "border-sky-400/30"}`} />)}
@@ -209,13 +304,15 @@ function HeatPumpCycleDiagram() {
               className="flex h-32 w-32 flex-col items-center justify-center rounded-full border-2 border-amber-400/50 bg-amber-400/10 text-center shadow-[0_0_40px_rgba(251,191,36,.12)]"
             >
               <Settings className="mb-2 h-10 w-10 animate-spin text-amber-400 [animation-duration:5s]" />
-              <span className="text-sm font-bold text-amber-300">Kompresör</span>
-              <span className="text-[10px] text-white/35">Basınç ↑ · Sıcaklık ↑</span>
+              <span className="text-sm font-bold text-amber-300">{isEnglish ? "Compressor" : "Kompresör"}</span>
+              <span className="text-[10px] text-white/35">{isEnglish ? "Pressure ↑ · Temperature ↑" : "Basınç ↑ · Sıcaklık ↑"}</span>
             </motion.div>
           </div>
 
           <div className={`rounded-[24px] border p-6 lg:row-start-1 ${isCooling ? "border-sky-400/30 bg-sky-400/[0.07]" : "border-orange-400/30 bg-orange-400/[0.07]"}`}>
-            <p className={`text-xs font-bold uppercase tracking-widest ${isCooling ? "text-sky-300" : "text-orange-300"}`}>{isWater ? "Su Devresi" : "İç Ortam"}</p>
+            <p className={`text-xs font-bold uppercase tracking-widest ${isCooling ? "text-sky-300" : "text-orange-300"}`}>
+              {isWater ? (isEnglish ? "Water Circuit" : "Su Devresi") : (isEnglish ? "Indoor Space" : "İç Ortam")}
+            </p>
             <h4 className="mt-2 text-xl font-bold">{insideTitle}</h4>
             <div className="my-5 space-y-2">
               {[1, 2, 3].map((line) => <div key={line} className={`h-2 rounded-full border ${isCooling ? "border-sky-400/30" : "border-orange-400/30"}`} />)}
@@ -226,16 +323,16 @@ function HeatPumpCycleDiagram() {
 
           <div className="rounded-xl border border-violet-400/30 bg-violet-400/10 p-4 text-center lg:col-start-2 lg:row-start-2">
             <Droplets className="mx-auto mb-2 h-6 w-6 text-violet-300" />
-            <p className="text-sm font-bold text-violet-200">Genleşme Valfi</p>
-            <p className="text-[10px] text-white/35">Basınç ↓ · Sıcaklık ↓</p>
+            <p className="text-sm font-bold text-violet-200">{isEnglish ? "Expansion Valve" : "Genleşme Valfi"}</p>
+            <p className="text-[10px] text-white/35">{isEnglish ? "Pressure ↓ · Temperature ↓" : "Basınç ↓ · Sıcaklık ↓"}</p>
           </div>
         </div>
       </div>
 
       <div className="mt-5 flex flex-wrap justify-center gap-5 text-[10px] uppercase tracking-wider text-white/35">
-        <span className="flex items-center gap-2"><i className="h-2 w-2 rounded-full bg-orange-400" /> Yüksek basınç / sıcak gaz</span>
-        <span className="flex items-center gap-2"><i className="h-2 w-2 rounded-full bg-violet-400" /> Yüksek basınç / sıvı</span>
-        <span className="flex items-center gap-2"><i className="h-2 w-2 rounded-full bg-sky-400" /> Düşük basınç / soğuk gaz</span>
+        <span className="flex items-center gap-2"><i className="h-2 w-2 rounded-full bg-orange-400" /> {isEnglish ? "High pressure / hot gas" : "Yüksek basınç / sıcak gaz"}</span>
+        <span className="flex items-center gap-2"><i className="h-2 w-2 rounded-full bg-violet-400" /> {isEnglish ? "High pressure / liquid" : "Yüksek basınç / sıvı"}</span>
+        <span className="flex items-center gap-2"><i className="h-2 w-2 rounded-full bg-sky-400" /> {isEnglish ? "Low pressure / cold gas" : "Düşük basınç / soğuk gaz"}</span>
       </div>
     </motion.div>
   );
@@ -283,6 +380,63 @@ const thermaplusPluses = [
   "6 kW'tan 1.066 kW kaskad sistemlere uzanan geniş güç aralığı",
 ];
 
+const copStatsEn = [
+  { value: "3-5", label: "COP: 3-5 units of heat from 1 unit of electricity" },
+  { value: "%75", label: "Potential annual energy cost savings" },
+  { value: "A+++", label: "ERP energy efficiency class" },
+  { value: "80 °C", label: "Outlet water temperature in industrial series" },
+];
+
+const sourcesEn = [
+  {
+    icon: Wind,
+    title: "Air Source",
+    desc: "The most common solution, with simple installation and lower initial investment.",
+  },
+];
+
+const benefitsEn = [
+  {
+    title: "High Energy Savings",
+    icon: BarChart3,
+    desc: "Reduces residential and commercial energy costs with efficiency 3-5 times higher than conventional fossil fuel systems.",
+  },
+  {
+    title: "Three Functions in One System",
+    icon: Thermometer,
+    desc: "Covers heating, cooling, and domestic hot water with one system, reducing separate installation and maintenance costs.",
+  },
+  {
+    title: "Less Dependence on Fossil Fuels",
+    icon: Leaf,
+    desc: "Reduces exposure to unpredictable natural gas prices and lowers the carbon footprint.",
+  },
+  {
+    title: "Waste Heat Recovery",
+    icon: Recycle,
+    desc: "In suitable projects, reuses waste heat inside the facility to increase total efficiency.",
+  },
+  {
+    title: "Pool Comfort",
+    icon: Waves,
+    desc: "Extends the pool season for residential and commercial pools, including pools up to 500 m³.",
+  },
+  {
+    title: "Smart Control",
+    icon: Settings,
+    desc: "Makes system performance easy to monitor with Wi-Fi, LCD panel, and automation options.",
+  },
+];
+
+const thermaplusPlusesEn = [
+  "Heat pump technology manufactured in Turkey",
+  "Local components, local engineering, and a strong service network",
+  "Residential, pool, and industrial series options",
+  "Low-carbon use scenarios integrated with solar PV and BESS",
+  "A+++ energy label support for building energy performance",
+  "Wide power range from 6 kW to 1,066 kW cascade systems",
+];
+
 const categoryMeta: Record<string, { icon: typeof Home; desc: string }> = {
   "Konut Serileri": {
     icon: Home,
@@ -299,6 +453,13 @@ const categoryMeta: Record<string, { icon: typeof Home; desc: string }> = {
 };
 
 export default function HeatPumpPage() {
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
+  const pageCopStats = isEnglish ? copStatsEn : copStats;
+  const pageSources = isEnglish ? sourcesEn : sources;
+  const pageBenefits = isEnglish ? benefitsEn : benefits;
+  const pageThermaplusPluses = isEnglish ? thermaplusPlusesEn : thermaplusPluses;
+
   return (
     <>
       <Navbar />
@@ -313,29 +474,28 @@ export default function HeatPumpPage() {
                 transition={{ duration: 0.8 }}
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ea580c]/10 text-[#ea580c] font-bold text-sm mb-8 uppercase tracking-widest">
-                  <Leaf className="w-4 h-4" /> Temiz Isı Teknolojisi
+                  <Leaf className="w-4 h-4" /> {isEnglish ? "Clean Heat Technology" : "Temiz Isı Teknolojisi"}
                 </div>
                 <h1 className="text-5xl md:text-7xl font-bold mb-8 text-[#1e3a8a]">
-                  Thermaplus <span className="text-[#ea580c]">Isı Pompası</span>
+                  Thermaplus <span className="text-[#ea580c]">{isEnglish ? "Heat Pump" : "Isı Pompası"}</span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed mb-10 max-w-xl font-light">
-                  Çevreci, verimli, ekonomik. Isı pompası; çevredeki havadan,
-                  topraktan veya sudan aldığı enerjiyi ısıtma ve soğutma
-                  sistemine aktaran elektrikli bir cihazdır. Kışın ısıtır, yazın
-                  soğutur; üstelik kullanım sıcak suyu da üretir.
+                  {isEnglish
+                    ? "Eco-friendly, efficient, and economical. A heat pump transfers energy from air, ground, or water into heating and cooling systems. It heats in winter, cools in summer, and can also produce domestic hot water."
+                    : "Çevreci, verimli, ekonomik. Isı pompası; çevredeki havadan, topraktan veya sudan aldığı enerjiyi ısıtma ve soğutma sistemine aktaran elektrikli bir cihazdır. Kışın ısıtır, yazın soğutur; üstelik kullanım sıcak suyu da üretir."}
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Link
                     href="#urunler"
                     className="inline-flex items-center gap-3 bg-[#1e3a8a] text-white px-8 py-4 rounded-full font-bold hover:bg-[#152e73] transition-colors"
                   >
-                    Ürünleri İncele <ArrowRight className="w-5 h-5" />
+                    {isEnglish ? "View Products" : "Ürünleri İncele"} <ArrowRight className="w-5 h-5" />
                   </Link>
                   <Link
                     href="/markalar/thermaplus"
                     className="inline-flex items-center gap-3 bg-white text-[#1e3a8a] px-8 py-4 rounded-full font-bold border border-blue-100 hover:border-[#ea580c] hover:text-[#ea580c] transition-colors"
                   >
-                    Markayı Tanıyın
+                    {isEnglish ? "Meet the Brand" : "Markayı Tanıyın"}
                   </Link>
                 </div>
               </motion.div>
@@ -348,7 +508,7 @@ export default function HeatPumpPage() {
               >
                 <Image
                   src="/images/heat-pump-branded.png"
-                  alt="Thermaplus ısı pompası"
+                  alt={isEnglish ? "Thermaplus heat pump" : "Thermaplus ısı pompası"}
                   fill
                   className="object-cover"
                   priority
@@ -362,7 +522,7 @@ export default function HeatPumpPage() {
         <section className="py-20 bg-white border-b border-gray-50">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {copStats.map((stat, i) => (
+              {pageCopStats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
                   initial={{ opacity: 0, y: 20 }}
@@ -379,9 +539,9 @@ export default function HeatPumpPage() {
               ))}
             </div>
             <p className="text-center text-gray-500 font-light mt-10 max-w-3xl mx-auto">
-              COP (Verimlilik Katsayısı): Isı pompası 1 birim elektrik
-              harcayarak 3-5 birim ısıtma enerjisi üretir. Bu, doğalgaza göre
-              3-5 kat verimlilik ve yılda %75&apos;e varan tasarruf anlamına gelir.
+              {isEnglish
+                ? "COP (Coefficient of Performance): A heat pump can produce 3-5 units of heating energy from 1 unit of electricity. This means 3-5 times higher efficiency than natural gas and savings of up to 75% per year."
+                : "COP (Verimlilik Katsayısı): Isı pompası 1 birim elektrik harcayarak 3-5 birim ısıtma enerjisi üretir. Bu, doğalgaza göre 3-5 kat verimlilik ve yılda %75'e varan tasarruf anlamına gelir."}
             </p>
           </div>
         </section>
@@ -397,15 +557,15 @@ export default function HeatPumpPage() {
           <div className="container relative z-10 mx-auto px-6">
             <div className="mx-auto mb-14 max-w-3xl text-center">
               <span className="mb-4 block text-xs font-bold uppercase tracking-[0.45em] text-[#f97316]">
-                Isı Enerjisi Akışı
+                {isEnglish ? "Heat Energy Flow" : "Isı Enerjisi Akışı"}
               </span>
               <h2 className="mb-6 text-4xl font-bold md:text-6xl">
-                Isı Pompası Nasıl Çalışır?
+                {isEnglish ? "How Does a Heat Pump Work?" : "Isı Pompası Nasıl Çalışır?"}
               </h2>
               <p className="text-lg font-light leading-relaxed text-white/70">
-                Düşük sıcaklıklı çevre enerjisi kablo hattı boyunca taşınır;
-                evaporatör, kompresör ve kondenser çevrimiyle kullanılabilir
-                ısıya dönüştürülür.
+                {isEnglish
+                  ? "Low-temperature environmental energy moves through the refrigerant circuit and is converted into usable heat through the evaporator, compressor, and condenser cycle."
+                  : "Düşük sıcaklıklı çevre enerjisi kablo hattı boyunca taşınır; evaporatör, kompresör ve kondenser çevrimiyle kullanılabilir ısıya dönüştürülür."}
               </p>
             </div>
 
@@ -534,12 +694,12 @@ export default function HeatPumpPage() {
           <div className="container mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] mb-6">
-                Isı Pompası ile Elde Edilen Faydalar
+                {isEnglish ? "Benefits of Heat Pumps" : "Isı Pompası ile Elde Edilen Faydalar"}
               </h2>
               <div className="w-20 h-1.5 bg-[#ea580c] mx-auto rounded-full" />
             </div>
             <div className="mx-auto mb-12 grid max-w-xl grid-cols-1 gap-6">
-              {sources.map((source, i) => (
+              {pageSources.map((source, i) => (
                 <motion.div
                   key={source.title}
                   initial={{ opacity: 0, y: 20 }}
@@ -555,7 +715,7 @@ export default function HeatPumpPage() {
               ))}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {benefits.map((benefit, index) => (
+              {pageBenefits.map((benefit, index) => (
                 <motion.div
                   key={benefit.title}
                   initial={{ opacity: 0, y: 24 }}
@@ -580,20 +740,20 @@ export default function HeatPumpPage() {
               <div className="relative aspect-[4/3] rounded-[40px] overflow-hidden shadow-2xl">
                 <Image
                   src="/images/residential-solutions.png"
-                  alt="Thermaplus entegre enerji çözümü"
+                  alt={isEnglish ? "Thermaplus integrated energy solution" : "Thermaplus entegre enerji çözümü"}
                   fill
                   className="object-cover"
                 />
               </div>
               <div>
                 <span className="text-[#ea580c] text-xs font-bold uppercase tracking-[0.3em] mb-4 block">
-                  Newstag&apos;ın Tescilli Markası
+                  {isEnglish ? "Newstag Registered Brand" : "Newstag'ın Tescilli Markası"}
                 </span>
                 <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] mb-8">
-                  Neden Thermaplus?
+                  {isEnglish ? "Why Thermaplus?" : "Neden Thermaplus?"}
                 </h2>
                 <div className="space-y-5">
-                  {thermaplusPluses.map((item) => (
+                  {pageThermaplusPluses.map((item) => (
                     <div key={item} className="flex items-start gap-4">
                       <div className="w-8 h-8 rounded-full bg-[#ea580c] text-white flex items-center justify-center shrink-0">
                         ✓
@@ -612,15 +772,18 @@ export default function HeatPumpPage() {
           <div className="container mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] mb-6">
-                Thermaplus Ürün Gamı
+                {isEnglish ? "Thermaplus Product Range" : "Thermaplus Ürün Gamı"}
               </h2>
               <p className="text-gray-500 text-lg font-light">
-                Konut, havuz ve endüstriyel ihtiyaçlara göre gruplanmış seriler.
+                {isEnglish
+                  ? "Series grouped for residential, pool, and industrial needs."
+                  : "Konut, havuz ve endüstriyel ihtiyaçlara göre gruplanmış seriler."}
               </p>
             </div>
 
             {heatPumpCategories.map((category) => {
               const meta = categoryMeta[category];
+              const categoryCopy = isEnglish ? categoryCopyEn[category] : undefined;
               const CategoryIcon = meta.icon;
               return (
                 <div key={category} className="mb-16 last:mb-0">
@@ -629,14 +792,18 @@ export default function HeatPumpPage() {
                       <div className="w-14 h-14 rounded-2xl bg-[#ea580c] text-white flex items-center justify-center">
                         <CategoryIcon className="w-7 h-7" />
                       </div>
-                      <h3 className="text-3xl font-bold text-[#1e3a8a]">{category}</h3>
+                      <h3 className="text-3xl font-bold text-[#1e3a8a]">{categoryCopy?.title ?? category}</h3>
                     </div>
-                    <p className="text-gray-500 font-light md:mb-1 max-w-2xl">{meta.desc}</p>
+                    <p className="text-gray-500 font-light md:mb-1 max-w-2xl">{categoryCopy?.desc ?? meta.desc}</p>
                   </div>
                   <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
                     {heatPumpProducts
                       .filter((product) => product.category === category)
-                      .map((product) => (
+                      .map((product) => {
+                        const displayProduct = isEnglish && productCopyEn[product.slug]
+                          ? { ...product, ...productCopyEn[product.slug] }
+                          : product;
+                        return (
                         <Link
                           key={product.slug}
                           href={`/isi-pompasi/${product.slug}`}
@@ -645,17 +812,17 @@ export default function HeatPumpPage() {
                           <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-[18px] bg-gray-50 sm:aspect-square sm:w-36">
                             <Image
                               src={product.image}
-                              alt={product.title}
+                              alt={displayProduct.title}
                               fill
                               className="object-contain p-2 group-hover:scale-105 transition-transform duration-500"
                             />
                           </div>
                           <div className="min-w-0 py-1">
                             <h4 className="text-lg font-bold text-[#1e3a8a] mb-2 leading-tight">
-                              {product.title}
+                              {displayProduct.title}
                             </h4>
                             <p className="text-gray-500 font-light leading-relaxed mb-3 text-sm line-clamp-2">
-                              {product.summary}
+                              {displayProduct.summary}
                             </p>
                             {product.options && (
                               <p className="mb-3 line-clamp-2 text-xs font-bold leading-relaxed text-[#ea580c]">
@@ -663,11 +830,12 @@ export default function HeatPumpPage() {
                               </p>
                             )}
                             <span className="inline-flex items-center gap-2 font-bold text-sm text-[#1e3a8a] group-hover:text-[#ea580c]">
-                              Detayları İncele <ArrowRight className="w-4 h-4" />
+                              {isEnglish ? "View Details" : "Detayları İncele"} <ArrowRight className="w-4 h-4" />
                             </span>
                           </div>
                         </Link>
-                      ))}
+                        );
+                      })}
                   </div>
                 </div>
               );
@@ -681,29 +849,26 @@ export default function HeatPumpPage() {
             <div className="max-w-4xl mx-auto text-white">
               <Calculator className="w-14 h-14 text-[#f97316] mx-auto mb-8" />
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-                Tasarruf Hesaplama
+                {isEnglish ? "Savings Calculator" : "Tasarruf Hesaplama"}
               </h2>
               <p className="text-white/75 font-light text-lg md:text-xl leading-relaxed mb-10">
-                Mevcut ısıtma sisteminize göre ısı pompasıyla ne kadar tasarruf
-                edeceğinizi hesaplayan modülümüz çok yakında burada. Şimdilik
-                kapasite hesaplama formumuz üzerinden uzman ekibimizden ücretsiz
-                analiz talep edebilirsiniz.
+                {isEnglish
+                  ? "Our savings calculator will soon show how much you can save by switching from your current heating system to a heat pump. For now, you can request a free analysis from our expert team through the capacity calculation form."
+                  : "Mevcut ısıtma sisteminize göre ısı pompasıyla ne kadar tasarruf edeceğinizi hesaplayan modülümüz çok yakında burada. Şimdilik kapasite hesaplama formumuz üzerinden uzman ekibimizden ücretsiz analiz talep edebilirsiniz."}
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <a
-                  href="https://form.jotform.com/232702760885966"
-                  target="_blank"
-                  rel="noreferrer"
+                <Link
+                  href="/kapasite-hesaplama.html"
                   className="inline-flex items-center gap-3 bg-white text-[#1e3a8a] px-8 py-4 rounded-full font-bold hover:bg-[#f97316] hover:text-white transition-colors"
                 >
-                  Kapasite Hesaplama Formu <ArrowRight className="w-5 h-5" />
-                </a>
+                  {isEnglish ? "Capacity Calculation Form" : "Kapasite Hesaplama Formu"} <ArrowRight className="w-5 h-5" />
+                </Link>
                 <Link
                   href="/iletisim"
                   className="inline-flex items-center gap-3 border border-white/40 text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-[#1e3a8a] transition-colors"
                 >
                   <ThermometerSun className="w-5 h-5" />
-                  Uzmana Danışın
+                  {isEnglish ? "Talk to an Expert" : "Uzmana Danışın"}
                 </Link>
               </div>
             </div>

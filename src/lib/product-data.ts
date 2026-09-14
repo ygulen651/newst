@@ -152,7 +152,7 @@ export const heatPumpProducts: ProductInfo[] = [
     slug: "thermaplus-up-serisi",
     title: "Thermaplus Up Serisi",
     category: "Konut Serileri",
-    image: "/images/SARAY ENERJİ 2.png",
+    image: "/images/2.png",
     imageFit: "contain",
     summary: "8-35 kW kapasite, R32 soğutucu akışkan, DC inverter kontrol ve Wi-Fi desteği.",
     description:
@@ -180,7 +180,7 @@ export const heatPumpProducts: ProductInfo[] = [
     slug: "thermaplus-boost-serisi",
     title: "Thermaplus Boost Serisi",
     category: "Konut Serileri",
-    image: "/images/skdskdk.png",
+    image: "/images/6.png",
     imageFit: "contain",
     summary: "8-22 kW kapasite, doğal R290 akışkan, yüksek sıcaklık desteği ve Wi-Fi kontrol.",
     description:
@@ -209,7 +209,7 @@ export const heatPumpProducts: ProductInfo[] = [
     slug: "thermaplus-all",
     title: "Thermaplus All Serisi",
     category: "Konut Serileri",
-    image: "/images/SARAY  ENERJİ 8.png",
+    image: "/images/4.png",
     imageFit: "contain",
     summary: "200 ve 300 L tank, R290 akışkan, Wi-Fi kontrol ve 75 °C'ye kadar sıcak su desteği.",
     description:
@@ -238,7 +238,7 @@ export const heatPumpProducts: ProductInfo[] = [
     slug: "thermaplus-silent-pool-serisi",
     title: "Thermaplus Silent Pool Serisi",
     category: "Havuz Serileri",
-    image: "/images/SARAY ENERJİ  4.png",
+    image: "/images/3.png",
     imageFit: "contain",
     summary: "10-33 kW kapasite, R32 akışkan, sessiz çalışma ve Wi-Fi kontrollü dört mevsim havuz konforu.",
     description:
@@ -264,7 +264,7 @@ export const heatPumpProducts: ProductInfo[] = [
     slug: "thermaplus-commercial-pool",
     title: "Thermaplus Commercial Pool Serisi",
     category: "Havuz Serileri",
-    image: "/images/SARAY ENERJİ 9.png",
+    image: "/images/5.png",
     imageFit: "contain",
     summary: "26-145 kW kapasite, titanyum eşanjör ve 43 °C'ye kadar ticari havuz suyu.",
     description:
@@ -291,7 +291,7 @@ export const heatPumpProducts: ProductInfo[] = [
     slug: "thermaplus-commercial-duo",
     title: "Thermaplus Commercial Duo Serisi",
     category: "Endüstriyel Seriler",
-    image: "/images/SARAY ENERJİ 6 .png",
+    image: "/images/1.png",
     imageFit: "contain",
     summary: "50 ve 92 kW kapasite, R290 akışkan, yüksek sıcaklık ve Wi-Fi kontrollü ticari performans.",
     description:

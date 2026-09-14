@@ -7,7 +7,8 @@ import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
+  const isEnglish = lang === "en";
 
   const footerLinks = [
     {
@@ -33,12 +34,12 @@ export default function Footer() {
     {
       title: t.footer.solutions,
       links: [
-        { name: "Enerji Santralleri", href: "/cozumlerimiz/enerji-santralleri", external: false },
-        { name: "Sanayi Tesisleri", href: "/cozumlerimiz/sanayi-tesisleri", external: false },
-        { name: "Ticari İşletmeler", href: "/cozumlerimiz/ticari-isletmeler", external: false },
-        { name: "Konutlar", href: "/cozumlerimiz/konutlar", external: false },
-        { name: "Veri Merkezleri", href: "/cozumlerimiz/veri-merkezleri", external: false },
-        { name: "Sınırlı Şebeke Noktaları", href: "/cozumlerimiz/sinirli-sebeke", external: false },
+        { name: isEnglish ? "Power Plants" : "Enerji Santralleri", href: "/cozumlerimiz/enerji-santralleri", external: false },
+        { name: isEnglish ? "Industrial Facilities" : "Sanayi Tesisleri", href: "/cozumlerimiz/sanayi-tesisleri", external: false },
+        { name: isEnglish ? "Commercial Facilities" : "Ticari İşletmeler", href: "/cozumlerimiz/ticari-isletmeler", external: false },
+        { name: isEnglish ? "Residential" : "Konutlar", href: "/cozumlerimiz/konutlar", external: false },
+        { name: isEnglish ? "Data Centers" : "Veri Merkezleri", href: "/cozumlerimiz/veri-merkezleri", external: false },
+        { name: isEnglish ? "Limited Grid Locations" : "Sınırlı Şebeke Noktaları", href: "/cozumlerimiz/sinirli-sebeke", external: false },
       ],
     },
   ];
@@ -120,7 +121,7 @@ export default function Footer() {
             </span>
           </div>
           <p className="text-xs text-gray-400 font-light">
-            © {new Date().getFullYear()} Newstag Enerji.{" "}
+            © {new Date().getFullYear()} {isEnglish ? "Newstag Energy." : "Newstag Enerji."}{" "}
             <span className="font-medium text-gray-600">{t.footer.brandNote}</span>
           </p>
         </div>

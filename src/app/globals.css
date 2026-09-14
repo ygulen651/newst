@@ -27,8 +27,8 @@
   --radius-xl: 1.5rem;
   --radius-2xl: 2rem;
 
-  --font-heading: var(--font-outfit);
-  --font-sans: var(--font-geist-sans);
+  --font-heading: Arial, Helvetica, sans-serif;
+  --font-sans: Arial, Helvetica, sans-serif;
 }
 
 @layer base {
@@ -37,10 +37,12 @@
   }
   body {
     @apply bg-background text-foreground overflow-x-hidden antialiased;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
   }
   h1, h2, h3, h4 {
-    @apply font-heading tracking-[-0.04em] font-medium;
+    @apply font-heading font-extrabold;
+    letter-spacing: 0;
   }
 }
 

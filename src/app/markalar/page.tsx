@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const brands = [
   {
@@ -39,7 +40,42 @@ const brands = [
   },
 ];
 
+const brandsEn = [
+  {
+    name: "INSPUR BESS",
+    tagline: "A Key Player in Energy Security",
+    desc: "Inspur is one of the world's top server manufacturers and brings its engineering strength in IT, cloud, and AI infrastructure into battery energy storage systems. With close to 1 GWh of installation experience and a 400 MWh single-project reference, it is a global energy storage player.",
+    logo: "/images/image1.png",
+    image: "/images/products/bess-konteyner.png",
+    brandLink: "/markalar/inspur",
+    productsLink: "/bess#urunler",
+    stats: [
+      { value: "$31B+", label: "Annual Revenue" },
+      { value: "Top 3", label: "Global Server Brand" },
+      { value: "1 GWh", label: "Installation Experience" },
+    ],
+  },
+  {
+    name: "THERMAPLUS",
+    tagline: "Green, Efficient, Economical",
+    desc: "Thermaplus is Newstag's own registered heat pump brand. It combines heat pump technology manufactured in Turkey with local components, local engineering, and a strong service network. Its product range covers residential, pool, and industrial needs from 6 kW to 1,066 kW cascade systems.",
+    logo: "/images/Adsız tasarım.png",
+    image: "/images/heat-pump-branded.png",
+    brandLink: "/markalar/thermaplus",
+    productsLink: "/isi-pompasi#urunler",
+    stats: [
+      { value: "A+++", label: "Energy Efficiency" },
+      { value: "3-5", label: "COP Value" },
+      { value: "%75", label: "Potential Savings" },
+    ],
+  },
+];
+
 export default function BrandsPage() {
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
+  const pageBrands = isEnglish ? brandsEn : brands;
+
   return (
     <>
       <Navbar />
@@ -55,17 +91,18 @@ export default function BrandsPage() {
                 Newstag Enerji
               </span>
               <h1 className="text-5xl sm:text-6xl md:text-8xl font-medium text-[#020817] tracking-tighter mb-4">
-                Ürün <span className="text-[#ea580c]">Markalarımız</span>
+                {isEnglish ? "Our" : "Ürün"} <span className="text-[#ea580c]">{isEnglish ? "Brands" : "Markalarımız"}</span>
               </h1>
             </div>
             <div className="text-xl text-gray-500 font-light max-w-md">
-              Global teknoloji devi Inspur ve tescilli markamız Thermaplus ile
-              enerji dönüşümünün iki kilit teknolojisini sunuyoruz.
+              {isEnglish
+                ? "We offer two key technologies for energy transformation through global technology brand Inspur and our registered brand Thermaplus."
+                : "Global teknoloji devi Inspur ve tescilli markamız Thermaplus ile enerji dönüşümünün iki kilit teknolojisini sunuyoruz."}
             </div>
           </motion.div>
 
           <div className="grid grid-cols-1 gap-10">
-            {brands.map((brand, i) => (
+            {pageBrands.map((brand, i) => (
               <motion.div
                 key={brand.name}
                 initial={{ opacity: 0, y: 30 }}
@@ -116,14 +153,14 @@ export default function BrandsPage() {
                         href={brand.brandLink}
                         className="inline-flex items-center gap-2 rounded-full bg-[#1e3a8a] px-7 py-3.5 font-bold text-white transition-colors hover:bg-[#ea580c]"
                       >
-                        Marka Tanıtımı
+                        {isEnglish ? "Brand Profile" : "Marka Tanıtımı"}
                         <ArrowUpRight className="w-5 h-5" />
                       </Link>
                       <Link
                         href={brand.productsLink}
                         className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-7 py-3.5 font-bold text-[#1e3a8a] transition-colors hover:border-[#ea580c] hover:text-[#ea580c]"
                       >
-                        Ürünleri İncele
+                        {isEnglish ? "View Products" : "Ürünleri İncele"}
                         <ArrowRight className="w-5 h-5" />
                       </Link>
                     </div>

@@ -1005,6 +1005,341 @@ const originalText = new WeakMap<Text, string>();
 const originalAttributes = new WeakMap<Element, Map<string, string>>();
 let isApplyingTranslation = false;
 
+const cleanSentenceTranslations: Record<string, string> = {
+  "COP: 1 birim elektrikten 3-5 birim ısı": "COP: 3-5 units of heat from 1 unit of electricity",
+  "Yıllık enerji giderinde tasarruf potansiyeli": "Annual energy cost saving potential",
+  "ERP enerji verimliliği sınıfı": "ERP energy efficiency class",
+  "Endüstriyel serilerde çıkış suyu sıcaklığı": "Outlet water temperature in industrial series",
+  "Dış Hava": "Outdoor Air",
+  "Havadaki, topraktaki veya sudaki düşük sıcaklıklı enerji alınır.": "Low-temperature energy is captured from air, ground, or water.",
+  "Soğutucu akışkan ısıyı emer ve buharlaşır.": "The refrigerant absorbs heat and evaporates.",
+  "Basınç yükselir, enerji kullanılabilir ısıya dönüşür.": "Pressure rises and the energy becomes usable heat.",
+  "Isı, suya veya iç ortama kontrollü şekilde aktarılır.": "Heat is transferred to water or the indoor space in a controlled way.",
+  "Isıtma / Soğutma / Sıcak Su": "Heating / Cooling / Hot Water",
+  "Tek cihazla konfor ve kullanım sıcak suyu sağlanır.": "One unit provides comfort and domestic hot water.",
+  "Hava Kaynaklı": "Air Source",
+  "En yaygın çözüm; kurulumu basit, yatırım maliyeti düşük.": "The most common solution, with simple installation and low investment cost.",
+  "Dış Ünite · Kondenser": "Outdoor Unit · Condenser",
+  "Dış Ünite · Evaporatör": "Outdoor Unit · Evaporator",
+  "İç Ünite · Evaporatör": "Indoor Unit · Evaporator",
+  "Boyler Eşanjörü": "Boiler Heat Exchanger",
+  "İç Ünite · Kondenser": "Indoor Unit · Condenser",
+  "Dış ortama ısı verir": "Releases heat outdoors",
+  "Havadan ısı alır": "Captures heat from air",
+  "İç ortamdan ısı alır": "Captures heat from indoors",
+  "Isıyı aktarır": "Transfers heat",
+  "Isıtma": "Heating",
+  "Soğutma": "Cooling",
+  "Kullanım Suyu": "Domestic Hot Water",
+  "Soğutucu Akışkan Döngüsü": "Refrigerant Cycle",
+  "Modu değiştirerek enerji akış yönünü inceleyin": "Switch modes to view the energy flow direction",
+  "Dış Sıcaklık": "Outdoor Temperature",
+  "Su Sıcaklığı": "Water Temperature",
+  "İç Ortam": "Indoor Space",
+  "Dış sıcaklık": "Outdoor temperature",
+  "Soğutma döngüsü:": "Cooling cycle:",
+  "Kullanım suyu döngüsü:": "Domestic hot water cycle:",
+  "Isıtma döngüsü:": "Heating cycle:",
+  "İç üniteden alınan ısı soğutucu akışkana aktarılır, kompresör ve dış ünite üzerinden dış ortama bırakılır.": "Heat taken from the indoor unit is transferred to the refrigerant, then released outdoors through the compressor and outdoor unit.",
+  "Dış havadan alınan düşük sıcaklıklı enerji kompresörle yükseltilir ve kullanım suyuna aktarılır.": "Low-temperature energy from outdoor air is raised by the compressor and transferred to domestic hot water.",
+  "Dış evaporatör havadan ısı çeker, kompresör akışkan sıcaklığını yükseltir ve iç kondenser ısıyı ortama aktarır.": "The outdoor evaporator draws heat from the air, the compressor raises the refrigerant temperature, and the indoor condenser transfers heat to the space.",
+  "Dış Ortam": "Outdoor Space",
+  "Kompresör": "Compressor",
+  "Basınç ↑ · Sıcaklık ↑": "Pressure Up · Temperature Up",
+  "Su Devresi": "Water Circuit",
+  "Genleşme Valfi": "Expansion Valve",
+  "Basınç ↓ · Sıcaklık ↓": "Pressure Down · Temperature Down",
+  "Yüksek basınç / sıcak gaz": "High pressure / hot gas",
+  "Yüksek basınç / sıvı": "High pressure / liquid",
+  "Düşük basınç / soğuk gaz": "Low pressure / cold gas",
+  "Yüksek Enerji Tasarrufu": "High Energy Savings",
+  "Doğalgazın 3-5 katı verimlilik ile işletme ve konut enerji giderlerini belirgin şekilde düşürür.": "It significantly reduces business and residential energy costs with 3-5 times the efficiency of natural gas.",
+  "3'ü 1 Arada Tek Sistem": "Three Functions in One System",
+  "Isıtma, soğutma ve sıcak su ihtiyacını tek sistemle karşılar; ayrı sistemlerin kurulum ve bakım maliyetinden kurtarır.": "It covers heating, cooling, and hot water with one system, reducing separate installation and maintenance costs.",
+  "Fosil Yakıttan Bağımsızlık": "Independence from Fossil Fuels",
+  "Fiyatı öngörülemez hale gelen doğalgaz bağımlılığını kırar; karbon ayak izini azaltır.": "It reduces dependence on unpredictable natural gas prices and lowers the carbon footprint.",
+  "Atık Isı Değerlendirme": "Waste Heat Recovery",
+  "Uygun projelerde tesisteki atık ısıyı yeniden kullanarak toplam verimliliği artırır.": "In suitable projects, it reuses waste heat from the facility and improves total efficiency.",
+  "Konut ve ticari havuzlarda sezonu uzatır; 500 m³'e kadar havuzlarda sıcak havuz konforu sağlar.": "It extends the season for residential and commercial pools and provides warm pool comfort up to 500 m³.",
+  "Akıllı Kontrol": "Smart Control",
+  "Wi-Fi, LCD panel ve otomasyon seçenekleriyle sistem performansını izlenebilir hale getirir.": "Wi-Fi, LCD panel, and automation options make system performance easy to monitor.",
+  "Türkiye'de üretilen ısı pompası teknolojisi": "Heat pump technology produced in Turkiye",
+  "Yerli parça, yerli mühendislik ve güçlü servis ağı": "Local components, local engineering, and a strong service network",
+  "Konut, havuz ve endüstriyel seri seçenekleri": "Residential, pool, and industrial series options",
+  "GES ve BESS ile entegre, düşük karbonlu kullanım senaryoları": "Low-carbon use cases integrated with solar PV and BESS",
+  "A+++ enerji etiketi ile bina enerji pasaportu değerine katkı": "A+++ energy label contribution to building energy performance",
+  "6 kW'tan 1.066 kW kaskad sistemlere uzanan geniş güç aralığı": "Wide power range from 6 kW to 1,066 kW cascade systems",
+  "Isıtma, soğutma ve kullanım sıcak suyu için 6-16 kW inverter monoblok çözümler ve boyler uyumlu seriler.": "6-16 kW inverter monoblock solutions and boiler-compatible series for heating, cooling, and domestic hot water.",
+  "15 m³ villa havuzlarından 500 m³ ticari havuzlara kadar korozyona dayanıklı, sessiz ısıtma çözümleri.": "Quiet, corrosion-resistant heating solutions from 15 m³ villa pools to 500 m³ commercial pools.",
+  "80 °C proses suyu, ticari sıcak su ve 328 kW - 1.066 kW kaskad sistemlerle büyük ölçekli projeler.": "Large-scale projects with 80 °C process water, commercial hot water, and 328 kW - 1,066 kW cascade systems.",
+  "Temiz Isı Teknolojisi": "Clean Heat Technology",
+  "Thermaplus Isı Pompası": "Thermaplus Heat Pump",
+  "Çevreci, verimli, ekonomik. Isı pompası; çevredeki havadan, topraktan veya sudan aldığı enerjiyi ısıtma ve soğutma sistemine aktaran elektrikli bir cihazdır. Kışın ısıtır, yazın soğutur; üstelik kullanım sıcak suyu da üretir.": "Eco-friendly, efficient, and economical. A heat pump is an electric system that transfers energy from ambient air, ground, or water into heating and cooling. It heats in winter, cools in summer, and also produces domestic hot water.",
+  "Ürünleri İncele": "View Products",
+  "Markayı Tanıyın": "Discover the Brand",
+  "Thermaplus ısı pompası": "Thermaplus heat pump",
+  "COP (Verimlilik Katsayısı): Isı pompası 1 birim elektrik harcayarak 3-5 birim ısıtma enerjisi üretir. Bu, doğalgaza göre 3-5 kat verimlilik ve yılda %75'e varan tasarruf anlamına gelir.": "COP means coefficient of performance. A heat pump can produce 3-5 units of heating energy from 1 unit of electricity. This means 3-5 times higher efficiency than natural gas and up to 75% annual savings.",
+  "Isı Enerjisi Akışı": "Heat Energy Flow",
+  "Isı Pompası Nasıl Çalışır?": "How Does a Heat Pump Work?",
+  "Düşük sıcaklıklı çevre enerjisi kablo hattı boyunca taşınır; evaporatör, kompresör ve kondenser çevrimiyle kullanılabilir ısıya dönüştürülür.": "Low-temperature ambient energy moves through the cycle and is converted into usable heat by the evaporator, compressor, and condenser.",
+  "Isı Pompası ile Elde Edilen Faydalar": "Benefits of Heat Pumps",
+  "Thermaplus entegre enerji çözümü": "Thermaplus integrated energy solution",
+  "Newstag'ın Tescilli Markası": "Newstag's Registered Brand",
+  "Neden Thermaplus?": "Why Thermaplus?",
+  "Thermaplus Ürün Gamı": "Thermaplus Product Range",
+  "Konut, havuz ve endüstriyel ihtiyaçlara göre gruplanmış seriler.": "Series grouped by residential, pool, and industrial needs.",
+  "Konut Serileri": "Residential Series",
+  "Havuz Serileri": "Pool Series",
+  "Endüstriyel Seriler": "Industrial Series",
+  "Detayları İncele": "View Details",
+  "Tasarruf Hesaplama": "Savings Calculator",
+  "Mevcut ısıtma sisteminize göre ısı pompasıyla ne kadar tasarruf edeceğinizi hesaplayan modülümüz çok yakında burada. Şimdilik kapasite hesaplama formumuz üzerinden uzman ekibimizden ücretsiz analiz talep edebilirsiniz.": "Our savings calculator will be available soon. For now, you can request a free analysis from our expert team through the capacity calculation form.",
+  "Kapasite Hesaplama Formu": "Capacity Calculation Form",
+  "Uzmana Danışın": "Talk to an Expert",
+  "Isı Pompası Ürünlerine Dön": "Back to Heat Pump Products",
+  "Kapasite Seçenekleri": "Capacity Options",
+  "Model Karşılaştırma": "Model Comparison",
+  "Teknik Özellikler": "Technical Specifications",
+  "Projenize uygun kapasiteyi temel performans değerleriyle karşılaştırın.": "Compare key performance values to choose the right capacity for your project.",
+  "Teknik değer": "Technical value",
+  "Ürünün Kullanıldığı Çözüm Alanları": "Solution Areas Using This Product",
+  "Doğru Model Seçimi": "Choosing the Right Model",
+  "Isı pompası kapasitesi; bina büyüklüğü, yalıtım durumu, bölge iklimi, sıcak su ve havuz ihtiyacına göre belirlenir. Uzman ekibimiz ücretsiz keşif ile ihtiyacınıza en uygun Thermaplus modelini önerir.": "Heat pump capacity depends on building size, insulation, regional climate, hot water, and pool needs. Our expert team recommends the right Thermaplus model after a free survey.",
+  "Ücretsiz Keşif Talep Et": "Request a Free Survey",
+  "Ürün Kataloğunu Talep Et": "Request Product Catalog",
+  "Aynı Serideki Diğer Ürünler": "Other Products in the Same Series",
+  "İncele": "View",
+};
+
+const forcedWordTranslations: Record<string, string> = {
+  ana: "main",
+  ağı: "network",
+  akış: "flow",
+  akışı: "flow",
+  akışkan: "refrigerant",
+  alınan: "captured",
+  alınır: "captured",
+  aralığı: "range",
+  araç: "vehicle",
+  artırır: "increases",
+  atık: "waste",
+  bağlantı: "connection",
+  bakım: "maintenance",
+  basınç: "pressure",
+  bağımlılığı: "dependency",
+  bağımsızlık: "independence",
+  belirgin: "significant",
+  birlikte: "together",
+  bina: "building",
+  bir: "one",
+  birim: "unit",
+  boyler: "boiler",
+  bölümünde: "part",
+  büyük: "large",
+  cihaz: "device",
+  cihazla: "device",
+  çalışma: "operation",
+  çalışır: "works",
+  çalışan: "operating",
+  çevreci: "eco-friendly",
+  çevredeki: "ambient",
+  çevrimiyle: "cycle",
+  çıkış: "outlet",
+  çok: "multi",
+  çözüm: "solution",
+  çözümleri: "solutions",
+  çözümlerimiz: "solutions",
+  dayanıklı: "resistant",
+  değer: "value",
+  değerleriyle: "values",
+  değerine: "value",
+  değerlendirir: "evaluates",
+  değerlendirme: "recovery",
+  değiştirerek: "changing",
+  dengeleme: "balancing",
+  dengeli: "balanced",
+  depolama: "storage",
+  desteği: "support",
+  detayları: "details",
+  devam: "continue",
+  devresi: "circuit",
+  dış: "outdoor",
+  doğalgaz: "natural gas",
+  doğal: "natural",
+  doğru: "right",
+  dön: "back",
+  dönüş: "return",
+  dönüşümü: "transformation",
+  dönüştürülür: "converted",
+  dört: "four",
+  düşük: "low",
+  düşürür: "reduces",
+  ekonomi: "economy",
+  ekonomik: "economical",
+  elektrikten: "electricity",
+  enerji: "energy",
+  enerjisi: "energy",
+  enerjiyi: "energy",
+  endüstriyel: "industrial",
+  eşanjör: "heat exchanger",
+  eşanjörü: "heat exchanger",
+  et: "request",
+  edilen: "delivered",
+  etmek: "request",
+  fiyatlı: "priced",
+  fosil: "fossil",
+  geç: "switch",
+  geçen: "past",
+  geçin: "contact",
+  geleceğe: "future",
+  genelinde: "across",
+  genleşme: "expansion",
+  geniş: "wide",
+  geri: "back",
+  giderinde: "expenses",
+  göre: "according to",
+  görüşme: "meeting",
+  güç: "power",
+  güçlü: "strong",
+  güvenliği: "security",
+  hava: "air",
+  havadan: "from air",
+  havuz: "pool",
+  havuzlarından: "pools",
+  hesaplama: "calculator",
+  hesaplayan: "calculating",
+  hizmet: "service",
+  ısı: "heat",
+  ısıtma: "heating",
+  ısıtır: "heats",
+  ihtiyacına: "need",
+  ihtiyacını: "need",
+  ihtiyaçlara: "needs",
+  ile: "with",
+  iletişim: "contact",
+  inceledin: "viewed",
+  incele: "view",
+  işletme: "business",
+  işletmeler: "businesses",
+  iç: "indoor",
+  için: "for",
+  kalın: "bold",
+  kapasite: "capacity",
+  kapasitesi: "capacity",
+  karşılar: "meets",
+  karşılaştırma: "comparison",
+  karşılaştırın: "compare",
+  katı: "times",
+  kaynaklı: "source",
+  kadar: "up to",
+  keşif: "survey",
+  kışın: "in winter",
+  konfor: "comfort",
+  konforu: "comfort",
+  konut: "residential",
+  kontrol: "control",
+  kontrollü: "controlled",
+  korozyona: "corrosion",
+  kullanıldığı: "used",
+  kullanılabilir: "usable",
+  kullanım: "domestic",
+  kurulum: "installation",
+  maliyetinden: "cost",
+  marka: "brand",
+  markalarımız: "our brands",
+  markayı: "brand",
+  mevsim: "season",
+  mevcut: "existing",
+  model: "model",
+  modeli: "model",
+  modülümüz: "module",
+  nokta: "site",
+  olan: "with",
+  olarak: "as",
+  ortam: "environment",
+  ortama: "environment",
+  pompası: "pump",
+  potansiyeli: "potential",
+  proje: "project",
+  projelerde: "projects",
+  proses: "process",
+  sağlanır: "provided",
+  sağlar: "provides",
+  sanayi: "industry",
+  seferde: "single",
+  seçim: "selection",
+  seçimi: "selection",
+  seçenekleri: "options",
+  seçenekleriyle: "options",
+  serideki: "series",
+  seriler: "series",
+  serileri: "series",
+  serisi: "series",
+  servis: "service",
+  sessiz: "silent",
+  sıcak: "hot",
+  sıcaklığı: "temperature",
+  sıcaklıklı: "temperature",
+  sınıfı: "class",
+  sıvı: "liquid",
+  sistem: "system",
+  sistemi: "system",
+  soğuk: "cold",
+  soğutma: "cooling",
+  soğutucu: "refrigerant",
+  sunar: "delivers",
+  su: "water",
+  suyu: "water",
+  süreklilik: "continuity",
+  sürdürülebilir: "sustainable",
+  şarj: "charging",
+  şebeke: "grid",
+  taşı: "portable",
+  tasarruf: "savings",
+  teknoloji: "technology",
+  teknolojisi: "technology",
+  teknik: "technical",
+  temiz: "clean",
+  tescilli: "registered",
+  ticari: "commercial",
+  topraktan: "from ground",
+  türkçe: "Turkish",
+  türkiye: "Turkiye",
+  ücretsiz: "free",
+  ünite: "unit",
+  üniteden: "unit",
+  ünitesi: "unit",
+  üretim: "production",
+  üretir: "produces",
+  ürün: "product",
+  ürünü: "product",
+  ürünler: "products",
+  ürünleri: "products",
+  ürünlerine: "products",
+  üzerindeki: "on",
+  üzerinden: "through",
+  uzanan: "ranging",
+  uzatır: "extends",
+  uzman: "expert",
+  ve: "and",
+  verim: "efficiency",
+  verimli: "efficient",
+  verimlilik: "efficiency",
+  verimliliği: "efficiency",
+  yakıt: "fuel",
+  yakın: "soon",
+  yakında: "soon",
+  yıllık: "annual",
+  yılda: "per year",
+  yönünü: "direction",
+  yüksek: "high",
+  yüzey: "surface",
+};
+
+const turkishCharacterPattern = /[çğıöşüÇĞİÖŞÜ]/;
+const turkishCommonWordPattern =
+  /\b(ana|ağı|akış|akışkan|araç|atık|bakım|basınç|bina|bir|çalışma|çevreci|çözüm|dış|doğal|dön|düşük|enerji|endüstriyel|eşanjör|geç|geri|güç|hava|havuz|hesaplama|ısı|ısıtma|iç|için|ile|iletişim|kapasite|konut|kullanım|marka|mevcut|pompası|proje|seçim|seçenekleri|seriler|serileri|serisi|servis|sıcak|sıcaklığı|sıvı|soğutma|soğutucu|su|şarj|şebeke|tasarruf|teknik|ticari|ürün|ürünler|ve|verimli|verimlilik|yıllık|yüksek)\b/i;
+
 function normalizeText(value: string) {
   return value.replace(/\s+/g, " ").trim();
 }
@@ -1027,7 +1362,7 @@ function replaceWholePhrase(value: string, source: string, target: string) {
 
 function replaceKnownPhrases(value: string) {
   let translated = value;
-  const sources = { ...phraseTranslations, ...exactTranslations };
+  const sources = { ...phraseTranslations, ...exactTranslations, ...cleanSentenceTranslations };
   for (const [source, target] of Object.entries(sources).sort(([a], [b]) => b.length - a.length)) {
     translated = replaceWholePhrase(translated, source, target);
   }
@@ -1039,7 +1374,21 @@ function replaceKnownWords(value: string) {
     const clean = word.replace(/^['’]+|['’]+$/g, "");
     const lowered = clean.toLocaleLowerCase("tr-TR");
     const stem = turkishStemTranslations.find(([source]) => lowered.startsWith(source));
-    return wordTranslations[clean] ?? lowercaseWordTranslations[lowered] ?? stem?.[1] ?? word;
+    return wordTranslations[clean] ?? lowercaseWordTranslations[lowered] ?? forcedWordTranslations[lowered] ?? stem?.[1] ?? word;
+  });
+}
+
+function scrubRemainingTurkish(value: string) {
+  return value.replace(/[A-Za-zÇĞİÖŞÜçğıöşü'’]+/g, (word) => {
+    const clean = word.replace(/^['’]+|['’]+$/g, "");
+    const lowered = clean.toLocaleLowerCase("tr-TR");
+    const direct = forcedWordTranslations[lowered] ?? lowercaseWordTranslations[lowered] ?? wordTranslations[clean];
+    if (direct) return direct;
+
+    const stem = turkishStemTranslations.find(([source]) => lowered.startsWith(source));
+    if (stem) return stem[1];
+
+    return word;
   });
 }
 
@@ -1053,6 +1402,55 @@ function cleanupEnglish(value: string) {
     .replace(/\bÇözüm\b/g, "Solution")
     .replace(/\bOrtağı\b/g, "Partner")
     .replace(/\bEnerji\b/g, "Energy")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function polishEnglish(value: string) {
+  return value
+    .replace(/\bve\b/gi, "and")
+    .replace(/\bile\b/gi, "with")
+    .replace(/\biçin\b/gi, "for")
+    .replace(/\bbir\b/gi, "a")
+    .replace(/\bbu\b/gi, "this")
+    .replace(/\bçok\b/gi, "multi")
+    .replace(/\bdaha\b/gi, "more")
+    .replace(/\bgöre\b/gi, "according to")
+    .replace(/\bkadar\b/gi, "up to")
+    .replace(/\bserisi\b/gi, "series")
+    .replace(/\bseriler\b/gi, "series")
+    .replace(/\bürünleri\b/gi, "products")
+    .replace(/\bürünler\b/gi, "products")
+    .replace(/\bürünü\b/gi, "product")
+    .replace(/\bürün\b/gi, "product")
+    .replace(/\bçözümü\b/gi, "solution")
+    .replace(/\bçözümleri\b/gi, "solutions")
+    .replace(/\bçözüm\b/gi, "solution")
+    .replace(/\bısı\b/gi, "heat")
+    .replace(/\bısıtma\b/gi, "heating")
+    .replace(/\bsoğutma\b/gi, "cooling")
+    .replace(/\bsıcak\b/gi, "hot")
+    .replace(/\bsuyu\b/gi, "water")
+    .replace(/\bsu\b/gi, "water")
+    .replace(/\bkonut\b/gi, "residential")
+    .replace(/\bhavuz\b/gi, "pool")
+    .replace(/\bendüstriyel\b/gi, "industrial")
+    .replace(/\bticari\b/gi, "commercial")
+    .replace(/\btürkiye\b/gi, "Turkiye")
+    .replace(/\bşebeke\b/gi, "grid")
+    .replace(/\bgüç\b/gi, "power")
+    .replace(/\byüksek\b/gi, "high")
+    .replace(/\bdüşük\b/gi, "low")
+    .replace(/\bsessiz\b/gi, "silent")
+    .replace(/\bakıllı\b/gi, "smart")
+    .replace(/\bkontrol\b/gi, "control")
+    .replace(/\bkapasite\b/gi, "capacity")
+    .replace(/\btasarruf\b/gi, "savings")
+    .replace(/\bteknik\b/gi, "technical")
+    .replace(/\bdetayları\b/gi, "details")
+    .replace(/\bincele\b/gi, "view")
+    .replace(/\bgeri\b/gi, "back")
+    .replace(/\bdön\b/gi, "back")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -1071,12 +1469,15 @@ function translateValue(value: string) {
   const normalized = normalizeText(value);
   if (shouldSkipValue(normalized)) return value;
 
-  const exact = exactTranslations[normalized] ?? phraseTranslations[normalized];
+  const exact = cleanSentenceTranslations[normalized] ?? exactTranslations[normalized] ?? phraseTranslations[normalized];
   if (exact) return withOriginalSpacing(value, exact);
 
   let translated = replaceKnownPhrases(normalized);
   translated = replaceKnownWords(translated);
   translated = cleanupEnglish(translated);
+  if (turkishCharacterPattern.test(translated) || turkishCommonWordPattern.test(translated)) {
+    translated = polishEnglish(cleanupEnglish(scrubRemainingTurkish(translated)));
+  }
 
   return translated === normalized ? value : withOriginalSpacing(value, translated);
 }

@@ -1,16 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Outfit } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Newstag Enerji | Future of Energy",
@@ -28,7 +17,7 @@ export default function RootLayout({
   return (
     <html
       lang="tr"
-      className={`${geistSans.variable} ${outfit.variable} dark h-full antialiased`}
+      className="dark h-full antialiased"
     >
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
         <div className="noise-overlay" />

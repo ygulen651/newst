@@ -7,9 +7,13 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { solutions } from "@/lib/solutions-data";
+import { getLocalizedSolutions } from "@/lib/solutions-data";
+import { useLanguage } from "@/lib/i18n";
 
 export default function SolutionsPage() {
+  const { lang } = useLanguage();
+  const localizedSolutions = getLocalizedSolutions(lang);
+
   return (
     <>
       <Navbar />
@@ -25,21 +29,18 @@ export default function SolutionsPage() {
               Newstag Enerji
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-medium text-[#020817] tracking-tighter mb-8">
-              Çözümlerimiz
+              {lang === "en" ? "Solutions" : "Çözümlerimiz"}
             </h1>
             <p className="text-xl md:text-2xl text-gray-500 font-light leading-relaxed">
-              BESS ve Isı Pompası teknolojilerini yenilenebilir enerji
-              kaynaklarıyla entegre ederek; enerji maliyetlerini düşüren, arz
-              güvenliğini artıran ve karbon ayak izini ölçülebilir şekilde
-              azaltan altyapılar tasarlıyoruz. Enerji santrallerinden
-              konutlara, her sektöre özel mühendislik yaklaşımıyla hizmet
-              veriyoruz.
+              {lang === "en"
+                ? "We design energy infrastructure that integrates BESS and heat pump technologies with renewable energy sources. Our solutions reduce energy costs, strengthen supply security, and lower carbon footprint with engineering tailored to each sector."
+                : "BESS ve Isı Pompası teknolojilerini yenilenebilir enerji kaynaklarıyla entegre ederek; enerji maliyetlerini düşüren, arz güvenliğini artıran ve karbon ayak izini ölçülebilir şekilde azaltan altyapılar tasarlıyoruz. Enerji santrallerinden konutlara, her sektöre özel mühendislik yaklaşımıyla hizmet veriyoruz."}
             </p>
           </motion.div>
 
           {/* Solution cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {solutions.map((solution, index) => (
+            {localizedSolutions.map((solution, index) => (
               <motion.div
                 key={solution.slug}
                 initial={{ opacity: 0, y: 30 }}
@@ -47,7 +48,7 @@ export default function SolutionsPage() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08, duration: 0.6 }}
                 className={
-                  index === solutions.length - 1
+                  index === localizedSolutions.length - 1
                     ? "w-full justify-self-center md:col-span-2 md:max-w-[calc(50%-1rem)] lg:col-span-1 lg:col-start-2 lg:max-w-none"
                     : ""
                 }
@@ -78,7 +79,7 @@ export default function SolutionsPage() {
                       {solution.shortDesc}
                     </p>
                     <span className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.15em] text-[#ea580c]">
-                      Detaylı İncele
+                  {lang === "en" ? "View Details" : "Detaylı İncele"}
                       <span className="flex h-8 w-8 items-center justify-center rounded-full border border-orange-100 transition-all group-hover:translate-x-2 group-hover:bg-[#ea580c] group-hover:text-white">
                         <ArrowRight className="h-4 w-4" />
                       </span>
@@ -97,17 +98,18 @@ export default function SolutionsPage() {
             className="mt-24 rounded-[40px] bg-[#1e3a8a] p-12 md:p-16 text-center text-white"
           >
             <h2 className="text-3xl md:text-5xl font-bold mb-6">
-              Sektörünüze Özel Çözüm Tasarlayalım
+              {lang === "en" ? "Let Us Design a Solution for Your Sector" : "Sektörünüze Özel Çözüm Tasarlayalım"}
             </h2>
             <p className="text-white/75 text-lg font-light max-w-2xl mx-auto mb-10">
-              İhtiyacınıza göre kapasite, ürün ve finansman modelini birlikte
-              netleştirelim; keşiften devreye almaya tüm süreci yönetelim.
+              {lang === "en"
+                ? "Let us define the right capacity, product, and financing model for your needs, then manage the full process from assessment to commissioning."
+                : "İhtiyacınıza göre kapasite, ürün ve finansman modelini birlikte netleştirelim; keşiften devreye almaya tüm süreci yönetelim."}
             </p>
             <Link
               href="/iletisim"
               className="inline-flex items-center gap-3 bg-white text-[#1e3a8a] px-10 py-5 rounded-full font-bold hover:bg-[#f97316] hover:text-white transition-colors"
             >
-              Teklif Al <ArrowRight className="w-5 h-5" />
+              {lang === "en" ? "Get a Quote" : "Teklif Al"} <ArrowRight className="w-5 h-5" />
             </Link>
           </motion.div>
         </div>

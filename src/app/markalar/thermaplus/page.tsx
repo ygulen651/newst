@@ -17,6 +17,7 @@ import {
   Waves,
   Wrench,
 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const stats = [
   { value: "3-5", label: "COP Verimlilik Katsayısı" },
@@ -78,7 +79,57 @@ const productGroups = [
   },
 ];
 
+const statsEn = [
+  { value: "3-5", label: "COP Efficiency Coefficient" },
+  { value: "%75", label: "Potential Savings" },
+  { value: "A+++", label: "ERP Energy Label" },
+  { value: "1,066 kW", label: "Power Range with Cascade Systems" },
+];
+
+const strengthsEn = [
+  { icon: Flag, title: "Manufactured in Turkey", desc: "Thermaplus delivers heat pump technology manufactured in Turkey as Newstag's own brand." },
+  { icon: Wrench, title: "Local Engineering and Service", desc: "Local components, local engineering, and a strong nationwide service network from installation to maintenance." },
+  { icon: Leaf, title: "Green Technology", desc: "Solutions that reduce fossil fuel dependence, lower carbon footprint, and support green building goals." },
+  { icon: ShieldCheck, title: "Proven Reliability", desc: "Backed by Saray Holding's 65-year corporate heritage and 15 years of production experience in energy." },
+];
+
+const productGroupsEn = [
+  {
+    icon: Home,
+    title: "Residential Series",
+    items: [
+      "Residential heat pumps: 6 kW - 16 kW, inverter, monoblock",
+      "Large residential and commercial units: 25 kW - 70 kW, DC twin-rotary",
+      "Boiler and domestic hot water heat pumps",
+    ],
+  },
+  {
+    icon: Waves,
+    title: "Pool Series",
+    items: [
+      "Pool heat pumps: 15 m³ - 100 m³, corrosion-resistant",
+      "Commercial pool series: up to 500 m³, operation down to -25 °C",
+      "High-capacity series: 70 kW - 145 kW",
+    ],
+  },
+  {
+    icon: Factory,
+    title: "Industrial Series",
+    items: [
+      "High-temperature series: 80 °C hot water for process water applications",
+      "Cascade systems: 328 kW - 1,066 kW for large projects",
+      "Commercial hot water and hygienic water solutions",
+    ],
+  },
+];
+
 export default function ThermaplusBrandPage() {
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
+  const pageStats = isEnglish ? statsEn : stats;
+  const pageStrengths = isEnglish ? strengthsEn : strengths;
+  const pageProductGroups = isEnglish ? productGroupsEn : productGroups;
+
   return (
     <>
       <Navbar />
@@ -95,27 +146,25 @@ export default function ThermaplusBrandPage() {
                 <div className="relative h-20 w-72 mb-10">
                   <Image
                     src="/images/Adsız tasarım.png"
-                    alt="Thermaplus logosu"
+                    alt={isEnglish ? "Thermaplus logo" : "Thermaplus logosu"}
                     fill
                     className="object-contain object-left"
                   />
                 </div>
                 <h1 className="text-5xl md:text-7xl font-bold mb-8 text-[#1e3a8a]">
-                  Çevreci, Verimli, <span className="text-[#ea580c]">Ekonomik</span>
+                  {isEnglish ? "Green, Efficient," : "Çevreci, Verimli,"} <span className="text-[#ea580c]">{isEnglish ? "Economical" : "Ekonomik"}</span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed mb-10 max-w-xl font-light">
-                  Newstag&apos;ın kendi markası Thermaplus; Türkiye&apos;de üretilen ısı
-                  pompası teknolojisini yerli parça, yerli mühendislik ve güçlü
-                  servis ağıyla birlikte sunuyor. Konutlardan endüstriyel
-                  tesislere kadar her ölçekte ısıtma, soğutma ve sıcak su
-                  konforu sağlıyor.
+                  {isEnglish
+                    ? "Thermaplus is Newstag's own heat pump brand. It combines heat pump technology manufactured in Turkey with local components, local engineering, and a strong service network for heating, cooling, and hot water comfort at every scale."
+                    : "Newstag'ın kendi markası Thermaplus; Türkiye'de üretilen ısı pompası teknolojisini yerli parça, yerli mühendislik ve güçlü servis ağıyla birlikte sunuyor. Konutlardan endüstriyel tesislere kadar her ölçekte ısıtma, soğutma ve sıcak su konforu sağlıyor."}
                 </p>
                 <Link
                   href="/isi-pompasi#urunler"
                   className="inline-flex items-center gap-3 bg-[#ea580c] text-white px-8 py-4 rounded-full font-bold hover:bg-[#c2410c] transition-colors"
                 >
                   <ThermometerSun className="w-5 h-5" />
-                  Isı Pompası Ürünlerini İncele
+                  {isEnglish ? "View Heat Pump Products" : "Isı Pompası Ürünlerini İncele"}
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </motion.div>
@@ -128,7 +177,7 @@ export default function ThermaplusBrandPage() {
               >
                 <Image
                   src="/images/heat-pump-branded.png"
-                  alt="Thermaplus ısı pompası kurulumu"
+                  alt={isEnglish ? "Thermaplus heat pump installation" : "Thermaplus ısı pompası kurulumu"}
                   fill
                   className="object-cover"
                   priority
@@ -137,7 +186,7 @@ export default function ThermaplusBrandPage() {
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-20">
-              {stats.map((stat, i) => (
+              {pageStats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
                   initial={{ opacity: 0, y: 20 }}
@@ -161,12 +210,12 @@ export default function ThermaplusBrandPage() {
           <div className="container mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] mb-6">
-                Neden Thermaplus?
+                {isEnglish ? "Why Thermaplus?" : "Neden Thermaplus?"}
               </h2>
               <div className="w-20 h-1.5 bg-[#ea580c] mx-auto rounded-full" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {strengths.map((item, index) => (
+              {pageStrengths.map((item, index) => (
                 <motion.div
                   key={item.title}
                   initial={{ opacity: 0, y: 24 }}
@@ -189,14 +238,16 @@ export default function ThermaplusBrandPage() {
           <div className="container mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] mb-6">
-                Thermaplus Ürün Gamı
+                {isEnglish ? "Thermaplus Product Range" : "Thermaplus Ürün Gamı"}
               </h2>
               <p className="text-gray-500 text-lg font-light">
-                6 kW konut çözümlerinden 1.066 kW kaskad sistemlere uzanan geniş portföy.
+                {isEnglish
+                  ? "A wide portfolio from 6 kW residential solutions to 1,066 kW cascade systems."
+                  : "6 kW konut çözümlerinden 1.066 kW kaskad sistemlere uzanan geniş portföy."}
               </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {productGroups.map((group, index) => (
+              {pageProductGroups.map((group, index) => (
                 <motion.div
                   key={group.title}
                   initial={{ opacity: 0, y: 24 }}

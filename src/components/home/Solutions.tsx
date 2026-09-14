@@ -4,6 +4,7 @@ import React, { useRef, useState } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { Factory, Zap, Database, Hotel, Home, Building2, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n";
 
 const solutions = [
   {
@@ -50,7 +51,52 @@ const solutions = [
   },
 ];
 
-function SolutionCard({ solution, index }: { solution: typeof solutions[0]; index: number }) {
+const solutionsEn = [
+  {
+    title: "Factories",
+    description: "Smart energy optimization and efficiency for high-consumption industrial facilities.",
+    icon: Factory,
+    href: "/cozumlerimiz/fabrikalar",
+    color: "from-orange-500/20",
+  },
+  {
+    title: "Data Centers",
+    description: "Critical power security and reliable uptime for uninterrupted operations.",
+    icon: Database,
+    href: "/cozumlerimiz/veri-merkezleri",
+    color: "from-blue-500/20",
+  },
+  {
+    title: "Power Plants",
+    description: "Grid stabilization and storage for renewable energy systems.",
+    icon: Zap,
+    href: "/cozumlerimiz/santraller",
+    color: "from-yellow-500/20",
+  },
+  {
+    title: "Residential",
+    description: "Next-generation smart energy storage and management technologies for homes.",
+    icon: Home,
+    href: "/cozumlerimiz/evler",
+    color: "from-green-500/20",
+  },
+  {
+    title: "Commercial Buildings",
+    description: "Solutions that reduce operating costs for offices and business centers.",
+    icon: Building2,
+    href: "/cozumlerimiz/ticari-binalar",
+    color: "from-purple-500/20",
+  },
+  {
+    title: "Hotels",
+    description: "Maximum energy savings without compromising comfort standards.",
+    icon: Hotel,
+    href: "/cozumlerimiz/oteller",
+    color: "from-cyan-500/20",
+  },
+];
+
+function SolutionCard({ solution, index, isEnglish }: { solution: typeof solutions[0]; index: number; isEnglish: boolean }) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -99,7 +145,7 @@ function SolutionCard({ solution, index }: { solution: typeof solutions[0]; inde
           href={solution.href}
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#ff6a00]"
         >
-          Detaylı Bilgi
+          {isEnglish ? "Details" : "Detaylı Bilgi"}
           <div className="flex h-8 w-8 items-center justify-center rounded-full border border-orange-100 transition-all group-hover:translate-x-2 group-hover:bg-[#ff6a00] group-hover:text-white">
             <ChevronRight className="h-4 w-4" />
           </div>
@@ -110,6 +156,10 @@ function SolutionCard({ solution, index }: { solution: typeof solutions[0]; inde
 }
 
 export default function Solutions() {
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
+  const pageSolutions = isEnglish ? solutionsEn : solutions;
+
   return (
     <section className="relative overflow-hidden py-32 bg-white">
       {/* Abstract Background Shapes */}
@@ -126,25 +176,25 @@ export default function Solutions() {
               whileInView={{ opacity: 1 }}
               className="text-xs font-bold uppercase tracking-[0.4em] text-[#ff6a00] mb-4 block"
             >
-              Uygulama Alanları
+              {isEnglish ? "Application Areas" : "Uygulama Alanları"}
             </motion.span>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               className="text-5xl md:text-7xl font-medium tracking-tighter text-[#1e3a8a]"
             >
-              Her İhtiyaca <br />
-              <span className="text-gray-300">Özel Çözümler</span>
+              {isEnglish ? "Solutions for" : "Her İhtiyaca"} <br />
+              <span className="text-gray-300">{isEnglish ? "Every Need" : "Özel Çözümler"}</span>
             </motion.h2>
           </div>
           <Link href="/cozumlerimiz" className="hidden md:flex items-center gap-4 text-sm font-bold uppercase tracking-widest text-gray-400 hover:text-[#ff6a00] transition-colors">
-            Tüm Çözümleri Gör <ChevronRight className="w-5 h-5" />
+            {isEnglish ? "View All Solutions" : "Tüm Çözümleri Gör"} <ChevronRight className="w-5 h-5" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {solutions.map((solution, index) => (
-            <SolutionCard key={solution.title} solution={solution} index={index} />
+          {pageSolutions.map((solution, index) => (
+            <SolutionCard key={solution.title} solution={solution} index={index} isEnglish={isEnglish} />
           ))}
         </div>
       </div>

@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ThermaPlus Isı Pompası Kapasite Simülatörü</title>
+<!--
+==================================================================================
+  THERMAPLUS ISI POMPASI KAPASİTE SİMÜLATÖRÜ  ·  v3
+  Tek dosya, kurulum gerektirmez. Logo dosyanın içine gömülüdür.
+
+  KAPSAM
+    Yapı türleri : Müstakil ev, apartman dairesi, otel, fabrika/depo,
+                   mağaza/ofis, havuz, sera
+    Amaç         : Isıtma / Soğutma / Kullanım sıcak suyu (çoklu seçim)
+    Tesisat      : Sıfırdan kurulum veya mevcut tesisata entegrasyon
+                   (mevcut radyatör ve yerden ısıtma yeterlilik kontrolü)
+
+  HESAP YÖNTEMİ  (tüm katsayılar aşağıdaki CFG bloğunda)
+    Isıtma yükü   Q = (Qtransmisyon + Qhavalandırma) × emniyet payı
+                  Qtrans = Alan × qYalıtım × fKonum × fCam × fKat × ΔT
+                  Qhava  = 0,34 × Hacim × HavaDeğişimi × ΔT
+                  ΔT = İç tasarım sıcaklığı − Kış tasarım dış sıcaklığı
+    Soğutma yükü  Q = Alan × qSoğutma × fCam × (YazTasarım − 26) / 9
+    Sıcak su      Günlük litre × 35 K × 1,163 Wh/L·K ; kapasite = günlük / 3 saat
+    Havuz         Yüzey alanı × qHavuz (örtü ve konum durumuna göre)
+    Sera          Örtü alanı (taban × 1,8) × U × ΔT
+    SCOP          Gidiş suyu sıcaklığı ve iklim bölgesine göre tablo
+    Yıllık tüketim = Kapasite × eşdeğer tam yük saati / SCOP
+
+  MEVCUT TESİSAT KONTROLÜ
+    Radyatör kapasitesi = Uzunluk × 1400 W/m × (Yükseklik/0,6)
+                          × (ΔTlog / 50)^1,3
+    Yerden ısıtma       = Boru uzunluğu × 14 W/m  (20 cm boru aralığı, 35 °C)
+    Hesaplanan yük tesisatın kapasitesini aşarsa kullanıcı uyarılır.
+
+  ÜRÜNLER  (newstag-sigma.vercel.app/isi-pompasi)
+    Up 8-35 kW · Boost 8-22 kW (R290, yüksek sıcaklık) · All 200/300 L
+    Silent Pool 10-33 kW · Commercial Pool 26-145 kW · Commercial Duo 50/92 kW
+    92 kW üstü kaskad. MAX_KW üzerinde ürün önerilmez, proje çalışmasına yönlendirilir.
+
+  E-POSTA
+    Sonuçlar MAIL_TO adresine FormSubmit ile gider. İlk gönderimde bu adrese
+    bir doğrulama maili düşer; linke bir kez tıklandıktan sonra sistem aktiftir.
+    Servis yanıt vermezse form yedek olarak posta programını açar.
+==================================================================================
+-->
+<style>
+  :root{
+    --navy:#16326B; --navy-deep:#0E2049; --flame:#E23D19; --azure:#0B79C4;
+    --paper:#FBFAF8; --line:#E3E0DA; --ink:#1C1F26; --muted:#6B7280;
+    --amber:#B26A00; --amber-bg:#FFF6E6;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;
+    display:flex;justify-content:center;padding:32px 20px 64px;
+  }
+  .shell{width:100%;max-width:760px}
+
+  header.brand{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  header.brand img{width:190px;height:auto;display:block;mix-blend-mode:multiply}
+  header.brand p{margin:0;font-size:13px;color:var(--muted);text-align:right;max-width:230px}
+  .brand-actions{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+  .site-back{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--navy);padding:9px 15px;text-decoration:none;font-size:14px;font-weight:700;box-shadow:0 8px 22px rgba(14,32,73,.06)}
+  .site-back:hover{border-color:var(--navy);background:var(--navy);color:#fff}
+
+  .rail{display:flex;gap:5px;margin:22px 0 28px}
+  .rail span{height:3px;flex:1;background:var(--line);border-radius:2px;transition:background .25s}
+  .rail span.on{background:var(--navy)}
+  .rail span.done{background:var(--azure)}
+
+  .count{font-size:13px;color:var(--muted);margin-bottom:6px;font-variant-numeric:tabular-nums}
+  h1{font-size:clamp(25px,4.2vw,33px);line-height:1.2;font-weight:700;color:var(--navy-deep);margin:0 0 8px;letter-spacing:-.015em;max-width:26ch}
+  .lead{margin:0 0 26px;color:var(--muted);font-size:15px;max-width:62ch}
+  h2.q{font-size:21px;font-weight:600;color:var(--navy-deep);margin:0 0 6px;line-height:1.35;letter-spacing:-.01em}
+  .hint{font-size:14px;color:var(--muted);margin:0 0 18px;max-width:60ch}
+
+  /* kart ızgarası */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:9px;padding:15px 14px;cursor:pointer;text-align:left;transition:border-color .15s}
+  .card:hover{border-color:#C9C4BA}
+  .card.sel{border-color:var(--navy);box-shadow:inset 3px 0 0 var(--flame)}
+  .card b{display:block;font-weight:600;font-size:16px;color:var(--navy-deep);margin-bottom:2px}
+  .card i{font-style:normal;font-size:13px;color:var(--muted);line-height:1.4;display:block}
+
+  /* alan ızgarası */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .fld label{display:block;font-size:14px;color:var(--muted);margin-bottom:5px}
+  .fld{margin-bottom:4px}
+  input[type=text],input[type=number],input[type=tel],input[type=email],textarea,select{
+    width:100%;padding:12px 13px;font:inherit;font-size:17px;color:var(--ink);
+    background:#fff;border:1px solid var(--line);border-radius:8px;outline:none;
+  }
+  input:focus,textarea:focus,select:focus{border-color:var(--azure);box-shadow:0 0 0 3px rgba(11,121,196,.16)}
+  textarea{min-height:100px;resize:vertical}
+  .fld .u{font-size:13px;color:var(--muted);margin-top:4px;display:block}
+
+  nav{display:flex;align-items:center;gap:14px;margin-top:30px;flex-wrap:wrap}
+  button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid transparent}
+  .next{background:var(--navy);color:#fff;padding:12px 30px;font-weight:600;font-size:17px}
+  .next:hover{background:var(--navy-deep)}
+  .send{background:var(--flame);color:#fff;padding:12px 30px;font-weight:600;font-size:17px}
+  .send:hover{background:#C7330F}
+  .back{background:none;color:var(--muted);padding:12px 4px;border:none;text-decoration:underline}
+  button:disabled{opacity:.55;cursor:default}
+  button:focus-visible,.card:focus-visible,a:focus-visible{outline:2px solid var(--azure);outline-offset:2px}
+
+  .err{color:var(--flame);font-size:14.5px;margin-top:12px;display:none}
+  .err.show{display:block}
+
+  /* sonuç */
+  .figures{border-top:2px solid var(--navy);margin:0 0 24px}
+  .fig{display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .fig .name{font-size:15px;color:var(--muted);max-width:34ch}
+  .fig .val{font-size:28px;font-weight:700;color:var(--navy-deep);font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.02em}
+  .fig .val u{text-decoration:none;font-size:14px;font-weight:500;color:var(--muted);margin-left:5px}
+  .fig.lead-fig .val{color:var(--flame);font-size:37px}
+
+  .pick{background:#fff;border:1px solid var(--line);border-left:4px solid var(--flame);border-radius:8px;padding:18px 20px;margin-bottom:14px}
+  .pick h3{margin:0 0 10px;font-size:19px;color:var(--navy-deep);letter-spacing:-.01em}
+  .pick .item{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:15.5px}
+  .pick .item b{font-weight:600;color:var(--navy-deep)}
+  .pick .item span{color:var(--muted);font-size:14px;text-align:right;max-width:26ch}
+  .pick a{display:inline-block;margin-top:12px;font-size:14.5px}
+
+  .warn{background:var(--amber-bg);border-left:4px solid var(--amber);border-radius:8px;padding:14px 18px;margin-bottom:12px;font-size:14.5px;color:#5A3A00}
+  .warn b{display:block;color:var(--amber);margin-bottom:3px}
+  .note{background:#F2F5FA;border-radius:8px;padding:15px 18px;font-size:14.5px;color:#33405C}
+
+  .done-box{text-align:center;padding:40px 10px}
+  .done-box h2{color:var(--navy-deep);font-size:27px;margin:0 0 10px;letter-spacing:-.015em}
+  .done-box p{color:var(--muted);margin:0 auto 22px;max-width:46ch}
+  .tick{width:56px;height:56px;border-radius:50%;background:var(--azure);color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 18px}
+  .again{background:#fff;border:1px solid var(--line);color:var(--navy);padding:11px 24px;font-weight:600}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+  a{color:var(--azure)}
+
+  @media (max-width:560px){
+    body{padding:20px 16px 48px}
+    .grid{grid-template-columns:1fr}
+    .cards{grid-template-columns:1fr 1fr}
+    header.brand{flex-direction:column;align-items:flex-start;gap:10px}
+    header.brand p{text-align:left}
+    .brand-actions{align-items:flex-start}
+    .fig{flex-direction:column;gap:2px}
+    .fig .val{font-size:26px}
+    .fig.lead-fig .val{font-size:32px}
+    .pick .item{flex-direction:column;gap:2px}
+    .pick .item span{text-align:left;max-width:none}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="brand">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAH0At8DASIAAhEBAxEB/8QAHgABAAICAwEBAQAAAAAAAAAAAAgJAQcCBQYEAwr/xABVEAABAwMCAwUEBQUJDAkFAAAAAQIDBAURBgcIEiEJEzFBUWFxkaEUIjKB0RUWUpKxFzNCYnKCorLBGBkjJFNVY3ODk5TwJTR0hJWjs8LhQ0dXZPH/xAAcAQEAAQUBAQAAAAAAAAAAAAAAAQIEBQYHAwj/xAA7EQEAAQQBAwICCgADBgcAAAAAAQIDBBEFBiExEkETUQcUIjJhcYGRodEVI7EWFyRDUmIzQkRTgpKi/9oADAMBAAIRAxEAPwC00AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnNRPA4gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5cqAYVyr4mAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZ5lMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//2Q==" alt="ThermaPlus">
+    <div class="brand-actions">
+      <p>Kapasite hesabı ön bilgi amaçlıdır. Kesin seçim için mühendislik departmanımızla görüşün.</p>
+      <a class="site-back" href="/isi-pompasi">← Siteye Geri Dön</a>
+    </div>
+  </header>
+
+  <div class="rail" id="rail"></div>
+  <div id="stage"></div>
+
+  <footer>ThermaPlus · Newstag Enerji Çözümleri A.Ş. — Hesaplama ön bilgi amaçlıdır, taahhüt niteliği taşımaz.</footer>
+</div>
+
+<script>
+/* ================================================================
+   1) YAPILANDIRMA — bütün katsayılar burada
+   ================================================================ */
+var MAIL_TO = "burak.pala@sarayholding.com.tr";
+var CATALOG = "https://newstag-sigma.vercel.app/isi-pompasi";
+var MARGIN  = 1.05;          // tasarım emniyet payı
+
+/* ---- BİRİM FİYATLAR — güncel değerlerle değiştirin (TL) ----
+   Yalnızca sonuç ekranındaki tasarruf karşılaştırmasında kullanılır.
+   Fiyatlar boş bırakılırsa (0) karşılaştırma gösterilmez.          */
+var PRICES = {
+  elektrik: 3.00,   // TL / kWh  (mesken tarifesi)
+  dogalgaz: 15.00,  // TL / m³
+  lpg:      40.00,  // TL / kg
+  motorin:  50.00,  // TL / L
+  komur:    12.00,  // TL / kg
+  klima:     3.00   // TL / kWh
+};
+var PRICE_DATE = "güncel tarifelerle doğrulayın";
+var MAX_KW  = 700;           // bu kapasitenin üzerinde ürün önerilmez, proje çalışmasına yönlendirilir
+var DHW_CHARGE_H = 3;        // konutta sıcak su şarj süresi (saat)
+var DHW_CHARGE_H_TIC = 8;    // ticari yapılarda şarj süresi (daha büyük akümülasyon)
+
+var CFG = {
+
+  /* iklim bölgeleri — kış/yaz tasarım sıcaklıkları ve tam yük saatleri */
+  zones: [
+    {v:"1. Bölge", s:"Antalya, Adana, Mersin, İzmir kıyı", tw: 0,  ts:38, eflhH: 800, eflhC:1000, copF:1.10},
+    {v:"2. Bölge", s:"İstanbul, İzmir, Bursa, Aydın",      tw:-3,  ts:35, eflhH:1200, eflhC: 750, copF:1.05},
+    {v:"3. Bölge", s:"Ankara, Eskişehir, Konya, Denizli",  tw:-9,  ts:34, eflhH:1700, eflhC: 600, copF:1.00},
+    {v:"4. Bölge", s:"Kayseri, Sivas, Elazığ, Malatya",    tw:-12, ts:33, eflhH:2000, eflhC: 450, copF:0.92},
+    {v:"5. Bölge", s:"Erzurum, Kars, Ardahan, Ağrı",       tw:-18, ts:30, eflhH:2400, eflhC: 300, copF:0.85}
+  ],
+
+  /* yapı türleri
+     ti      : iç tasarım sıcaklığı (°C)
+     ach     : saatlik hava değişim sayısı
+     qCool   : soğutma özgül yükü (W/m²)
+     dhwL    : kişi/yatak başına günlük sıcak su (L)  */
+  types: {
+    ev:      {v:"Müstakil ev",     s:"Villa, bahçeli konut",        ti:21, ach:0.5, qCool: 75,  dhwL:50,  pos:1.15, seg:"konut"},
+    daire:   {v:"Apartman dairesi",s:"Kat mülkiyeti konut",         ti:21, ach:0.5, qCool: 70,  dhwL:50,  pos:0.95, seg:"konut"},
+    otel:    {v:"Otel",            s:"Konaklama tesisi",            ti:22, ach:0.7, qCool: 95,  dhwL:100, pos:1.05, seg:"ticari"},
+    fabrika: {v:"Fabrika / depo",  s:"Üretim ve depolama alanı",    ti:18, ach:0.6, qCool: 70,  dhwL:40,  pos:1.05, seg:"ticari"},
+    magaza:  {v:"Mağaza / ofis",   s:"Perakende, ofis, restoran",   ti:21, ach:1.2, qCool:110,  dhwL:15,  pos:1.10, seg:"ticari"},
+    havuz:   {v:"Havuz",           s:"Konut veya ticari havuz",     seg:"havuz"},
+    sera:    {v:"Sera",            s:"Tarımsal örtüaltı üretim",    seg:"sera"}
+  },
+
+  /* yalıtım — özgül transmisyon kaybı (W/m²K, taban alanı üzerinden) */
+  insul: [
+    {v:"Çok iyi", s:"Yeni bina, mantolama + ısıcam", q:1.5},
+    {v:"İyi",     s:"Mantolamalı",                   q:2.1},
+    {v:"Orta",    s:"Kısmi yalıtım",                 q:2.8},
+    {v:"Kötü",    s:"Yalıtımsız",                    q:3.9}
+  ],
+
+  /* pencere */
+  glass: [
+    {v:"Üç cam",  s:"Isıcam, düşük U değeri", f:0.92},
+    {v:"Çift cam",s:"Standart ısıcam",        f:1.00},
+    {v:"Tek cam", s:"Yalıtımsız cam",         f:1.18}
+  ],
+
+  /* dışa bakan cephe sayısı */
+  facade: [
+    {v:"1 cephe", f:0.85},{v:"2 cephe", f:1.00},
+    {v:"3 cephe", f:1.10},{v:"4 cephe", f:1.18}
+  ],
+
+  /* kat sayısı kompaktlık düzeltmesi */
+  floors: function(n){ return n<=1 ? 1.10 : (n===2 ? 1.00 : 0.95); },
+
+  /* ısıtma sistemi (ısıtıcı yüzey)
+     temp    : tasarım gidiş suyu sıcaklığı (°C) — SCOP'u belirler
+     f       : kapasite düzeltme katsayısı
+     cool    : bu yüzey soğutma da yapabilir mi
+     panel   : panel yüzeyi hesabına girer mi (radyatör kontrolü)
+     panelK  : fan desteğinin panel kapasitesine çarpanı  */
+  emitters: {
+    yerden:   {v:"Yerden ısıtma",
+               s:"Döşemeye gömülü boru · 35 °C gidiş suyu · en verimli seçenek",
+               temp:35, f:1.00, cool:false},
+    dosemefc: {v:"Döşeme tipi fan-coil",
+               s:"Üflemeli petek · duvar dibine, radyatör yerine monte edilir · 45 °C · yoğuşma tavası sayesinde soğutma da yapar",
+               temp:45, f:1.05, cool:true, panel:true, panelK:2.2},
+    kasetfc:  {v:"Kaset / gizli tavan tipi fan-coil",
+               s:"Tavana gömülü ünite · 45 °C · ısıtma ve soğutma yapar",
+               temp:45, f:1.05, cool:true},
+    radyator: {v:"Panel radyatör (klasik)",
+               s:"Fansız panel radyatör · 55-65 °C · en yüksek su sıcaklığını ister, verimi düşürür",
+               temp:55, f:1.10, cool:false, panel:true, panelK:1.0}
+  },
+
+  /* mevcut ısıtma kaynağı — hem hibrit seçeneğini hem de tasarruf
+     karşılaştırmasını belirler.
+     kwh  : yakıtın birim başına ısıl değeri (kWh)
+     eff  : mevcut cihazın yıllık ortalama verimi
+     unit : fiyatın birimi
+     Fiyatlar güncel değerlerle değiştirilmelidir (aşağıdaki PRICES bloğu). */
+  sources: {
+    dogalgaz: {v:"Doğalgaz",            s:"Kombi veya kazan", kwh:9.59, eff:0.90, unit:"m³",  hybrid:true},
+    lpg:      {v:"LPG",                 s:"Tüp veya dökme gaz", kwh:12.8, eff:0.90, unit:"kg", hybrid:true},
+    motorin:  {v:"Motorin / fuel-oil",  s:"Sıvı yakıtlı kazan", kwh:10.0, eff:0.88, unit:"L",  hybrid:true},
+    komur:    {v:"Kömür / katı yakıt",  s:"Soba veya katı yakıt kazanı", kwh:7.0, eff:0.65, unit:"kg", hybrid:true},
+    elektrik: {v:"Elektrikli ısıtıcı",  s:"Rezistanslı ısıtma, elektrikli kazan", kwh:1, eff:1.00, unit:"kWh", hybrid:false},
+    klima:    {v:"Klima / VRF",         s:"Split klima veya VRF sistemi", kwh:1, eff:3.50, unit:"kWh", hybrid:false},
+    yok:      {v:"Mevcut sistem yok",   s:"Yeni yapı veya ısıtmasız", hybrid:false}
+  },
+
+  /* SCOP tablosu — gidiş suyu sıcaklığına göre, 3. bölge referans */
+  scop: {35:4.3, 40:4.0, 45:3.6, 50:3.3, 55:3.0, 60:2.7, 65:2.4, 70:2.2},
+  seer: 4.5,
+  copDHW: 2.8,
+
+  /* havuz özgül yükü (W/m² su yüzeyi) */
+  pool: [
+    {v:"Kapalı havuz",          s:"İç mekân, örtülü",         q:200},
+    {v:"Açık havuz — örtülü",   s:"Isı örtüsü kullanılıyor",  q:300},
+    {v:"Açık havuz — örtüsüz",  s:"Örtü yok, açık su yüzeyi", q:550}
+  ],
+
+  /* sera örtü U değerleri (W/m²K) */
+  cover: [
+    {v:"Polikarbon / cam", s:"Çok katmanlı sert örtü", u:2.5},
+    {v:"Çift kat naylon",  s:"Şişirmeli çift örtü",    u:3.5},
+    {v:"Tek kat naylon",   s:"Tek katmanlı örtü",      u:6.0}
+  ],
+  seraTi: 12,        // sera iç tasarım sıcaklığı
+  seraSurface: 1.8   // örtü alanı = taban alanı × bu katsayı
+};
+
+/* ---- ThermaPlus ürün gamı ---- */
+var SERIES = {
+  up:   {n:"ThermaPlus Up Serisi", sizes:[8,13,16,18,23,28,35],
+         d:"R32 akışkan, DC inverter, Wi-Fi kontrol",
+         u:CATALOG+"/thermaplus-up-serisi", maxTemp:60},
+  boost:{n:"ThermaPlus Boost Serisi", sizes:[8,11,15,22],
+         d:"Doğal R290 akışkan, 75 °C'ye kadar çıkış suyu",
+         u:CATALOG+"/thermaplus-boost-serisi", maxTemp:75},
+  duo:  {n:"ThermaPlus Commercial Duo Serisi", sizes:[50,92],
+         d:"R290 akışkan, 80 °C proses suyu, ticari ölçek",
+         u:CATALOG+"/thermaplus-commercial-duo", maxTemp:80},
+  all:  {n:"ThermaPlus All Serisi", sizes:[200,300],
+         d:"Entegre tanklı kullanım suyu ünitesi, 75 °C",
+         u:CATALOG+"/thermaplus-all"},
+  spool:{n:"ThermaPlus Silent Pool Serisi", sizes:[10,11,14,17,20,24,28,33],
+         d:"R32 akışkan, sessiz çalışma, dört mevsim havuz",
+         u:CATALOG+"/thermaplus-silent-pool-serisi"},
+  cpool:{n:"ThermaPlus Commercial Pool Serisi", sizes:[26,52,75,100,121,145],
+         d:"Titanyum eşanjör, 43 °C'ye kadar ticari havuz suyu",
+         u:CATALOG+"/thermaplus-commercial-pool"}
+};
+
+/* ================================================================
+   2) SAYFA TANIMLARI
+   ================================================================ */
+var A = {use:[], emit:[]};   // cevaplar
+var R = null;                // son hesap
+
+function seg(){ var t = CFG.types[A.btype]; return t ? t.seg : null; }
+function has(u){ return A.use.indexOf(u) > -1; }
+function isBuilding(){ return seg()==='konut' || seg()==='ticari'; }
+function wantsHeat(){ return isBuilding() ? has('isitma') : true; }
+
+var PAGES = [
+
+{ id:'intro', kind:'intro' },
+
+{ id:'btype', kind:'cards', key:'btype',
+  q:'Isı pompasını kullanacağınız yapıyı seçin',
+  hint:'Yapı türü hem hesap yöntemini hem de önerilecek ürün serisini belirler.',
+  opts:function(){ return Object.keys(CFG.types).map(function(k){
+      return {id:k, v:CFG.types[k].v, s:CFG.types[k].s}; }); } },
+
+{ id:'zone', kind:'cards', key:'zone',
+  q:'Yapı hangi iklim bölgesinde?',
+  hint:'TS 825 iklim bölgeleri. Kış ve yaz tasarım sıcaklıkları buradan alınır.',
+  opts:function(){ return CFG.zones.map(function(z,i){ return {id:i, v:z.v, s:z.s}; }); } },
+
+{ id:'use', kind:'multi', key:'use',
+  q:'Isı pompasını hangi amaçla kullanacaksınız?',
+  hint:'Birden fazla seçebilirsiniz.',
+  show:function(){ return isBuilding(); },
+  opts:function(){ return [
+    {id:'isitma',  v:'Isıtma',              s:'Kış konforu'},
+    {id:'sogutma', v:'Soğutma',             s:'Yaz konforu'},
+    {id:'sicaksu', v:'Kullanım sıcak suyu', s:'Duş ve musluk suyu'} ]; } },
+
+{ id:'install', kind:'cards', key:'install',
+  q:'Tesisat durumu',
+  hint:'Mevcut tesisata entegrasyonda radyatör ve yerden ısıtma yeterliliğini ayrıca kontrol ederiz.',
+  show:function(){ return isBuilding() && wantsHeat(); },
+  opts:function(){ return [
+    {id:'yeni',   v:'Sıfırdan tesisat',           s:'Yeni sistem kurulacak'},
+    {id:'mevcut', v:'Mevcut tesisata entegrasyon',s:'Var olan tesisat kullanılacak'} ]; } },
+
+/* --- bina geometrisi --- */
+{ id:'geo', kind:'fields',
+  q:function(){ return CFG.types[A.btype].v + ' — yapı bilgileri'; },
+  hint:'Isıtılacak/soğutulacak net alanı ve hacim bilgilerini girin.',
+  show:function(){ return isBuilding(); },
+  fields:function(){
+    var f = [
+      {k:'area',   l:'Toplam alan',        u:'m²', min:20, max:100000, def:''},
+      {k:'height', l:'Kat yüksekliği',     u:'m',  min:2,  max:12, step:0.1, def:3},
+      {k:'nfloor', l:'Kat sayısı',         u:'adet', min:1, max:30, def:2}
+    ];
+    if(seg()==='konut')
+      f.push({k:'people', l:'Yaşayan kişi sayısı', u:'kişi', min:1, max:30, def:4});
+    else if(A.btype==='otel')
+      f.push({k:'people', l:'Yatak kapasitesi', u:'yatak', min:2, max:2000, def:60});
+    else
+      f.push({k:'people', l:'Çalışan / kullanıcı sayısı', u:'kişi', min:1, max:5000, def:30});
+    return f;
+  } },
+
+/* --- havuz --- */
+{ id:'poolgeo', kind:'fields',
+  q:'Havuz bilgileri',
+  hint:'Havuz ısıtma yükü su yüzeyinden olan buharlaşma kaybına göre hesaplanır.',
+  show:function(){ return seg()==='havuz'; },
+  fields:function(){ return [
+    {k:'area',  l:'Su yüzeyi alanı', u:'m²', min:5, max:2000, def:32},
+    {k:'depth', l:'Ortalama derinlik', u:'m', min:0.8, max:5, step:0.1, def:1.5} ]; } },
+
+{ id:'pooltype', kind:'cards', key:'pooltype',
+  q:'Havuz tipi',
+  hint:'Örtü kullanımı ısı kaybını yarıya kadar düşürür.',
+  show:function(){ return seg()==='havuz'; },
+  opts:function(){ return CFG.pool.map(function(p,i){ return {id:i, v:p.v, s:p.s}; }); } },
+
+/* --- sera --- */
+{ id:'seragone', kind:'fields',
+  q:'Sera bilgileri',
+  hint:'Örtü alanı taban alanının yaklaşık 1,8 katı kabul edilir.',
+  show:function(){ return seg()==='sera'; },
+  fields:function(){ return [
+    {k:'area',  l:'Taban alanı', u:'m²', min:100, max:200000, def:1000},
+    {k:'seraT', l:'Hedef iç sıcaklık', u:'°C', min:5, max:30, def:12} ]; } },
+
+{ id:'cover', kind:'cards', key:'cover',
+  q:'Sera örtü tipi',
+  hint:'Örtünün ısı geçirgenliği toplam yükü doğrudan belirler.',
+  show:function(){ return seg()==='sera'; },
+  opts:function(){ return CFG.cover.map(function(c,i){ return {id:i, v:c.v, s:c.s}; }); } },
+
+/* --- yapı zarfı --- */
+{ id:'insul', kind:'cards', key:'insul',
+  q:'Yalıtım durumu',
+  hint:'Duvar ve çatı yalıtımının genel seviyesi.',
+  show:function(){ return isBuilding(); },
+  opts:function(){ return CFG.insul.map(function(x,i){ return {id:i, v:x.v, s:x.s}; }); } },
+
+{ id:'glass', kind:'cards', key:'glass',
+  q:'Pencere yalıtımı',
+  hint:'Cam tipi ısı kaybının önemli bir bölümünü belirler.',
+  show:function(){ return isBuilding(); },
+  opts:function(){ return CFG.glass.map(function(x,i){ return {id:i, v:x.v, s:x.s}; }); } },
+
+{ id:'facade', kind:'cards', key:'facade',
+  q:'Dışa bakan cephe sayısı',
+  hint:'Kaç cephesi dış havayla temas ediyor?',
+  show:function(){ return isBuilding(); },
+  opts:function(){ return CFG.facade.map(function(x,i){ return {id:i, v:x.v, s:''}; }); } },
+
+/* --- ısıtma sistemi --- */
+{ id:'source', kind:'cards', key:'source',
+  q:'Şu anda yapıyı ne ile ısıtıyorsunuz?',
+  hint:'Mevcut sisteminizi bilmek, ısı pompasına geçişte ne kadar tasarruf edeceğinizi hesaplamamızı sağlar.',
+  show:function(){ return isBuilding() && wantsHeat(); },
+  opts:function(){ return Object.keys(CFG.sources).map(function(k){
+      return {id:k, v:CFG.sources[k].v, s:CFG.sources[k].s}; }); } },
+
+{ id:'emit', kind:'multi', key:'emit',
+  q:'Isıyı odaya hangi yüzey verecek?',
+  hint:'Birden fazla seçebilirsiniz. Isı pompası ne kadar düşük sıcaklıkta su üretirse o kadar verimli çalışır, bu yüzden bu seçim faturayı doğrudan etkiler.',
+  show:function(){ return isBuilding() && wantsHeat(); },
+  opts:function(){ return Object.keys(CFG.emitters).map(function(k){
+      return {id:k, v:CFG.emitters[k].v, s:CFG.emitters[k].s}; }); } },
+
+/* --- mevcut tesisat ölçüleri --- */
+{ id:'exist', kind:'fields',
+  q:'Mevcut tesisat ölçüleri',
+  hint:'Bu bilgilerle mevcut tesisatınızın ısı pompasına yeterli olup olmadığını kontrol ederiz. Bilmiyorsanız boş bırakabilirsiniz.',
+  show:function(){ return A.install==='mevcut' && isBuilding() && wantsHeat(); },
+  optional:true,
+  fields:function(){
+    var f = [{k:'flowT', l:'Mevcut tesisat gidiş suyu sıcaklığı', u:'°C', min:30, max:80, def:55}];
+    if(A.emit.indexOf('yerden')>-1)
+      f.push({k:'pipeLen', l:'Yerden ısıtma boru uzunluğu', u:'m', min:0, max:20000, def:''});
+    if(A.emit.indexOf('radyator')>-1 || A.emit.indexOf('dosemefc')>-1){
+      f.push({k:'radLen', l:(A.emit.indexOf('dosemefc')>-1 ? 'Toplam petek / fan-coil uzunluğu' : 'Toplam radyatör uzunluğu'), u:'m', min:0, max:20000, step:0.1, def:''});
+      f.push({k:'radH',   l:'Yükseklik',                 u:'m', min:0.3, max:1.2, step:0.1, def:0.6});
+    }
+    return f;
+  } },
+
+/* --- elektrik ve hibrit --- */
+{ id:'elec', kind:'cards', key:'elec',
+  q:'Yapıda hangi elektrik sistemi var?',
+  hint:'16 kW üzeri cihazlar trifaze besleme ister.',
+  show:function(){ return true; },
+  opts:function(){ return [
+    {id:'220', v:'220 V — monofaze', s:'Standart konut aboneliği'},
+    {id:'380', v:'380 V — trifaze',  s:'Üç fazlı besleme mevcut'} ]; } },
+
+{ id:'hybrid', kind:'cards', key:'hybrid',
+  q:function(){
+    var s = CFG.sources[A.source];
+    return 'Mevcut ' + (s ? s.v.toLowerCase() : '') + ' sisteminiz yedek olarak kalsın mı?';
+  },
+  hint:'Yılın en soğuk birkaç gününde mevcut sisteminiz devreye girer, geri kalan zamanda ısı pompası çalışır. Böylece ısı pompasını daha küçük seçebilir, ilk yatırımı düşürebilirsiniz. Isıtmanın büyük bölümü yine ısı pompasından gelir.',
+  show:function(){ return isBuilding() && wantsHeat() && A.source && CFG.sources[A.source].hybrid; },
+  opts:function(){ return [
+    {id:'evet',  v:'Evet, yedek kalsın',  s:'Isı pompası daha küçük seçilir, ilk yatırım düşer'},
+    {id:'hayir', v:'Hayır, tamamen geçmek istiyorum', s:'Isı pompası en soğuk gün dahil yükün tamamını karşılar'} ]; } },
+
+{ id:'result',  kind:'result'  },
+{ id:'contact', kind:'contact' },
+{ id:'done',    kind:'done'    }
+];
+
+/* ================================================================
+   3) HESAP MOTORU
+   ================================================================ */
+function num(k, d){ var v = parseFloat(A[k]); return isNaN(v) ? d : v; }
+
+function scopAt(t, zoneF){
+  var keys = Object.keys(CFG.scop).map(Number).sort(function(a,b){return a-b;});
+  var lo = keys[0], hi = keys[keys.length-1];
+  if(t <= lo) return CFG.scop[lo] * zoneF;
+  if(t >= hi) return CFG.scop[hi] * zoneF;
+  for(var i=0;i<keys.length-1;i++){
+    if(t >= keys[i] && t <= keys[i+1]){
+      var a=keys[i], b=keys[i+1], r=(t-a)/(b-a);
+      return (CFG.scop[a] + (CFG.scop[b]-CFG.scop[a])*r) * zoneF;
+    }
+  }
+  return CFG.scop[45] * zoneF;
+}
+
+/* logaritmik sıcaklık farkına göre radyatör derating */
+function radDerate(flowT, ti){
+  var ret = flowT - 8;                               // 8 K su tarafı sıcaklık düşümü
+  var dt  = ((flowT - ti) - (ret - ti)) / Math.log((flowT - ti) / (ret - ti));
+  return Math.pow(dt / 50, 1.3);
+}
+
+function pickSize(series, need){
+  var s = series.sizes.filter(function(x){ return x >= need; });
+  return s.length ? s[0] : null;
+}
+
+function compute(){
+  var z  = CFG.zones[A.zone];
+  var s  = seg();
+  var warns = [], out = {};
+
+  /* ---------- HAVUZ ---------- */
+  if(s === 'havuz'){
+    var pa = num('area', 32);
+    var pq = CFG.pool[A.pooltype].q;
+    out.heat = Math.round(pa * pq / 1000 * MARGIN * 10)/10;
+    out.flowT = 40;
+    out.scop  = 4.0 * z.copF;
+    out.energyH = Math.round(out.heat * z.eflhH * 0.6 / out.scop);
+    var pser = out.heat <= 33 ? SERIES.spool : SERIES.cpool;
+    var psz  = pickSize(pser, out.heat);
+    out.units = psz ? [{s:pser, size:psz, role:'Havuz ısıtma'}]
+                    : cascade(SERIES.cpool, out.heat, 'Havuz ısıtma', warns);
+    warns.push(['Havuz hacmi', 'İlk ısıtma süresi havuz hacmine bağlıdır; ' + Math.round(pa*num('depth',1.5)) + ' m³ hacim için devreye alma planını mühendislik ekibimizle belirleyin.']);
+  }
+
+  /* ---------- SERA ---------- */
+  else if(s === 'sera'){
+    var sa = num('area', 1000);
+    var su = CFG.cover[A.cover].u;
+    var sti = num('seraT', CFG.seraTi);
+    var sdt = sti - z.tw;
+    out.heat = Math.round(sa * CFG.seraSurface * su * sdt / 1000 * MARGIN * 10)/10;
+    out.flowT = 45;
+    out.scop  = scopAt(45, z.copF);
+    out.energyH = Math.round(out.heat * z.eflhH / out.scop);
+    out.units = pickSize(SERIES.duo, out.heat)
+      ? [{s:SERIES.duo, size:pickSize(SERIES.duo, out.heat), role:'Sera ısıtma'}]
+      : cascade(SERIES.duo, out.heat, 'Sera ısıtma', warns);
+    warns.push(['Sera projeleri', 'Perde sistemi, rüzgâr yükü ve gece örtüsü kullanımı bu değeri belirgin şekilde değiştirir. Sera projelerinde mutlaka yerinde keşif yapılır.']);
+  }
+
+  /* ---------- BİNA ---------- */
+  else {
+    var t   = CFG.types[A.btype];
+    var ar  = num('area', 100), hh = num('height',3), nf = num('nfloor',2), pp = num('people',4);
+    var vol = ar * hh;
+    var qi  = CFG.insul[A.insul].q, gf = CFG.glass[A.glass].f, ff = CFG.facade[A.facade].f;
+
+    /* ısıtma */
+    if(has('isitma')){
+      var dT = t.ti - z.tw;
+      var qTrans = ar * qi * t.pos * gf * ff * CFG.floors(nf) * dT / 1000;
+      var qVent  = 0.34 * vol * t.ach * dT / 1000;
+
+      /* seçilen ısıtıcıların en yükseği kapasite faktörünü belirler */
+      var ef = 1.0, ft = 35;
+      A.emit.forEach(function(k){
+        ef = Math.max(ef, CFG.emitters[k].f);
+        ft = Math.max(ft, CFG.emitters[k].temp);
+      });
+      if(A.install === 'mevcut') ft = num('flowT', ft);
+
+      out.heat = (qTrans + qVent) * ef * MARGIN;
+      out.qTrans = Math.round(qTrans*10)/10;
+      out.qVent  = Math.round(qVent*10)/10;
+
+      if(A.hybrid === 'evet'){
+        out.fullHeat = Math.round(out.heat*10)/10;
+        out.heat = out.heat * 0.70;
+        out.hybridShare = 0.85;
+        warns.push(['Mevcut sisteminiz yedekte kalıyor',
+          'Isı pompası ' + fmt(Math.round(out.heat*10)/10) + ' kW seçildi; binanın en soğuk gündeki toplam ihtiyacı ' + fmt(out.fullHeat) + ' kW. Aradaki farkı yılın yalnızca en soğuk birkaç gününde mevcut ' + CFG.sources[A.source].v.toLowerCase() + ' sisteminiz tamamlar. Yıllık ısıtmanın yaklaşık %85\'i yine ısı pompasından gelir, cihaz bir üst modele çıkmadığı için ilk yatırım belirgin şekilde düşer.']);
+      }
+      out.heat  = Math.round(out.heat*10)/10;
+      out.flowT = ft;
+      out.scop  = Math.round(scopAt(ft, z.copF)*100)/100;
+      out.energyH = Math.round(out.heat * z.eflhH / out.scop);
+
+      /* mevcut tesisat yeterlilik kontrolü */
+      if(A.install === 'mevcut'){
+        var panelKey = A.emit.indexOf('dosemefc')>-1 ? 'dosemefc' : (A.emit.indexOf('radyator')>-1 ? 'radyator' : null);
+        if(panelKey && num('radLen',0) > 0){
+          var pk = CFG.emitters[panelKey].panelK;
+          var radCap = num('radLen',0) * 1400 * (num('radH',0.6)/0.6) * radDerate(ft, t.ti) * pk / 1000;
+          out.radCap = Math.round(radCap*10)/10;
+          var isFC = panelKey === 'dosemefc';
+          var yuzey = isFC ? 'fan-coil yüzeyi' : 'radyatör yüzeyi';
+          if(radCap < out.heat){
+            warns.push([
+              (isFC ? 'Fan-coil yüzeyi yetersiz' : 'Radyatör yüzeyi yetersiz'),
+              isFC
+                ? 'Belirttiğiniz uzunluktaki döşeme tipi fan-coil ' + ft + ' °C gidiş suyunda yaklaşık ' + fmt(out.radCap) + ' kW verebilir; ihtiyaç ' + fmt(out.heat) + ' kW. Ünite sayısını artırmak veya daha uzun/yüksek modeller seçmek gerekir. Mahal bazında dağılımı mühendislik ekibimizle netleştirin.'
+                : 'Mevcut radyatörleriniz ' + ft + ' °C gidiş suyunda yaklaşık ' + fmt(out.radCap) + ' kW verebilir; ihtiyaç ' + fmt(out.heat) + ' kW. Suyu daha sıcak vermek verimi ve tasarrufu düşürür. Bunun yerine peteklerin yerine döşeme tipi fan-coil (üflemeli petek) takmak en ekonomik çözümdür: aynı ölçüdeki yüzey, fan desteğiyle iki katından fazla ısı verir, 45 °C su ile çalışır ve yazın soğutma da yapar.'
+            ]);
+          } else {
+            warns.push([
+              (isFC ? 'Fan-coil yüzeyi yeterli' : 'Radyatör yüzeyi yeterli'),
+              'Belirttiğiniz ' + yuzey + ' ' + ft + ' °C gidiş suyunda yaklaşık ' + fmt(out.radCap) + ' kW verebiliyor; ihtiyacı karşılıyor. Gidiş sıcaklığını düşürerek verimi daha da artırabilirsiniz.'
+            ]);
+          }
+        }
+        if(A.emit.indexOf('yerden')>-1 && num('pipeLen',0) > 0){
+          var flrCap = num('pipeLen',0) * 14 / 1000;
+          out.flrCap = Math.round(flrCap*10)/10;
+          if(flrCap < out.heat * 0.9)
+            warns.push(['Yerden ısıtma devresi sınırda','Mevcut boru uzunluğu yaklaşık ' + fmt(out.flrCap) + ' kW taşıyabilir; ihtiyaç ' + fmt(out.heat) + ' kW. Eksik kalan yük için ilave devre veya destekleyici fan-coil değerlendirilmelidir.']);
+        }
+      }
+    }
+
+    /* soğutma */
+    if(has('sogutma')){
+      out.cool = Math.round(ar * t.qCool * gf * Math.min(1.25, Math.max(0.7,(z.ts-26)/9)) / 1000 * MARGIN * 10)/10;
+      out.energyC = Math.round(out.cool * z.eflhC / CFG.seer);
+    }
+
+    /* kullanım sıcak suyu */
+    if(has('sicaksu')){
+      var lit = pp * t.dhwL;
+      var eDay = lit * 35 * 1.163 / 1000;                 // kWh/gün
+      out.dhwL = lit;
+      var chg = (seg()==='konut') ? DHW_CHARGE_H : DHW_CHARGE_H_TIC;
+      out.dhwKW = Math.round(eDay / chg * 10)/10;
+      out.dhwTank = Math.round(lit * 1.2 / 50) * 50;
+      out.energyD = Math.round(eDay * 365 / CFG.copDHW);
+    }
+
+    /* soğutma yüzeyi kontrolü */
+    if(has('sogutma') && A.emit.length){
+      var canCool = A.emit.some(function(k){ return CFG.emitters[k].cool; });
+      if(!canCool)
+        warns.push(['Soğutma için uygun yüzey yok','Seçtiğiniz yüzeyler yalnızca ısıtma yapar. Soğutma da isteniyorsa en az bir mahalde fan-coil gerekir — döşeme tipi veya kaset tipi olabilir. Klasik panel radyatör ve yerden ısıtma soğuk suyla yoğuşma yaptığı için soğutmada kullanılamaz.']);
+    }
+
+    /* mevcut sistemle işletme maliyeti karşılaştırması */
+    if(has('isitma') && A.source && A.source !== 'yok'){
+      var src = CFG.sources[A.source];
+      var unitPrice = PRICES[A.source];
+      if(unitPrice > 0){
+        var heatNeed = (out.fullHeat || out.heat) * z.eflhH;          // kWh ısı / yıl
+        var costOld  = heatNeed / (src.kwh * src.eff) * unitPrice;
+        var hpElec   = heatNeed / out.scop;
+        var costNew  = hpElec * PRICES.elektrik;
+        if(A.hybrid === 'evet'){
+          var share = out.hybridShare || 0.85;
+          costNew = (heatNeed * share / out.scop) * PRICES.elektrik +
+                    (heatNeed * (1-share) / (src.kwh * src.eff)) * unitPrice;
+        }
+        out.costOld = Math.round(costOld);
+        out.costNew = Math.round(costNew);
+        out.saving  = Math.round(costOld - costNew);
+        out.savingPct = costOld > 0 ? Math.round((1 - costNew/costOld)*100) : 0;
+        out.srcName = src.v;
+      }
+    }
+
+    /* ana cihaz kapasitesi */
+    var main = Math.max(out.heat || 0, out.cool || 0);
+    out.main = Math.round(main*10)/10;
+
+    /* ürün seçimi */
+    out.units = [];
+    if(main > 0){
+      var highT = (out.flowT || 45) > SERIES.up.maxTemp - 5;   // 55 °C ve üstü → Boost
+      var prim  = highT ? SERIES.boost : SERIES.up;
+      var sz    = pickSize(prim, main);
+      if(!sz && highT) { prim = SERIES.up; sz = pickSize(prim, main); }
+      if(sz){
+        out.units.push({s:prim, size:sz, role: has('sogutma') ? 'Isıtma + soğutma' : 'Isıtma'});
+      } else {
+        var dsz = pickSize(SERIES.duo, main);
+        if(dsz) out.units.push({s:SERIES.duo, size:dsz, role:'Isıtma / soğutma'});
+        else out.units = out.units.concat(cascade(SERIES.duo, main, 'Isıtma / soğutma', warns));
+      }
+    }
+
+    /* sıcak su ünitesi */
+    if(has('sicaksu')){
+      if(seg()==='konut' && out.dhwTank <= 300){
+        out.units.push({s:SERIES.all, size:(out.dhwTank<=200?200:300), unit:'L', role:'Kullanım sıcak suyu'});
+      } else {
+        out.units.push({s:SERIES.duo, size:pickSize(SERIES.duo, out.dhwKW) || 50,
+                        role:'Merkezi sıcak su (' + fmt(out.dhwTank) + ' L akümülasyon tankı ile)'});
+      }
+    }
+
+    /* elektrik uyarısı */
+    if(A.elec === '220' && main > 16)
+      warns.push(['Trifaze besleme gerekli','Hesaplanan ' + fmt(out.main) + ' kW kapasite monofaze 220 V ile beslenemez. Bu proje için 380 V trifaze abonelik veya güç artırımı gerekir.']);
+
+    if(seg()==='ticari')
+      warns.push(['Ticari proje','Ticari yapılarda proses yükü, çalışma saatleri, iç kazançlar ve havalandırma debisi sonucu belirgin şekilde değiştirir. Bu değer ön boyutlandırmadır; kesin seçim keşif sonrası yapılır.']);
+  }
+
+  out.energy = (out.energyH||0) + (out.energyC||0) + (out.energyD||0);
+  out.warns = warns;
+  out.zone  = z;
+  R = out;
+}
+
+function cascade(series, need, role, warns){
+  if(need > MAX_KW){
+    warns.push(['Yüksek kapasiteli proje',
+      'Hesaplanan ' + fmt(Math.round(need)) + ' kW ihtiyaç, standart ürün seçimiyle karşılanabilecek ölçeğin üzerinde. Bu büyüklükteki tesisler için kaskad kurgusu, ünite dağılımı ve devreye alma senaryosu projeye özel çalışılır. Formu gönderdiğinizde mühendislik ekibimiz sizinle iletişime geçecektir.']);
+    return [];
+  }
+  var big = series.sizes[series.sizes.length-1];
+  var n = Math.ceil(need / big);
+  warns.push(['Kaskad sistem','Bu kapasite ' + n + ' adet ' + big + ' kW ünitenin kaskad bağlanmasıyla karşılanır. Yük durumuna göre yalnızca gereken ünite devreye girer, böylece düşük yükte de yüksek verim korunur.']);
+  return [{s:series, size:big, qty:n, role:role}];
+}
+
+/* ================================================================
+   4) ARAYÜZ
+   ================================================================ */
+var stage = document.getElementById('stage'), rail = document.getElementById('rail'), cur = 0;
+
+function live(){ return PAGES.filter(function(p){ return !p.show || p.show(); }); }
+function fmt(n){ return (typeof n === 'number') ? n.toLocaleString('tr-TR') : n; }
+function txt(x){ return typeof x === 'function' ? x() : x; }
+
+function paintRail(){
+  var L = live(), total = L.length - 2;
+  rail.innerHTML = '';
+  var idx = L.indexOf(PAGES[cur]);
+  rail.style.visibility = (idx <= 0 || L[idx].kind==='done') ? 'hidden' : 'visible';
+  for(var i=0;i<total;i++){
+    var el = document.createElement('span');
+    el.className = i < idx-1 ? 'done' : (i === idx-1 ? 'on' : '');
+    rail.appendChild(el);
+  }
+}
+
+function go(dir){
+  var L = live(), i = L.indexOf(PAGES[cur]);
+  var t = L[i + dir];
+  if(!t) return;
+  if(t.kind === 'result') compute();
+  cur = PAGES.indexOf(t);
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function jumpTo(id){ cur = PAGES.findIndex(function(p){return p.id===id;}); render(); window.scrollTo({top:0}); }
+
+function navHTML(nextLabel, showBack){
+  return '<nav><button class="next" id="btnNext">' + nextLabel + '</button>' +
+         (showBack !== false ? '<button class="back" id="btnBack">Geri</button>' : '') + '</nav>' +
+         '<div class="err" id="err"></div>';
+}
+
+function bindNav(onNext){
+  var n = document.getElementById('btnNext'), b = document.getElementById('btnBack');
+  if(n) n.onclick = onNext;
+  if(b) b.onclick = function(){ go(-1); };
+}
+function showErr(m){ var e = document.getElementById('err'); e.textContent = m; e.classList.add('show'); }
+
+function render(){
+  var p = PAGES[cur];
+  var L = live(), idx = L.indexOf(p);
+  var counter = (idx > 0 && p.kind !== 'result' && p.kind !== 'contact' && p.kind !== 'done')
+      ? '<div class="count">Adım ' + idx + ' / ' + (L.length - 3) + '</div>' : '';
+
+  if(p.kind === 'intro'){
+    stage.innerHTML =
+      '<h1>Isı Pompası Kapasite Simülatörü</h1>' +
+      '<p class="lead">Konut, otel, fabrika, mağaza, havuz ve sera projeleri için ısıtma, soğutma ve kullanım sıcak suyu kapasitesini hesaplar; mevcut tesisatınızın yeterliliğini kontrol eder ve size uygun ThermaPlus ürününü önerir.</p>' +
+      '<p class="lead" style="margin-bottom:8px">Yaklaşık 3 dakika sürer.</p>' +
+      '<p class="lead">Dilerseniz hesaplama sonunda bilgilerinizi teknik ekibimizle paylaşarak teklif alabilirsiniz.</p>' +
+      navHTML('Başla', false);
+    bindNav(function(){ go(1); });
+  }
+
+  else if(p.kind === 'cards' || p.kind === 'multi'){
+    var multi = p.kind === 'multi';
+    var opts = p.opts();
+    var html = counter + '<h2 class="q">' + txt(p.q) + '</h2><p class="hint">' + txt(p.hint) + '</p><div class="cards">';
+    opts.forEach(function(o){
+      var on = multi ? (A[p.key]||[]).indexOf(o.id) > -1 : A[p.key] === o.id;
+      html += '<button type="button" class="card' + (on?' sel':'') + '" data-id="' + o.id + '">' +
+              '<b>' + o.v + '</b>' + (o.s ? '<i>' + o.s + '</i>' : '') + '</button>';
+    });
+    html += '</div>' + navHTML('Devam');
+    stage.innerHTML = html;
+
+    stage.querySelectorAll('.card').forEach(function(c){
+      c.onclick = function(){
+        var id = c.dataset.id;
+        if(multi){
+          A[p.key] = A[p.key] || [];
+          var i = A[p.key].indexOf(id);
+          if(i > -1) A[p.key].splice(i,1); else A[p.key].push(id);
+          c.classList.toggle('sel');
+        } else {
+          var match = opts.filter(function(o){ return String(o.id) === id; })[0];
+          A[p.key] = match ? match.id : id;
+          stage.querySelectorAll('.card').forEach(function(x){x.classList.remove('sel')});
+          c.classList.add('sel');
+          setTimeout(function(){ go(1); }, 130);
+        }
+      };
+    });
+    bindNav(function(){
+      if(multi ? !(A[p.key]||[]).length : A[p.key] === undefined)
+        return showErr(multi ? 'En az bir seçim yapın.' : 'Bir seçim yapın.');
+      go(1);
+    });
+  }
+
+  else if(p.kind === 'fields'){
+    var fs = p.fields();
+    var h = counter + '<h2 class="q">' + txt(p.q) + '</h2><p class="hint">' + txt(p.hint) + '</p><div class="grid">';
+    fs.forEach(function(f){
+      var v = A[f.k] !== undefined ? A[f.k] : f.def;
+      h += '<div class="fld"><label for="f_'+f.k+'">'+f.l+'</label>' +
+           '<input type="number" id="f_'+f.k+'" value="'+(v===undefined?'':v)+'" ' +
+           'min="'+f.min+'" max="'+f.max+'" step="'+(f.step||1)+'" inputmode="decimal">' +
+           '<span class="u">'+f.u+'</span></div>';
+    });
+    h += '</div>' + navHTML('Devam');
+    stage.innerHTML = h;
+    bindNav(function(){
+      for(var i=0;i<fs.length;i++){
+        var f = fs[i], el = document.getElementById('f_'+f.k), v = parseFloat(el.value);
+        if(isNaN(v)){
+          if(p.optional) { A[f.k] = ''; continue; }
+          return showErr(f.l + ' alanını doldurun.');
+        }
+        if(v < f.min || v > f.max) return showErr(f.l + ' için ' + f.min + ' – ' + f.max + ' aralığında bir değer girin.');
+        A[f.k] = v;
+      }
+      go(1);
+    });
+  }
+
+  else if(p.kind === 'result'){
+    var h = '<h1>Hesap sonucunuz</h1><p class="lead">' +
+            CFG.types[A.btype].v + ' · ' + CFG.zones[A.zone].v +
+            ' · kış tasarım sıcaklığı ' + CFG.zones[A.zone].tw + ' °C</p><div class="figures">';
+
+    if(R.heat !== undefined)
+      h += fig('Isıtma kapasitesi', R.heat, 'kW', true);
+    if(R.cool !== undefined)
+      h += fig('Soğutma kapasitesi', R.cool, 'kW');
+    if(R.dhwKW !== undefined)
+      h += fig('Kullanım sıcak suyu kapasitesi', R.dhwKW, 'kW · ' + fmt(R.dhwL) + ' L/gün');
+    if(R.scop)
+      h += fig('Beklenen sezonluk verim (SCOP)', R.scop, '@ ' + R.flowT + ' °C gidiş');
+    h += fig('Tahmini yıllık elektrik tüketimi', R.energy, 'kWh / yıl');
+    h += '</div>';
+
+    if(R.saving !== undefined && R.saving > 0){
+      h += '<div class="pick" style="border-left-color:var(--azure)"><h3>Mevcut sisteminizle karşılaştırma</h3>' +
+           '<div class="item"><b>' + R.srcName + ' yerine ısı pompası ile tahmini tasarruf</b>' +
+           '<span style="color:var(--flame);font-weight:600;font-size:19px">%' + R.savingPct + '</span></div>' +
+           '<p class="hint" style="margin:12px 0 0">Tasarruf oranı tahmini olarak verilmiş olup, mevcut tarifeler, tesisat ve kullanım verilerine bağlı olarak değişebilir.</p></div>';
+    }
+
+    if(R.units.length){
+    h += '<div class="pick"><h3>Size önerdiğimiz sistem</h3>';
+    R.units.forEach(function(u){
+      var size = u.unit === 'L' ? u.size + ' L' : u.size + ' kW';
+      var qty  = u.qty && u.qty > 1 ? u.qty + ' × ' : '';
+      h += '<div class="item"><b>' + qty + u.s.n + ' · ' + size + '</b>' +
+           '<span>' + u.role + ' — ' + u.s.d + '</span></div>';
+    });
+    h += '</div>';
+    }
+
+    R.warns.forEach(function(w){
+      h += '<div class="warn"><b>' + w[0] + '</b>' + w[1] + '</div>';
+    });
+
+    h += '<div class="note">Bu değerler ön boyutlandırmadır. Kesin kapasite seçimi, bina ısı kaybı hesabı ve keşif sonrası mühendislik departmanımızla birlikte netleştirilir.</div>';
+    h += navHTML('İletişime Geçilmek İstiyorum');
+    stage.innerHTML = h;
+    bindNav(function(){ go(1); });
+  }
+
+  else if(p.kind === 'contact'){
+    stage.innerHTML =
+      '<h1>Size nasıl ulaşalım?</h1>' +
+      '<p class="lead">Hesabınızı mühendislik ekibimize iletelim, sizinle temasa geçsinler.</p>' +
+      '<div class="grid">' +
+        fldT('cf','Ad') + fldT('cl','Soyad') +
+        fldT('cp','Telefon','tel') + fldT('cc','İl') +
+      '</div>' +
+      '<div class="fld" style="margin-top:14px"><label for="ce">E-posta</label><input type="email" id="ce" placeholder="ornek@ornek.com"></div>' +
+      '<div class="fld" style="margin-top:14px"><label for="cn">İletmek istediğiniz not (isteğe bağlı)</label><textarea id="cn"></textarea></div>' +
+      '<nav><button class="send" id="btnSend">Gönder</button><button class="back" id="btnBack">Geri</button></nav>' +
+      '<div class="err" id="err"></div>';
+    document.getElementById('btnBack').onclick = function(){ go(-1); };
+    document.getElementById('btnSend').onclick = send;
+  }
+
+  else if(p.kind === 'done'){
+    stage.innerHTML =
+      '<div class="done-box"><div class="tick">✓</div>' +
+      '<h2 id="doneTitle">Teşekkürler, talebiniz alınmıştır</h2>' +
+      '<p id="doneText">Bilgileriniz ekibimize iletilmiş olup en kısa sürede sizinle iletişime geçilecektir.</p>' +
+      '<button class="again" id="btnAgain">Yeni hesaplama</button></div>';
+    document.getElementById('btnAgain').onclick = function(){ location.reload(); };
+  }
+
+  paintRail();
+}
+
+function fig(name, val, unit, big){
+  return '<div class="fig' + (big?' lead-fig':'') + '"><span class="name">' + name + '</span>' +
+         '<span class="val">' + fmt(val) + '<u>' + unit + '</u></span></div>';
+}
+function fldT(id, label, type){
+  return '<div class="fld"><label for="'+id+'">'+label+'</label><input type="'+(type||'text')+'" id="'+id+'"></div>';
+}
+
+/* ---------------- gönderim ---------------- */
+function v(id){ var e = document.getElementById(id); return e ? e.value.trim() : ''; }
+
+function productLine(){
+  return R.units.map(function(u){
+    return (u.qty && u.qty>1 ? u.qty+' × ' : '') + u.s.n + ' ' + u.size + (u.unit==='L'?' L':' kW') + ' (' + u.role + ')';
+  }).join(' | ');
+}
+
+function payloadObj(){
+  var t = CFG.types[A.btype], z = CFG.zones[A.zone], o = {};
+  o["Ad Soyad"] = v('cf') + ' ' + v('cl');
+  o["Telefon"]  = v('cp');
+  o["E-posta"]  = v('ce') || '-';
+  o["İl"]       = v('cc') || '-';
+  o["Not"]      = v('cn') || '-';
+  o["Yapı türü"] = t.v;
+  o["İklim bölgesi"] = z.v + ' (kış ' + z.tw + ' °C / yaz ' + z.ts + ' °C)';
+  if(isBuilding()){
+    o["Kullanım amacı"] = A.use.map(function(u){
+      return {isitma:'Isıtma',sogutma:'Soğutma',sicaksu:'Sıcak su'}[u]; }).join(', ');
+    o["Tesisat durumu"] = A.install === 'mevcut' ? 'Mevcut tesisata entegrasyon' : 'Sıfırdan tesisat';
+    o["Alan (m²)"] = A.area;
+    o["Kat yüksekliği (m)"] = A.height;
+    o["Kat sayısı"] = A.nfloor;
+    o["Kişi / yatak sayısı"] = A.people;
+    o["Yalıtım"] = CFG.insul[A.insul].v;
+    o["Pencere"] = CFG.glass[A.glass].v;
+    o["Cephe sayısı"] = CFG.facade[A.facade].v;
+    if(A.emit.length) o["Isıtma sistemi"] = A.emit.map(function(k){ return CFG.emitters[k].v; }).join(', ');
+    if(A.install === 'mevcut'){
+      o["Mevcut gidiş suyu (°C)"] = A.flowT || '-';
+      if(A.pipeLen) o["Yerden ısıtma borusu (m)"] = A.pipeLen;
+      if(A.radLen)  o["Radyatör uzunluğu (m)"] = A.radLen + ' / yükseklik ' + A.radH + ' m';
+      if(R.radCap !== undefined) o["Mevcut radyatör kapasitesi (kW)"] = R.radCap;
+      if(R.flrCap !== undefined) o["Mevcut yerden ısıtma kapasitesi (kW)"] = R.flrCap;
+    }
+    o["Elektrik"] = A.elec === '380' ? '380 V trifaze' : '220 V monofaze';
+    if(A.source) o["Mevcut ısıtma kaynağı"] = CFG.sources[A.source].v;
+    o["Mevcut sistem yedekte kalsın"] = A.hybrid === 'evet' ? 'Evet' : 'Hayır';
+  }
+  if(seg()==='havuz'){ o["Su yüzeyi (m²)"] = A.area; o["Derinlik (m)"] = A.depth; o["Havuz tipi"] = CFG.pool[A.pooltype].v; }
+  if(seg()==='sera'){ o["Taban alanı (m²)"] = A.area; o["Örtü"] = CFG.cover[A.cover].v; o["Hedef iç sıcaklık (°C)"] = A.seraT; }
+
+  if(R.heat  !== undefined) o["Isıtma kapasitesi (kW)"] = R.heat;
+  if(R.cool  !== undefined) o["Soğutma kapasitesi (kW)"] = R.cool;
+  if(R.dhwKW !== undefined) o["Sıcak su kapasitesi (kW)"] = R.dhwKW + ' / ' + R.dhwTank + ' L tank';
+  if(R.scop) o["SCOP"] = R.scop + ' @ ' + R.flowT + ' °C';
+  o["Yıllık tüketim (kWh)"] = R.energy;
+  if(R.savingPct !== undefined) o["Tahmini tasarruf oranı"] = '%' + R.savingPct + ' (' + R.srcName + ' ile karşılaştırma)';
+  o["Önerilen ürün"] = productLine();
+  if(R.warns.length) o["Uyarılar"] = R.warns.map(function(w){ return w[0] + ': ' + w[1]; }).join(' || ');
+  return o;
+}
+
+function summaryText(){
+  var o = payloadObj(), lines = ['ThermaPlus ısı pompası kapasite hesabı',''];
+  Object.keys(o).forEach(function(k){ lines.push(k + ': ' + o[k]); });
+  lines.push('', 'Tarih: ' + new Date().toLocaleString('tr-TR'));
+  return lines.join('\n');
+}
+
+function mailtoFallback(){
+  window.location.href = 'mailto:' + MAIL_TO +
+    '?subject=' + encodeURIComponent('Isı pompası hesabı — ' + v('cf') + ' ' + v('cl')) +
+    '&body=' + encodeURIComponent(summaryText());
+}
+
+function send(){
+  if(!v('cf') || !v('cl') || !v('cp')) return showErr('Ad, soyad ve telefon alanları zorunludur.');
+  var btn = document.getElementById('btnSend');
+  btn.disabled = true; btn.textContent = 'Gönderiliyor…';
+
+  var p = payloadObj();
+  p._subject  = 'Isı pompası hesabı — ' + v('cf') + ' ' + v('cl') + ' · ' + CFG.types[A.btype].v;
+  p._template = 'table';
+
+  fetch('https://formsubmit.co/ajax/' + MAIL_TO, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body: JSON.stringify(p)
+  })
+  .then(function(r){ if(!r.ok) throw new Error('http'); return r.json(); })
+  .then(function(){ jumpTo('done'); })
+  .catch(function(){
+    jumpTo('done');
+    document.getElementById('doneTitle').textContent = 'Son bir adım';
+    document.getElementById('doneText').textContent =
+      'Otomatik gönderim yapılamadı, bilgileriniz posta programınızda hazırlandı. Açılan pencereden Gönder\'e basmanız yeterli.';
+    mailtoFallback();
+  });
+}
+
+render();
+</script>
+</body>
+</html>

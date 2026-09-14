@@ -6,8 +6,11 @@ import Footer from "@/components/layout/Footer";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useLanguage } from "@/lib/i18n";
 
 export default function ContactPage() {
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -27,7 +30,7 @@ export default function ContactPage() {
           <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 opacity-45">
             <Image
               src="/images/e9551124-2722-4454-bf42-e6d7ff187aec.png"
-              alt="Inspur BESS saha kurulumu"
+              alt={isEnglish ? "Inspur BESS field installation" : "Inspur BESS saha kurulumu"}
               fill
               className="object-cover"
               priority
@@ -43,11 +46,11 @@ export default function ContactPage() {
               transition={{ duration: 1, ease: "easeOut" }}
             >
               <span className="text-[#f97316] text-xs font-bold uppercase tracking-[0.5em] mb-6 block">
-                İletişim
+                {isEnglish ? "Contact" : "İletişim"}
               </span>
               <h1 className="text-6xl md:text-9xl font-medium text-white tracking-tighter leading-none">
-                Bize <br />
-                <span className="text-gray-400">Ulaşın</span>
+                {isEnglish ? "Get in" : "Bize"} <br />
+                <span className="text-gray-400">{isEnglish ? "Touch" : "Ulaşın"}</span>
               </h1>
             </motion.div>
           </div>
@@ -65,11 +68,12 @@ export default function ContactPage() {
                   viewport={{ once: true }}
                 >
                   <h2 className="text-5xl md:text-7xl font-medium text-[#020817] tracking-tighter mb-8 leading-tight">
-                    Bizimle <br /> <span className="text-[#ea580c]">İletişime Geçin</span>
+                    {isEnglish ? "Contact" : "Bizimle"} <br /> <span className="text-[#ea580c]">{isEnglish ? "Our Team" : "İletişime Geçin"}</span>
                   </h2>
                   <p className="text-xl text-gray-500 font-light leading-relaxed max-w-md">
-                    BESS ve ısı pompası projeleriniz, teknik destek talepleriniz
-                    veya iş ortaklığı için uzman ekibimizle iletişime geçin.
+                    {isEnglish
+                      ? "Contact our expert team for BESS and heat pump projects, technical support requests, or business partnerships."
+                      : "BESS ve ısı pompası projeleriniz, teknik destek talepleriniz veya iş ortaklığı için uzman ekibimizle iletişime geçin."}
                   </p>
                 </motion.div>
 
@@ -77,12 +81,14 @@ export default function ContactPage() {
                   {[
                     {
                       icon: MapPin,
-                      title: "Genel Merkez",
-                      desc: "Yıldızhan Cad. Saray İş Merkezi No:4, Köşe Sk., 34887 Sancaktepe/İstanbul",
+                      title: isEnglish ? "Head Office" : "Genel Merkez",
+                      desc: isEnglish
+                        ? "Yildizhan Avenue, Saray Business Center No. 4, Kose Street, 34887 Sancaktepe/Istanbul"
+                        : "Yıldızhan Cad. Saray İş Merkezi No:4, Köşe Sk., 34887 Sancaktepe/İstanbul",
                       href: "https://www.google.com/maps/place/data=!4m2!3m1!1s0x14cad3c555555555:0xc12bb9adc218764f?sa=X&ved=1t:8290&ictx=111",
                     },
-                    { icon: Phone, title: "Telefon", desc: "0 216 311 00 67", href: "tel:+902163110067" },
-                    { icon: Mail, title: "E-posta", desc: "info@newstag.com.tr", href: "mailto:info@newstag.com.tr" },
+                    { icon: Phone, title: isEnglish ? "Phone" : "Telefon", desc: "0 216 311 00 67", href: "tel:+902163110067" },
+                    { icon: Mail, title: isEnglish ? "Email" : "E-posta", desc: "info@newstag.com.tr", href: "mailto:info@newstag.com.tr" },
                   ].map((item, i) => (
                     <motion.div
                       key={item.title}
@@ -118,25 +124,25 @@ export default function ContactPage() {
                   className="relative z-10 rounded-[28px] border border-gray-100 bg-white p-6 shadow-2xl shadow-[#ea580c]/10 sm:rounded-[40px] md:p-16"
                 >
                   <div className="mb-12">
-                    <h3 className="text-3xl font-bold text-[#020817] mb-4">Mesaj Gönderin</h3>
+                    <h3 className="text-3xl font-bold text-[#020817] mb-4">{isEnglish ? "Send a Message" : "Mesaj Gönderin"}</h3>
                     <div className="w-12 h-1 bg-[#ea580c]" />
                   </div>
 
                   <form className="space-y-8">
                     <div className="space-y-3">
                       <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-4">
-                        Ad Soyad
+                        {isEnglish ? "Full Name" : "Ad Soyad"}
                       </label>
                       <input
                         type="text"
                         className="w-full bg-gray-50 border-none px-6 py-5 rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#ea580c]/20 transition-all text-gray-800"
-                        placeholder="Adınız ve soyadınız"
+                        placeholder={isEnglish ? "Your full name" : "Adınız ve soyadınız"}
                       />
                     </div>
 
                     <div className="space-y-3">
                       <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-4">
-                        E-posta
+                        {isEnglish ? "Email" : "E-posta"}
                       </label>
                       <input
                         type="email"
@@ -147,16 +153,16 @@ export default function ContactPage() {
 
                     <div className="space-y-3">
                       <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-4">
-                        Mesajınız
+                        {isEnglish ? "Your Message" : "Mesajınız"}
                       </label>
                       <textarea
                         className="w-full bg-gray-50 border-none px-6 py-5 rounded-3xl h-40 focus:outline-none focus:ring-2 focus:ring-[#ea580c]/20 transition-all text-gray-800 resize-none"
-                        placeholder="Size nasıl yardımcı olabiliriz?"
+                        placeholder={isEnglish ? "How can we help you?" : "Size nasıl yardımcı olabiliriz?"}
                       ></textarea>
                     </div>
 
                     <button className="w-full group bg-[#ea580c] text-white py-6 rounded-3xl font-bold text-lg hover:bg-[#c2410c] transition-all flex items-center justify-center gap-4">
-                      Gönder
+                      {isEnglish ? "Send" : "Gönder"}
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                     </button>
                   </form>
@@ -179,16 +185,17 @@ export default function ContactPage() {
               transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
               className="text-[20rem] font-black text-white tracking-tighter uppercase whitespace-nowrap"
             >
-              NEWSTAG ENERJI • ILETISIM •
+              {isEnglish ? "NEWSTAG ENERGY • CONTACT •" : "NEWSTAG ENERJI • ILETISIM •"}
             </motion.span>
           </div>
           <div className="container mx-auto px-6 text-center relative z-10">
             <h2 className="text-4xl md:text-6xl font-medium text-white mb-8">
-              Geleceği Birlikte <span className="text-[#f97316]">İnşa Edelim</span>
+              {isEnglish ? "Let Us Build the" : "Geleceği Birlikte"} <span className="text-[#f97316]">{isEnglish ? "Future Together" : "İnşa Edelim"}</span>
             </h2>
             <p className="text-xl text-white/70 max-w-2xl mx-auto font-light">
-              Enerji dönüşüm yolculuğunuzda projelendirmeden servise kadar
-              yanınızdayız. Çözümlerimizi keşfetmek için bize ulaşın.
+              {isEnglish
+                ? "We are with you throughout your energy transformation journey, from project design to service. Contact us to explore our solutions."
+                : "Enerji dönüşüm yolculuğunuzda projelendirmeden servise kadar yanınızdayız. Çözümlerimizi keşfetmek için bize ulaşın."}
             </p>
           </div>
         </section>

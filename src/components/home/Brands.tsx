@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const brands = [
   {
@@ -31,22 +32,52 @@ const brands = [
   },
 ];
 
+const brandsEn = [
+  {
+    name: "INSPUR",
+    role: "Energy Storage (BESS)",
+    description:
+      "Inspur is one of the world's leading server manufacturers and a major IT technology group. The brand brings its engineering strength in IT, cloud, and AI infrastructure into battery energy storage systems, with close to 1 GWh of installation experience.",
+    image: "/images/products/bess-konteyner.png",
+    logo: "/images/image1.png",
+    brandHref: "/markalar/inspur",
+    productsHref: "/bess#urunler",
+    tags: ["Global Technology Brand", "1 GWh Installation Experience", "120+ Countries"],
+  },
+  {
+    name: "Thermaplus",
+    role: "Heat Pump",
+    description:
+      "Thermaplus is Newstag's registered heat pump brand. It combines heat pump technology manufactured in Turkey with local components, local engineering, and a strong service network for residential, pool, and industrial projects.",
+    image: "/images/heat-pump-branded.png",
+    logo: "/images/Adsız tasarım.png",
+    brandHref: "/markalar/thermaplus",
+    productsHref: "/isi-pompasi#urunler",
+    tags: ["Manufactured in Turkey", "A+++ Efficiency", "Local Engineering"],
+  },
+];
+
 export default function Brands() {
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
+  const pageBrands = isEnglish ? brandsEn : brands;
+
   return (
     <section className="py-32 bg-gray-50/50">
       <div className="container mx-auto px-6">
         <div className="text-center mb-24">
           <h2 className="text-4xl md:text-6xl font-medium mb-6 tracking-tight text-[#1e3a8a]">
-            Sektöre Yön Veren <br /> Markalarımız ile Hizmetinizdeyiz
+            {isEnglish ? "Brands Leading" : "Sektöre Yön Veren"} <br /> {isEnglish ? "the Energy Sector" : "Markalarımız ile Hizmetinizdeyiz"}
           </h2>
           <p className="mt-6 text-gray-500 max-w-2xl mx-auto text-lg font-light">
-            Global teknoloji devi Inspur&apos;un Türkiye distribütörlüğü ve Saray
-            Holding güvencesiyle geliştirdiğimiz tescilli markamız Thermaplus.
+            {isEnglish
+              ? "We offer Inspur's global energy storage technology and our registered Thermaplus heat pump brand backed by Saray Holding."
+              : "Global teknoloji devi Inspur'un Türkiye distribütörlüğü ve Saray Holding güvencesiyle geliştirdiğimiz tescilli markamız Thermaplus."}
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {brands.map((brand, i) => (
+          {pageBrands.map((brand, i) => (
             <motion.div
               key={brand.name}
               initial={{ opacity: 0, y: 30 }}
@@ -102,14 +133,14 @@ export default function Brands() {
                     href={brand.brandHref}
                     className="inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 px-6 py-3 text-sm font-bold text-[#1e3a8a] transition-colors hover:border-[#ea580c] hover:text-[#ea580c]"
                   >
-                    Markayı Tanıyın
+                    {isEnglish ? "Meet the Brand" : "Markayı Tanıyın"}
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                   <Link
                     href={brand.productsHref}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1e3a8a] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#ea580c]"
                   >
-                    Ürünleri İncele
+                    {isEnglish ? "View Products" : "Ürünleri İncele"}
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>

@@ -17,6 +17,7 @@ import {
   Wrench,
   Zap,
 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const serviceSteps = [
   {
@@ -57,7 +58,52 @@ const coverageStats = [
   { value: "6 Aşama", label: "Keşiften işletme desteğine" },
 ];
 
+const serviceStepsEn = [
+  {
+    icon: Phone,
+    title: "Request Intake",
+    desc: "Your service, maintenance, or site assessment request is registered through our head office.",
+  },
+  {
+    icon: Wrench,
+    title: "Technical Review",
+    desc: "The right team and action plan are defined according to the product, site conditions, and priority level.",
+  },
+  {
+    icon: Truck,
+    title: "Field Organization",
+    desc: "Installation, commissioning, and service operations are planned through our nationwide service network.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Continuity",
+    desc: "System performance is protected through periodic maintenance, checks, and remote monitoring processes.",
+  },
+];
+
+const serviceScopeEn = [
+  "BESS installation and commissioning support",
+  "Heat pump site assessment, installation, and service coordination",
+  "Periodic maintenance and performance checks",
+  "Fault registration and technical support coordination",
+  "Spare parts and warranty process tracking",
+  "Post-project operational support",
+];
+
+const coverageStatsEn = [
+  { value: "81", label: "Citywide service coordination" },
+  { value: "7/24", label: "Critical fault request tracking" },
+  { value: "Single Center", label: "End-to-end service coordination" },
+  { value: "6 Steps", label: "From assessment to operational support" },
+];
+
 export default function ServicePage() {
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
+  const pageServiceSteps = isEnglish ? serviceStepsEn : serviceSteps;
+  const pageServiceScope = isEnglish ? serviceScopeEn : serviceScope;
+  const pageCoverageStats = isEnglish ? coverageStatsEn : coverageStats;
+
   return (
     <>
       <Navbar />
@@ -72,17 +118,16 @@ export default function ServicePage() {
                 transition={{ duration: 0.8 }}
               >
                 <span className="text-[#ea580c] font-bold tracking-[0.3em] uppercase text-xs mb-6 block">
-                  Servis ve Satış Ağı
+                  {isEnglish ? "Service and Sales Network" : "Servis ve Satış Ağı"}
                 </span>
                 <h1 className="text-5xl md:text-7xl font-medium text-[#1e3a8a] tracking-tight mb-8 leading-tight">
-                  Enerjiniz İçin <br />
-                  <span className="text-[#ea580c]">Her Zaman Sahadayız</span>
+                  {isEnglish ? "Always in the Field" : "Enerjiniz İçin"} <br />
+                  <span className="text-[#ea580c]">{isEnglish ? "For Your Energy" : "Her Zaman Sahadayız"}</span>
                 </h1>
                 <p className="text-xl text-gray-600 font-light leading-relaxed max-w-2xl mb-8">
-                  Türkiye genelinde hizmet veren servis ve destek ağımızla;
-                  kurulum, devreye alma, periyodik bakım, arıza müdahalesi ve
-                  teknik yönlendirme süreçlerini genel merkez koordinasyonunda,
-                  tek noktadan yönetiyoruz.
+                  {isEnglish
+                    ? "With our nationwide service and support network, we manage installation, commissioning, periodic maintenance, fault response, and technical guidance from a single head-office coordination point."
+                    : "Türkiye genelinde hizmet veren servis ve destek ağımızla; kurulum, devreye alma, periyodik bakım, arıza müdahalesi ve teknik yönlendirme süreçlerini genel merkez koordinasyonunda, tek noktadan yönetiyoruz."}
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <a
@@ -110,7 +155,7 @@ export default function ServicePage() {
               >
                 <Image
                   src="/images/service-technician.png"
-                  alt="Newstag teknik servis ekibi sahada"
+                  alt={isEnglish ? "Newstag technical service team in the field" : "Newstag teknik servis ekibi sahada"}
                   fill
                   className="object-cover"
                   priority
@@ -119,7 +164,7 @@ export default function ServicePage() {
                 <div className="absolute left-6 bottom-6 right-6 rounded-3xl bg-white/90 backdrop-blur p-6">
                   <div className="flex items-center gap-3 text-[#1e3a8a] font-bold">
                     <Clock3 className="w-6 h-6 text-[#ea580c]" />
-                    Kurulum sonrası sürdürülebilir operasyon desteği
+                    {isEnglish ? "Sustainable operational support after installation" : "Kurulum sonrası sürdürülebilir operasyon desteği"}
                   </div>
                 </div>
               </motion.div>
@@ -136,20 +181,19 @@ export default function ServicePage() {
               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="text-white">
                   <p className="text-sm uppercase tracking-[0.3em] text-white/60 mb-4">
-                    Hizmet Kapsamı
+                    {isEnglish ? "Service Scope" : "Hizmet Kapsamı"}
                   </p>
                   <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
-                    Tüm Türkiye&apos;de servis ve destek
+                    {isEnglish ? "Service and support across Turkiye" : "Tüm Türkiye'de servis ve destek"}
                   </h2>
                   <p className="text-white/70 font-light text-lg leading-relaxed">
-                    Bölgesel liste yerine 81 ilin tamamında hizmet veren bir
-                    organizasyonla çalışıyoruz. Nerede olursanız olun; BESS ve
-                    ısı pompası sistemleriniz için keşif, kurulum, bakım ve
-                    arıza süreçleriniz tek merkezden koordine edilir.
+                    {isEnglish
+                      ? "Instead of a limited regional list, we work with an organization that can coordinate service across all 81 cities. Wherever your project is located, assessment, installation, maintenance, and fault processes for BESS and heat pump systems are managed from one center."
+                      : "Bölgesel liste yerine 81 ilin tamamında hizmet veren bir organizasyonla çalışıyoruz. Nerede olursanız olun; BESS ve ısı pompası sistemleriniz için keşif, kurulum, bakım ve arıza süreçleriniz tek merkezden koordine edilir."}
                   </p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  {coverageStats.map((stat, i) => (
+                  {pageCoverageStats.map((stat, i) => (
                     <motion.div
                       key={stat.label}
                       initial={{ opacity: 0, y: 20 }}
@@ -175,16 +219,17 @@ export default function ServicePage() {
           <div className="container mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] tracking-tight mb-6">
-                Servis Süreci
+                {isEnglish ? "Service Process" : "Servis Süreci"}
               </h2>
               <p className="text-gray-500 text-lg font-light">
-                Talebin alınmasından saha organizasyonuna kadar süreç tek
-                merkezden takip edilir.
+                {isEnglish
+                  ? "The full process is tracked from request intake to field organization through a single coordination center."
+                  : "Talebin alınmasından saha organizasyonuna kadar süreç tek merkezden takip edilir."}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {serviceSteps.map((step, index) => (
+              {pageServiceSteps.map((step, index) => (
                 <motion.div
                   key={step.title}
                   initial={{ opacity: 0, y: 20 }}
@@ -208,14 +253,15 @@ export default function ServicePage() {
             <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
               <div>
                 <span className="text-[#ea580c] text-xs font-bold tracking-[0.3em] uppercase mb-4 block">
-                  Genel Merkez
+                  {isEnglish ? "Head Office" : "Genel Merkez"}
                 </span>
                 <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] tracking-tight mb-6">
-                  Tüm talepler tek merkezden koordine edilir
+                  {isEnglish ? "All requests are coordinated from one center" : "Tüm talepler tek merkezden koordine edilir"}
                 </h2>
                 <p className="text-gray-600 font-light text-lg leading-relaxed">
-                  Proje, bakım, servis ve garanti süreçleriniz için genel merkez
-                  iletişim kanallarımız üzerinden bize ulaşabilirsiniz.
+                  {isEnglish
+                    ? "You can contact us through our head office channels for project, maintenance, service, and warranty processes."
+                    : "Proje, bakım, servis ve garanti süreçleriniz için genel merkez iletişim kanallarımız üzerinden bize ulaşabilirsiniz."}
                 </p>
               </div>
 
@@ -225,7 +271,7 @@ export default function ServicePage() {
                     <MapPin className="w-6 h-6 text-[#ea580c] mt-1" />
                     <div>
                       <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
-                        Lokasyon
+                        {isEnglish ? "Location" : "Lokasyon"}
                       </div>
                       <a
                         href="https://www.google.com/maps/place/data=!4m2!3m1!1s0x14cad3c555555555:0xc12bb9adc218764f?sa=X&ved=1t:8290&ictx=111"
@@ -233,7 +279,9 @@ export default function ServicePage() {
                         rel="noreferrer"
                         className="font-bold text-[#1e3a8a] transition-colors hover:text-[#ea580c]"
                       >
-                        Yıldızhan Cad. Saray İş Merkezi No:4, Köşe Sk., 34887 Sancaktepe/İstanbul
+                        {isEnglish
+                          ? "Yildizhan Avenue, Saray Business Center No. 4, Kose Street, 34887 Sancaktepe/Istanbul"
+                          : "Yıldızhan Cad. Saray İş Merkezi No:4, Köşe Sk., 34887 Sancaktepe/İstanbul"}
                       </a>
                     </div>
                   </div>
@@ -241,13 +289,13 @@ export default function ServicePage() {
                     <Phone className="w-6 h-6 text-[#ea580c] mt-1" />
                     <div>
                       <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
-                        Telefon
+                        {isEnglish ? "Phone" : "Telefon"}
                       </div>
                       <a href="tel:+902163110067" className="font-bold text-[#1e3a8a] transition-colors hover:text-[#ea580c]">
                         0 216 311 00 67
                       </a>
                       <p className="text-gray-500 font-light mt-1">
-                        Servis ve destek koordinasyonu
+                        {isEnglish ? "Service and support coordination" : "Servis ve destek koordinasyonu"}
                       </p>
                     </div>
                   </div>
@@ -255,11 +303,11 @@ export default function ServicePage() {
                     <Mail className="w-6 h-6 text-[#ea580c] mt-1" />
                     <div>
                       <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
-                        E-Posta
+                        {isEnglish ? "Email" : "E-Posta"}
                       </div>
                       <p className="text-[#1e3a8a] font-bold">info@newstag.com.tr</p>
                       <p className="text-gray-500 font-light mt-1">
-                        Teklif, servis ve teknik destek
+                        {isEnglish ? "Quotes, service, and technical support" : "Teklif, servis ve teknik destek"}
                       </p>
                     </div>
                   </div>
@@ -267,10 +315,10 @@ export default function ServicePage() {
                     <Zap className="w-6 h-6 text-[#ea580c] mt-1" />
                     <div>
                       <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
-                        Kapsam
+                        {isEnglish ? "Scope" : "Kapsam"}
                       </div>
-                      <p className="text-[#1e3a8a] font-bold">BESS ve Isı Pompası</p>
-                      <p className="text-gray-500 font-light mt-1">Kurulum sonrası destek</p>
+                      <p className="text-[#1e3a8a] font-bold">{isEnglish ? "BESS and Heat Pump" : "BESS ve Isı Pompası"}</p>
+                      <p className="text-gray-500 font-light mt-1">{isEnglish ? "After-installation support" : "Kurulum sonrası destek"}</p>
                     </div>
                   </div>
                 </div>
@@ -278,7 +326,7 @@ export default function ServicePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
-              {serviceScope.map((item) => (
+              {pageServiceScope.map((item) => (
                 <div
                   key={item}
                   className="bg-[#f8fafc] border border-gray-100 rounded-2xl px-5 py-4 text-gray-600 font-medium"
@@ -293,7 +341,7 @@ export default function ServicePage() {
                 href="/iletisim"
                 className="inline-flex items-center gap-3 bg-[#ea580c] text-white px-10 py-5 rounded-full font-bold hover:bg-[#c2410c] transition-colors"
               >
-                Servis Talebi Oluştur <ArrowRight className="w-5 h-5" />
+                {isEnglish ? "Create a Service Request" : "Servis Talebi Oluştur"} <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
           </div>

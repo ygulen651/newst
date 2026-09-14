@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Plus, Minus } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const storyCategories = [
   {
@@ -33,21 +34,51 @@ const storyCategories = [
   },
 ];
 
+const storyCategoriesEn = [
+  {
+    id: "customer",
+    label: "Customer Stories",
+    title: "Protecting the Past, Powering the Future",
+    description: "A historic mill's journey toward solar energy.",
+    image: "/images/utility-scenario.png",
+    href: "/referanslar",
+  },
+  {
+    id: "distributor",
+    label: "Distributor Stories",
+    title: "Leading the Change",
+    description: "Build the future of renewable energy with Newstag.",
+    image: "/images/business-scenario.png",
+    href: "/referanslar",
+  },
+  {
+    id: "service",
+    label: "Service Stories",
+    title: "Always by Your Side",
+    description: "Our 24/7 energy continuity and technical support solutions.",
+    image: "/images/home-scenario.png",
+    href: "/servis",
+  },
+];
+
 export default function Stories() {
+  const { lang } = useLanguage();
+  const isEnglish = lang === "en";
+  const stories = isEnglish ? storyCategoriesEn : storyCategories;
   const [activeCategory, setActiveCategory] = useState("customer");
-  const currentStory = storyCategories.find((s) => s.id === activeCategory)!;
+  const currentStory = stories.find((s) => s.id === activeCategory) ?? stories[0];
 
   return (
     <section className="py-32 bg-white overflow-hidden">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl md:text-6xl font-medium text-gray-400 text-center mb-24">
-          Hikayeler İlham Verir
+          {isEnglish ? "Stories Inspire" : "Hikayeler İlham Verir"}
         </h2>
 
         <div className="flex flex-col lg:flex-row gap-20 items-start">
           {/* Left Content - Accordion */}
           <div className="w-full lg:w-1/2 space-y-12">
-            {storyCategories.map((category) => (
+            {stories.map((category) => (
               <div key={category.id} className="border-l-2 border-gray-100 relative">
                 {activeCategory === category.id && (
                   <motion.div 
@@ -89,7 +120,7 @@ export default function Stories() {
                           href={category.href}
                           className="inline-block px-10 py-3 border border-[#ea580c] text-[#ea580c] rounded-full hover:bg-[#ea580c] hover:text-white transition-all duration-300 font-medium"
                         >
-                          Daha Fazlasını Keşfedin
+                          {isEnglish ? "Discover More" : "Daha Fazlasını Keşfedin"}
                         </Link>
                       </div>
                     </motion.div>

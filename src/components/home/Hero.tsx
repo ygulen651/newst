@@ -8,7 +8,7 @@ import { useLanguage } from "@/lib/i18n";
 
 export default function Hero() {
   const container = useRef(null);
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start start", "end start"],
@@ -88,7 +88,7 @@ export default function Hero() {
                 href="/isi-pompasi"
                 className="inline-flex items-center gap-3 rounded-full bg-[#ea580c] px-8 py-4 font-bold text-white shadow-2xl transition-colors hover:bg-[#c2410c]"
               >
-                Thermaplus Isı Pompası
+                {lang === "en" ? "Thermaplus Heat Pump" : "Thermaplus Isı Pompası"}
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </motion.div>
