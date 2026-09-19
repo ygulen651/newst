@@ -110,11 +110,16 @@ export default function Footer() {
 
         <div className="pt-12 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-wrap justify-center md:justify-start gap-8 text-sm text-gray-400">
+            <a
+              href="https://www.google.com/maps/place/data=!4m2!3m1!1s0x14cad3c555555555:0xc12bb9adc218764f?sa=X&ved=1t:8290&ictx=111"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 hover:text-[#ea580c] transition-colors"
+            >
+              <MapPin className="w-4 h-4" /> Yıldızhan Cad. Saray İş Merkezi No:4, Köşe Sk., 34887 Sancaktepe/İstanbul
+            </a>
             <span className="flex items-center gap-2">
-              <MapPin className="w-4 h-4" /> {t.footer.location}
-            </span>
-            <span className="flex items-center gap-2">
-              <Phone className="w-4 h-4" /> +90 (212) 000 00 00
+              <Phone className="w-4 h-4" /> 0 216 311 00 67
             </span>
             <span className="flex items-center gap-2">
               <Mail className="w-4 h-4" /> info@newstag.com.tr

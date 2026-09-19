@@ -86,7 +86,7 @@ const tableLabelEn: Record<string, string> = {
 const categoryCopyEn: Record<string, { title: string; desc: string }> = {
   "Konut Serileri": {
     title: "Residential Series",
-    desc: "6-16 kW inverter monoblock solutions and boiler-compatible series for heating, cooling, and domestic hot water.",
+    desc: "8-35 KW inverter monoblock solutions and boiler-compatible series for heating, cooling, and domestic hot water.",
   },
   "Havuz Serileri": {
     title: "Pool Series",
@@ -94,7 +94,7 @@ const categoryCopyEn: Record<string, { title: string; desc: string }> = {
   },
   "Endüstriyel Seriler": {
     title: "Industrial Series",
-    desc: "Large-scale projects with 80 °C process water, commercial hot water, and 328 kW - 1,066 kW cascade systems.",
+    desc: "Solutions for high-capacity projects with operating water up to 78 °C and cascade system architecture.",
   },
 };
 
@@ -377,7 +377,7 @@ const thermaplusPluses = [
   "Konut, havuz ve endüstriyel seri seçenekleri",
   "GES ve BESS ile entegre, düşük karbonlu kullanım senaryoları",
   "A+++ enerji etiketi ile bina enerji pasaportu değerine katkı",
-  "6 kW'tan 1.066 kW kaskad sistemlere uzanan geniş güç aralığı",
+  "8 KW’dan yüksek kapasiteli sanayi projelerine uzanan geniş güç aralığı",
 ];
 
 const copStatsEn = [
@@ -434,13 +434,13 @@ const thermaplusPlusesEn = [
   "Residential, pool, and industrial series options",
   "Low-carbon use scenarios integrated with solar PV and BESS",
   "A+++ energy label support for building energy performance",
-  "Wide power range from 6 kW to 1,066 kW cascade systems",
+  "Wide power range from 8 KW to high-capacity industrial projects",
 ];
 
 const categoryMeta: Record<string, { icon: typeof Home; desc: string }> = {
   "Konut Serileri": {
     icon: Home,
-    desc: "Isıtma, soğutma ve kullanım sıcak suyu için 6-16 kW inverter monoblok çözümler ve boyler uyumlu seriler.",
+    desc: "Isıtma, soğutma ve kullanım sıcak suyu için 8-35 KW inverter monoblok çözümler ve boyler uyumlu seriler.",
   },
   "Havuz Serileri": {
     icon: Waves,
@@ -448,7 +448,7 @@ const categoryMeta: Record<string, { icon: typeof Home; desc: string }> = {
   },
   "Endüstriyel Seriler": {
     icon: Factory,
-    desc: "80 °C proses suyu, ticari sıcak su ve 328 kW - 1.066 kW kaskad sistemlerle büyük ölçekli projeler.",
+    desc: "78 °C’ye varan çalışma suyu ve kaskad sistem yapısı ile büyük kapasiteli projelere yönelik çözümler.",
   },
 };
 
@@ -849,19 +849,19 @@ export default function HeatPumpPage() {
             <div className="max-w-4xl mx-auto text-white">
               <Calculator className="w-14 h-14 text-[#f97316] mx-auto mb-8" />
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-                {isEnglish ? "Savings Calculator" : "Tasarruf Hesaplama"}
+                {isEnglish ? "Capacity Calculation Simulator" : "Kapasite Hesaplama Simülatörü"}
               </h2>
               <p className="text-white/75 font-light text-lg md:text-xl leading-relaxed mb-10">
                 {isEnglish
-                  ? "Our savings calculator will soon show how much you can save by switching from your current heating system to a heat pump. For now, you can request a free analysis from our expert team through the capacity calculation form."
-                  : "Mevcut ısıtma sisteminize göre ısı pompasıyla ne kadar tasarruf edeceğinizi hesaplayan modülümüz çok yakında burada. Şimdilik kapasite hesaplama formumuz üzerinden uzman ekibimizden ücretsiz analiz talep edebilirsiniz."}
+                  ? "Enter your existing building and system information into our simulator to calculate the estimated savings rate provided by a heat pump, and view the required capacity and our product recommendation. At the end of the calculation, you can share your information with our technical team to request an offer."
+                  : "Mevcut yapı ve sistem bilgilerinizi simülatörümüze girerek, ısı pompası ile sağlanacak tahmini tasarruf oranını hesaplayabilir, ihtiyaç duyulan kapasite ve ürün önerimizi görebilirsiniz. Dilerseniz hesaplama sonunda bilgilerinizi teknik ekibimizle paylaşarak teklif alabilirsiniz."}
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
                   href="/kapasite-hesaplama.html"
                   className="inline-flex items-center gap-3 bg-white text-[#1e3a8a] px-8 py-4 rounded-full font-bold hover:bg-[#f97316] hover:text-white transition-colors"
                 >
-                  {isEnglish ? "Capacity Calculation Form" : "Kapasite Hesaplama Formu"} <ArrowRight className="w-5 h-5" />
+                  {isEnglish ? "Calculate Now" : "Hesaplama Yapın"} <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
                   href="/iletisim"

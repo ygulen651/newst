@@ -125,7 +125,7 @@ const heatPumpResidentialProduct: SolutionProduct = {
   title: "Thermaplus Konut ve Havuz Serileri",
   desc: "Isıtma, soğutma, sıcak su ve havuz ısıtmasını tek verimli sistemle çözen ısı pompası ailesi.",
   href: "/isi-pompasi#urunler",
-  image: "/images/SARAY ENERJİ 1.png",
+  image: "/images/2.png",
 };
 
 const commonBessBenefits: SolutionBenefit[] = [
