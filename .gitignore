@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local deployment bundles / accidental installers
+/newstag-main.zip
+/public/images/HPSupportSolutionsFramework-13.0.1.131.exe
+/public/images/sp158405.exe

@@ -1,0 +1,24 @@
+.git
+.gitignore
+.next
+node_modules
+npm-debug.log*
+.env*
+*.tsbuildinfo
+
+# Local source bundles and non-application documents must not be sent to the
+# Docker daemon. The nested ZIP alone is almost 1 GB.
+*.zip
+*.docx
+*.pptx
+*.pdf
+public/images/HPSupportSolutionsFramework-13.0.1.131.exe
+public/images/sp158405.exe
+
+.agents
+.claude
+scratch
+CLAUDE.md
+AGENTS.md
+IMAGE_ATTRIBUTIONS.md
+README.md
