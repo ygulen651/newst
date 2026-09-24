@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { applyAutoTranslation, observeAutoTranslation } from "@/lib/auto-translate";
 
 export type Language = "tr" | "en";
@@ -157,12 +157,14 @@ const LanguageContext = createContext<LanguageContextValue>({
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Language>("tr");
+  const stopTranslationObserver = useRef<() => void>(() => {});
 
   useEffect(() => {
     // Sync the language stored in localStorage after hydration; the server
     // always renders Turkish, so this must run in an effect.
     const stored = window.localStorage.getItem("newstag-lang");
     if (stored === "en") {
+      applyAutoTranslation("en");
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setLangState("en");
       document.documentElement.lang = "en";
@@ -170,20 +172,24 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = lang;
-    const frame = window.requestAnimationFrame(() => applyAutoTranslation(lang));
-    const stopObserver = observeAutoTranslation(lang);
+    const stop = observeAutoTranslation(lang);
+    stopTranslationObserver.current = stop;
 
     return () => {
-      window.cancelAnimationFrame(frame);
-      stopObserver();
+      stop();
+      if (stopTranslationObserver.current === stop) {
+        stopTranslationObserver.current = () => {};
+      }
     };
   }, [lang]);
 
   const setLang = (next: Language) => {
+    stopTranslationObserver.current();
+    stopTranslationObserver.current = () => {};
+    document.documentElement.lang = next;
+    applyAutoTranslation(next);
     setLangState(next);
     window.localStorage.setItem("newstag-lang", next);
-    document.documentElement.lang = next;
   };
 
   return (

@@ -117,7 +117,7 @@ const heatPumpIndustrialProduct: SolutionProduct = {
   title: "Thermaplus Endüstriyel Seriler",
   desc: "80 °C'ye kadar proses suyu, kaskad sistemler ve ticari sıcak su için yüksek verimli ısı pompaları.",
   href: "/isi-pompasi#urunler",
-  image: "/images/SARAY ENERJİ 3.png",
+  image: "/images/777.png",
 };
 
 const heatPumpResidentialProduct: SolutionProduct = {

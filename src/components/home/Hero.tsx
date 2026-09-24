@@ -33,24 +33,24 @@ export default function Hero() {
               loop
               muted
               playsInline
+              preload="auto"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/20" />
-          </motion.div>
-
-          {/* Saray Holding badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="absolute top-24 right-6 z-20 flex items-center gap-3 rounded-full border border-white/10 bg-black/20 px-5 py-2.5 shadow-2xl backdrop-blur-md md:top-28 md:right-12"
-          >
-            <div className="h-2 w-2 animate-pulse rounded-full bg-[#ea580c]" />
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-white/90 md:text-sm">
-              {t.hero.badge}
-            </span>
           </motion.div>
 
           <div className="container relative z-10 mx-auto flex h-full flex-col items-center justify-end px-6 pb-28 text-center md:pb-32">
+            {/* Saray Holding badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="z-20 mb-6 flex items-center gap-3 rounded-full border border-white/10 bg-black/20 px-5 py-2.5 shadow-2xl backdrop-blur-md md:absolute md:top-28 md:right-12 md:mb-0"
+            >
+              <div className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-[#ea580c]" />
+              <span className="text-xs font-medium uppercase tracking-[0.2em] text-white/90 md:text-sm">
+                {t.hero.badge}
+              </span>
+            </motion.div>
+
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
