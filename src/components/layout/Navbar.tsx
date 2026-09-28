@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Globe } from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n";
+import { usePageContent } from "@/lib/content/context";
 
 function LanguageSwitch({ compact = false }: { compact?: boolean }) {
   const { lang, setLang } = useLanguage();
@@ -25,7 +26,8 @@ function LanguageSwitch({ compact = false }: { compact?: boolean }) {
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
+  const layout = usePageContent("layout");
 
   const navLinks = [
     { name: t.nav.home, href: "/" },
@@ -46,7 +48,7 @@ export default function Navbar() {
           <Link href="/" className="z-10">
             <div className="relative w-[120px] h-10 md:w-[150px] md:h-12">
               <Image
-                src="/images/image5.png"
+                src={layout.text("logo")}
                 alt="NEWSTAG Logo"
                 fill
                 className="object-contain"
@@ -85,7 +87,7 @@ export default function Navbar() {
               className="relative w-[180px] h-14 xl:w-[220px] xl:h-16"
             >
               <Image
-                src="/images/image5.png"
+                src={layout.text("logo")}
                 alt="NEWSTAG Logo"
                 fill
                 className="object-contain"
@@ -119,7 +121,7 @@ export default function Navbar() {
             className="fixed inset-0 z-[100] flex h-[100svh] w-screen flex-col gap-5 overflow-y-auto bg-white p-6 sm:gap-6 sm:p-8"
           >
             <div className="flex justify-between items-center mb-8">
-              <div className="text-xl font-bold text-[#ea580c]">{lang === "tr" ? "NEWSTAG ENERJİ" : "NEWSTAG ENERGY"}</div>
+              <div className="text-xl font-bold text-[#ea580c]">{layout.text("mobileMenuTitle")}</div>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 aria-label="Menüyü kapat"

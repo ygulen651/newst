@@ -5,14 +5,17 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, Layers, Package } from "lucide-react";
 import Link from "next/link";
-import { getLocalizedSolutions } from "@/lib/solutions-data";
+import { localizeSolution, type Solution } from "@/lib/solutions";
 import { useLanguage } from "@/lib/i18n";
+import { usePageContent } from "@/lib/content/context";
 
-export default function Scenarios() {
+export default function Scenarios({ solutions }: { solutions: Solution[] }) {
   const { lang, t } = useLanguage();
-  const pageSolutions = getLocalizedSolutions(lang);
-  const [activeSlug, setActiveSlug] = useState(pageSolutions[0].slug);
+  const c = usePageContent("home");
+  const pageSolutions = solutions.map((solution) => localizeSolution(solution, lang));
+  const [activeSlug, setActiveSlug] = useState(pageSolutions[0]?.slug);
   const active = pageSolutions.find((s) => s.slug === activeSlug) ?? pageSolutions[0];
+  if (!active) return null;
   const primaryBessProduct = active.products.find((product) =>
     product.href.startsWith("/bess/"),
   );
@@ -26,7 +29,7 @@ export default function Scenarios() {
       {/* Section Title */}
       <div className="absolute top-12 left-0 w-full z-20 text-center">
         <span className="text-xs font-bold uppercase tracking-[0.4em] text-[#f97316] mb-3 block">
-          Newstag Enerji
+          {c.text("scenariosEyebrow")}
         </span>
         <h2 className="text-3xl md:text-5xl font-medium text-white tracking-tight">
           {t.nav.solutions}

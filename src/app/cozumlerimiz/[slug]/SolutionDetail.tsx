@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BatteryCharging, ThermometerSun } from "lucide-react";
-import { getLocalizedSolution, getLocalizedSolutions, type SolutionBenefit } from "@/lib/solutions-data";
+import { localizeSolution, type LocalizedSolution, type Solution } from "@/lib/solutions";
 import { useLanguage } from "@/lib/i18n";
 
 function BenefitGrid({
@@ -17,7 +17,7 @@ function BenefitGrid({
 }: {
   title: string;
   icon: typeof BatteryCharging;
-  benefits: SolutionBenefit[];
+  benefits: LocalizedSolution["whyBess"];
 }) {
   return (
     <div className="bg-white rounded-[40px] p-8 md:p-12 border border-gray-100 shadow-sm">
@@ -47,11 +47,11 @@ function BenefitGrid({
   );
 }
 
-export default function SolutionDetail({ slug }: { slug: string }) {
+export default function SolutionDetail({ solution: rawSolution, others }: { solution: Solution; others: Solution[] }) {
   const { lang } = useLanguage();
   const isEnglish = lang === "en";
-  const solution = getLocalizedSolution(slug, lang)!;
-  const otherSolutions = getLocalizedSolutions(lang).filter((s) => s.slug !== slug);
+  const solution = localizeSolution(rawSolution, lang);
+  const otherSolutions = others.map((item) => localizeSolution(item, lang));
 
   return (
     <>
@@ -106,7 +106,7 @@ export default function SolutionDetail({ slug }: { slug: string }) {
         </section>
 
         {/* Segments */}
-        {solution.segments && (
+        {solution.segments.length > 0 && (
           <section className="py-20 bg-[#eef4fb]">
             <div className="container mx-auto px-6">
               <h2 className="text-3xl md:text-5xl font-bold text-[#1e3a8a] tracking-tight mb-12 max-w-3xl">
@@ -166,7 +166,7 @@ export default function SolutionDetail({ slug }: { slug: string }) {
         )}
 
         {/* Why BESS */}
-        {solution.whyBess && (
+        {solution.whyBess.length > 0 && (
           <section className="py-20">
             <div className="container mx-auto px-6">
               <BenefitGrid
@@ -179,7 +179,7 @@ export default function SolutionDetail({ slug }: { slug: string }) {
         )}
 
         {/* Why Heat Pump */}
-        {solution.whyHeatPump && (
+        {solution.whyHeatPump.length > 0 && (
           <section className="pb-20">
             <div className="container mx-auto px-6">
               <BenefitGrid

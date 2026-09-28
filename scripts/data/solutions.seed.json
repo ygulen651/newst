@@ -1,0 +1,1448 @@
+[
+  {
+    "slug": "enerji-santralleri",
+    "order": 1,
+    "published": true,
+    "title": {
+      "tr": "Enerji Santralleri",
+      "en": "Power Plants"
+    },
+    "navTitle": {
+      "tr": "Enerji Santralleri",
+      "en": "Power Plants"
+    },
+    "icon": "Zap",
+    "image": "/images/utility-scenario.png",
+    "shortDesc": {
+      "tr": "GES ve RES projelerinde dengesizlik maliyetlerini azaltan, yan hizmet gelirleri yaratan şebeke ölçekli depolama.",
+      "en": "Grid-scale storage for renewable plants, imbalance management, and ancillary service revenue."
+    },
+    "intro": {
+      "tr": "Yenilenebilir enerji santrallerinin üretimdeki payı artarken, kesintili üretim yapısı şebeke güvenliği ve gelir yönetimi açısından daha akıllı çözümler gerektiriyor.\n\nBESS ile entegre çalışan santraller, üretilemeyen enerjiyi depolayabilir, dengesizlik maliyetlerini azaltabilir ve yan hizmet piyasalarıyla gelir modellerini çeşitlendirebilir.",
+      "en": "As renewable generation grows, power plants need smarter systems to manage intermittency, grid stability, and revenue.\n\nBESS stores unused energy, reduces imbalance costs, and supports new revenue models through ancillary services."
+    },
+    "highlight": {
+      "tr": "GES ve RES projelerinde batarya depolama; arz güvenliği, frekans desteği, reaktif güç yönetimi ve mikro şebeke kabiliyeti için kilit teknolojidir.",
+      "en": "Battery storage is a key technology for supply security, frequency support, reactive power management, and microgrid capability."
+    },
+    "segmentsTitle": {
+      "tr": "",
+      "en": ""
+    },
+    "segments": [],
+    "whyBess": [
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Enerji Arbitrajı",
+          "en": "Energy Arbitrage"
+        },
+        "desc": {
+          "tr": "YEKDEM dışı senaryolarda EPİAŞ PTF bazlı akıllı şarj-deşarj optimizasyonu ile gelir artışı.",
+          "en": "Energy Arbitrage for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "ShieldCheck",
+        "title": {
+          "tr": "Dengesizlik Yönetimi",
+          "en": "Imbalance Management"
+        },
+        "desc": {
+          "tr": "Üretim tahmin sapmalarından kaynaklanan dengesizlik maliyetlerini azaltma.",
+          "en": "Imbalance Management for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "BatteryCharging",
+        "title": {
+          "tr": "Kısıtlama Yönetimi",
+          "en": "Curtailment Management"
+        },
+        "desc": {
+          "tr": "TEİAŞ kısıtlamaları nedeniyle üretilemeyen enerjiyi depolayarak üretim kaybını önleme.",
+          "en": "Curtailment Management for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Zap",
+        "title": {
+          "tr": "Frekans Regülasyonu",
+          "en": "Frequency Regulation"
+        },
+        "desc": {
+          "tr": "FCR, FFR ve aFRR gibi yan hizmetlerle şebekeye milisaniyeler içinde tepki ve ilave gelir.",
+          "en": "Frequency Regulation for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "PlugZap",
+        "title": {
+          "tr": "Reaktif Güç Desteği",
+          "en": "Reactive Power Support"
+        },
+        "desc": {
+          "tr": "Dinamik reaktif güç kontrolü ile gerilim desteği ve ceza riskinin azaltılması.",
+          "en": "Reactive Power Support for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Power",
+        "title": {
+          "tr": "Mikro Şebeke",
+          "en": "Microgrid"
+        },
+        "desc": {
+          "tr": "Black-start desteği ve off-grid / mikro şebeke operasyonlarında süreklilik.",
+          "en": "Microgrid for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      }
+    ],
+    "whyHeatPump": [],
+    "products": [
+      {
+        "eyebrow": {
+          "tr": "Enerji Depolama",
+          "en": "Energy Storage"
+        },
+        "title": {
+          "tr": "Inspur 20 ft Konteyner Tipi BESS",
+          "en": "Inspur 20 ft Container BESS"
+        },
+        "desc": {
+          "tr": "Santral, şebeke ve sanayi ölçeği için sıvı soğutmalı, MWh sınıfı, modüler enerji depolama çözümü.",
+          "en": "Liquid-cooled, MWh-class modular energy storage for power plants, grids, and industrial-scale projects."
+        },
+        "href": "/bess/konteyner-tipi-bess",
+        "image": "/images/products/bess-konteyner.png"
+      },
+      {
+        "eyebrow": {
+          "tr": "Enerji Depolama",
+          "en": "Limited Grid and Off-Grid"
+        },
+        "title": {
+          "tr": "Inspur FlexCube Konteyner BESS",
+          "en": "FlexCube Container BESS"
+        },
+        "desc": {
+          "tr": "Şebeke olmayan veya kısıtlı noktalar için 10 ft, şarj et & taşı yapısına uygun off-grid çözüm.",
+          "en": "A 10 ft integrated, portable, plug-and-play off-grid solution for weak-grid or no-grid locations."
+        },
+        "href": "/bess/flexcube-konteyner-bess",
+        "image": "/images/products/bess-flexcube.png"
+      }
+    ]
+  },
+  {
+    "slug": "sanayi-tesisleri",
+    "order": 2,
+    "published": true,
+    "title": {
+      "tr": "Sanayi Tesisleri",
+      "en": "Industrial Facilities"
+    },
+    "navTitle": {
+      "tr": "Sanayi Tesisleri",
+      "en": "Industrial Facilities"
+    },
+    "icon": "Factory",
+    "image": "/images/industry-automotive.jpg",
+    "shortDesc": {
+      "tr": "Üretim sürekliliği, pik yük yönetimi ve proses ısısı için BESS ve endüstriyel ısı pompası entegrasyonu.",
+      "en": "BESS and industrial heat pump integration for production continuity, peak load control, and process heat."
+    },
+    "intro": {
+      "tr": "Sanayi tesisleri için enerji dönüşümü artık ertelenebilir bir yatırım değil; rekabet gücü, arz güvenliği ve verimlilik için kaçınılmaz bir gerekliliktir.\n\nArtan elektrik ve doğalgaz maliyetleri, üretim sürekliliği beklentisi ve karbon ayak izini azaltma baskısı; işletmeleri daha akıllı, daha esnek ve daha temiz enerji altyapılarına yönlendiriyor.",
+      "en": "For industrial facilities, energy transformation is now a core requirement for competitiveness, supply security, and efficiency.\n\nRising electricity and natural gas costs, production continuity expectations, and carbon pressure are pushing facilities toward smarter energy infrastructure."
+    },
+    "highlight": {
+      "tr": "Güneş enerjisinin BESS ve ısı pompası ile birleştirilmesi, sanayi tesislerinde hem ekonomik hem de çevreci kullanımın temelini oluşturur.",
+      "en": "Combining solar power with BESS and heat pumps creates a cleaner and more economical operating model for industry."
+    },
+    "segmentsTitle": {
+      "tr": "Yoğun enerji kullanan her üretim hattı için dönüşüm alanı",
+      "en": "Transformation areas for energy-intensive production lines"
+    },
+    "segments": [
+      {
+        "icon": "Factory",
+        "title": {
+          "tr": "Demir-Çelik",
+          "en": "Iron and Steel"
+        },
+        "desc": {
+          "tr": "Yüksek proses ısısı, yoğun elektrik tüketimi ve kesintisiz üretim ihtiyacı.",
+          "en": "Iron and Steel for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "",
+        "thumbnail": "/images/industry-steel-v2.png"
+      },
+      {
+        "icon": "Factory",
+        "title": {
+          "tr": "Çimento",
+          "en": "Cement"
+        },
+        "desc": {
+          "tr": "Pik yükler, karbon ayak izi ve atık ısı geri kazanımı için güçlü dönüşüm alanı.",
+          "en": "Cement for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "",
+        "thumbnail": "/images/industry-cement-v3.png"
+      },
+      {
+        "icon": "Factory",
+        "title": {
+          "tr": "Otomotiv",
+          "en": "Automotive"
+        },
+        "desc": {
+          "tr": "Robotik hatlar, boyahane ve iklimlendirme yüklerinde verimlilik odağı.",
+          "en": "Automotive for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "",
+        "thumbnail": "/images/industry-automotive-v2.png"
+      },
+      {
+        "icon": "Factory",
+        "title": {
+          "tr": "Beyaz Eşya",
+          "en": "White Goods"
+        },
+        "desc": {
+          "tr": "Süreklilik, kalite kontrol ve enerji maliyeti yönetiminin kritik olduğu üretim.",
+          "en": "White Goods for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "",
+        "thumbnail": "/images/industry-white-goods-v2.png"
+      }
+    ],
+    "whyBess": [
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Arbitraj ile Tasarruf",
+          "en": "Savings Through Energy Arbitrage"
+        },
+        "desc": {
+          "tr": "Elektriği düşük fiyatlı saatlerde depolayıp pahalı saatlerde kullanarak enerji maliyetlerini düşürme.",
+          "en": "Savings Through Energy Arbitrage for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Sun",
+        "title": {
+          "tr": "Lisanssız GES İçin Tamamlayıcı",
+          "en": "Lisanssız GES İçin Tamamlayıcı"
+        },
+        "desc": {
+          "tr": "Saatlik mahsuplaşma döneminde gündüz üretimini depolayarak kazanca çevirme, şebeke kısıtlama kayıplarını önleme.",
+          "en": "Saatlik mahsuplaşma döneminde gündüz üretimini depolayarak kazanca çevirme, şebeke kısıtlama kayıplarını önleme."
+        }
+      },
+      {
+        "icon": "Gauge",
+        "title": {
+          "tr": "Pik Güç Tıraşlama",
+          "en": "Pik Güç Tıraşlama"
+        },
+        "desc": {
+          "tr": "Anlık yüksek güç taleplerini BESS ile karşılama, güç aşım bedellerini ve kapasite baskısını azaltma.",
+          "en": "Anlık yüksek güç taleplerini BESS ile karşılama, güç aşım bedellerini ve kapasite baskısını azaltma."
+        }
+      },
+      {
+        "icon": "BatteryCharging",
+        "title": {
+          "tr": "Kapasite Kısıtını Aşma",
+          "en": "Overcoming Capacity Limits"
+        },
+        "desc": {
+          "tr": "Kapasite kısıtı olan saatlerde BESS üzerinden enerji sağlama, trafo yatırımını ve bekleme süresini erteleme.",
+          "en": "Overcoming Capacity Limits for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "ShieldCheck",
+        "title": {
+          "tr": "Operasyonel Süreklilik",
+          "en": "Operasyonel Süreklilik"
+        },
+        "desc": {
+          "tr": "Milisaniyeler içinde devreye girerek kesintisiz üretim sağlama, duruş kaynaklı maliyetleri engelleme.",
+          "en": "Milisaniyeler içinde devreye girerek kesintisiz üretim sağlama, duruş kaynaklı maliyetleri engelleme."
+        }
+      },
+      {
+        "icon": "PlugZap",
+        "title": {
+          "tr": "Reaktif Güç Kompanzasyonu",
+          "en": "Reaktif Güç Kompanzasyonu"
+        },
+        "desc": {
+          "tr": "Dinamik reaktif güç dengeleme, gerilim regülasyonu ve reaktif güç cezalarını engelleme.",
+          "en": "Dinamik reaktif güç dengeleme, gerilim regülasyonu ve reaktif güç cezalarını engelleme."
+        }
+      },
+      {
+        "icon": "Waves",
+        "title": {
+          "tr": "Harmonik Kompanzasyonu",
+          "en": "Harmonic Compensation"
+        },
+        "desc": {
+          "tr": "Aktif harmonik filtreleme ile ekipman ömrünü uzatma ve enerji iletim kayıplarını azaltma.",
+          "en": "Harmonic Compensation for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Zap",
+        "title": {
+          "tr": "Jeneratör İkamesi",
+          "en": "Generator Replacement"
+        },
+        "desc": {
+          "tr": "Yüksek yakıt maliyetli jeneratör yerine ekonomik, sessiz ve temiz yedek enerji çözümü.",
+          "en": "Generator Replacement for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Leaf",
+        "title": {
+          "tr": "Karbon Vergisi Baskısını Azaltma",
+          "en": "Karbon Vergisi Baskısını Azaltma"
+        },
+        "desc": {
+          "tr": "GES entegrasyonuyla karbon ayak izini küçültme, CBAM ve sürdürülebilirlik hedeflerine uyum.",
+          "en": "GES entegrasyonuyla karbon ayak izini küçültme, CBAM ve sürdürülebilirlik hedeflerine uyum."
+        }
+      }
+    ],
+    "whyHeatPump": [
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Yüksek Enerji Fiyatları",
+          "en": "High Energy Prices"
+        },
+        "desc": {
+          "tr": "Fiyatı öngörülemez hale gelen fosil yakıt ve doğalgaz bağımlılığını azaltma.",
+          "en": "High Energy Prices for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Gauge",
+        "title": {
+          "tr": "Enerji Verimliliği",
+          "en": "Energy Efficiency"
+        },
+        "desc": {
+          "tr": "3-5 arası COP değerleriyle 1 birim elektrikten 3-5 birim ısı üretme, %75'e varan tasarruf.",
+          "en": "Energy Efficiency for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "ThermometerSun",
+        "title": {
+          "tr": "Tek Sistem",
+          "en": "Single System"
+        },
+        "desc": {
+          "tr": "Isıtma, soğutma ve sıcak su ihtiyacını tek sistem üzerinden yönetme.",
+          "en": "Single System for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Leaf",
+        "title": {
+          "tr": "Çevrecilik",
+          "en": "Sustainability"
+        },
+        "desc": {
+          "tr": "Karbon ayak izini azaltma, yeşil bina sertifikaları ve ESG hedeflerine uyum sağlama.",
+          "en": "Sustainability for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Factory",
+        "title": {
+          "tr": "Atık Isı Değerlendirme",
+          "en": "Waste Heat Recovery"
+        },
+        "desc": {
+          "tr": "Tesisteki atık ısının yeniden kullanımıyla enerji tüketimini ve kayıpları azaltma.",
+          "en": "Waste Heat Recovery for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "ThermometerSun",
+        "title": {
+          "tr": "Proses Isısı",
+          "en": "Process Heat"
+        },
+        "desc": {
+          "tr": "80 °C'ye kadar çıkış suyu sıcaklığıyla endüstriyel proses ihtiyaçlarını karşılama.",
+          "en": "Process Heat for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      }
+    ],
+    "products": [
+      {
+        "eyebrow": {
+          "tr": "Enerji Depolama",
+          "en": "Energy Storage"
+        },
+        "title": {
+          "tr": "Inspur Sıvı Soğutmalı Kabinet BESS",
+          "en": "Inspur Liquid-Cooled Cabinet BESS"
+        },
+        "desc": {
+          "tr": "Sanayi ve ticari işletmeler için tak-çalıştır, tek kabinde entegre, paralel bağlantıyla büyüyen çözüm.",
+          "en": "A plug-and-play single-cabinet solution for industrial and commercial facilities, expandable through parallel connection."
+        },
+        "href": "/bess/sivi-sogutmali-kabinet-bess",
+        "image": "/images/products/bess-kabinet.png"
+      },
+      {
+        "eyebrow": {
+          "tr": "Enerji Depolama",
+          "en": "Energy Storage"
+        },
+        "title": {
+          "tr": "Inspur 20 ft Konteyner Tipi BESS",
+          "en": "Inspur 20 ft Container BESS"
+        },
+        "desc": {
+          "tr": "Santral, şebeke ve sanayi ölçeği için sıvı soğutmalı, MWh sınıfı, modüler enerji depolama çözümü.",
+          "en": "Liquid-cooled, MWh-class modular energy storage for power plants, grids, and industrial-scale projects."
+        },
+        "href": "/bess/konteyner-tipi-bess",
+        "image": "/images/products/bess-konteyner.png"
+      },
+      {
+        "eyebrow": {
+          "tr": "Isı Pompası",
+          "en": "Heat Pump"
+        },
+        "title": {
+          "tr": "Thermaplus Endüstriyel Seriler",
+          "en": "Thermaplus Heat Pump Series"
+        },
+        "desc": {
+          "tr": "80 °C'ye kadar proses suyu, kaskad sistemler ve ticari sıcak su için yüksek verimli ısı pompaları.",
+          "en": "Efficient heat pump solutions for residential, pool, commercial hot water, and industrial process water needs."
+        },
+        "href": "/isi-pompasi#urunler",
+        "image": "/images/777.png"
+      }
+    ]
+  },
+  {
+    "slug": "ticari-isletmeler",
+    "order": 3,
+    "published": true,
+    "title": {
+      "tr": "Ticari İşletmeler",
+      "en": "Commercial Facilities"
+    },
+    "navTitle": {
+      "tr": "Ticari İşletmeler",
+      "en": "Commercial Facilities"
+    },
+    "icon": "Building2",
+    "image": "/images/commercial-hotel-hero-hd.png",
+    "shortDesc": {
+      "tr": "AVM, otel, plaza ve perakende zincirleri için enerji maliyetini düşüren, arz güvenliği sağlayan çözümler.",
+      "en": "Energy solutions that lower costs and strengthen supply security for malls, hotels, offices, and retail chains."
+    },
+    "intro": {
+      "tr": "Ticari işletmeler için enerji maliyetleri gün geçtikçe ağırlığını artırıyor. Alışveriş merkezleri, oteller, plazalar ve büyük perakende zincirleri için tasarruf sağlayan, karbon ayak izini küçülten, enerji verimliliği ve arz güvenliği sunan çözümler büyük önem taşıyor.",
+      "en": "Energy costs are becoming a heavier burden for commercial facilities every day.\n\nShopping malls, hotels, office buildings, and retail chains need solutions that reduce costs, shrink carbon footprint, improve efficiency, and protect supply security."
+    },
+    "highlight": {
+      "tr": "BESS ve ısı pompası kullanımı, ticari işletmelere sağlıklı ve sürdürülebilir büyümenin kapısını açar.",
+      "en": "BESS and heat pump systems help commercial facilities grow with a healthier and more sustainable energy model."
+    },
+    "segmentsTitle": {
+      "tr": "Her ticari yapı tipi için özelleştirilmiş yaklaşım",
+      "en": "A tailored approach for every commercial building type"
+    },
+    "segments": [
+      {
+        "icon": "ShoppingBag",
+        "title": {
+          "tr": "Alışveriş Merkezleri",
+          "en": "Shopping Malls"
+        },
+        "desc": {
+          "tr": "Yoğun HVAC, aydınlatma ve ortak alan yüklerinde maliyet kontrolü.",
+          "en": "Shopping Malls for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "",
+        "thumbnail": "/images/commercial-mall.jpg"
+      },
+      {
+        "icon": "Hotel",
+        "title": {
+          "tr": "Oteller",
+          "en": "Hotels"
+        },
+        "desc": {
+          "tr": "7/24 konfor, sıcak su, havuz ısıtması ve iklimlendirmede verimli enerji kullanımı.",
+          "en": "Hotels for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "",
+        "thumbnail": "/images/commercial-hotel.jpg"
+      },
+      {
+        "icon": "Building2",
+        "title": {
+          "tr": "Plazalar",
+          "en": "Office Buildings"
+        },
+        "desc": {
+          "tr": "Kesintisiz işletme, pik yük yönetimi ve yeşil bina hedeflerine uyum.",
+          "en": "Office Buildings for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "",
+        "thumbnail": "/images/commercial-office.jpg"
+      },
+      {
+        "icon": "Store",
+        "title": {
+          "tr": "Perakende Zincirleri",
+          "en": "Retail Chains"
+        },
+        "desc": {
+          "tr": "Çok lokasyonlu yapılarda standart, izlenebilir ve sürdürülebilir enerji altyapısı.",
+          "en": "Retail Chains for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "",
+        "thumbnail": "/images/commercial-retail.jpg"
+      }
+    ],
+    "whyBess": [
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Arbitraj ile Tasarruf",
+          "en": "Savings Through Energy Arbitrage"
+        },
+        "desc": {
+          "tr": "Elektriği düşük fiyatlı saatlerde depolayıp pahalı saatlerde kullanarak enerji maliyetlerini düşürme.",
+          "en": "Savings Through Energy Arbitrage for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Sun",
+        "title": {
+          "tr": "Lisanssız GES İçin Tamamlayıcı",
+          "en": "Lisanssız GES İçin Tamamlayıcı"
+        },
+        "desc": {
+          "tr": "Saatlik mahsuplaşma döneminde gündüz üretimini depolayarak kazanca çevirme, şebeke kısıtlama kayıplarını önleme.",
+          "en": "Saatlik mahsuplaşma döneminde gündüz üretimini depolayarak kazanca çevirme, şebeke kısıtlama kayıplarını önleme."
+        }
+      },
+      {
+        "icon": "Gauge",
+        "title": {
+          "tr": "Pik Güç Tıraşlama",
+          "en": "Pik Güç Tıraşlama"
+        },
+        "desc": {
+          "tr": "Anlık yüksek güç taleplerini BESS ile karşılama, güç aşım bedellerini ve kapasite baskısını azaltma.",
+          "en": "Anlık yüksek güç taleplerini BESS ile karşılama, güç aşım bedellerini ve kapasite baskısını azaltma."
+        }
+      },
+      {
+        "icon": "BatteryCharging",
+        "title": {
+          "tr": "Kapasite Kısıtını Aşma",
+          "en": "Overcoming Capacity Limits"
+        },
+        "desc": {
+          "tr": "Kapasite kısıtı olan saatlerde BESS üzerinden enerji sağlama, trafo yatırımını ve bekleme süresini erteleme.",
+          "en": "Overcoming Capacity Limits for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "ShieldCheck",
+        "title": {
+          "tr": "Operasyonel Süreklilik",
+          "en": "Operasyonel Süreklilik"
+        },
+        "desc": {
+          "tr": "Milisaniyeler içinde devreye girerek kesintisiz üretim sağlama, duruş kaynaklı maliyetleri engelleme.",
+          "en": "Milisaniyeler içinde devreye girerek kesintisiz üretim sağlama, duruş kaynaklı maliyetleri engelleme."
+        }
+      },
+      {
+        "icon": "PlugZap",
+        "title": {
+          "tr": "Reaktif Güç Kompanzasyonu",
+          "en": "Reaktif Güç Kompanzasyonu"
+        },
+        "desc": {
+          "tr": "Dinamik reaktif güç dengeleme, gerilim regülasyonu ve reaktif güç cezalarını engelleme.",
+          "en": "Dinamik reaktif güç dengeleme, gerilim regülasyonu ve reaktif güç cezalarını engelleme."
+        }
+      },
+      {
+        "icon": "Waves",
+        "title": {
+          "tr": "Harmonik Kompanzasyonu",
+          "en": "Harmonic Compensation"
+        },
+        "desc": {
+          "tr": "Aktif harmonik filtreleme ile ekipman ömrünü uzatma ve enerji iletim kayıplarını azaltma.",
+          "en": "Harmonic Compensation for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Zap",
+        "title": {
+          "tr": "Jeneratör İkamesi",
+          "en": "Generator Replacement"
+        },
+        "desc": {
+          "tr": "Yüksek yakıt maliyetli jeneratör yerine ekonomik, sessiz ve temiz yedek enerji çözümü.",
+          "en": "Generator Replacement for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Leaf",
+        "title": {
+          "tr": "Karbon Vergisi Baskısını Azaltma",
+          "en": "Karbon Vergisi Baskısını Azaltma"
+        },
+        "desc": {
+          "tr": "GES entegrasyonuyla karbon ayak izini küçültme, CBAM ve sürdürülebilirlik hedeflerine uyum.",
+          "en": "GES entegrasyonuyla karbon ayak izini küçültme, CBAM ve sürdürülebilirlik hedeflerine uyum."
+        }
+      }
+    ],
+    "whyHeatPump": [
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Yüksek Enerji Fiyatları",
+          "en": "High Energy Prices"
+        },
+        "desc": {
+          "tr": "Fiyatı öngörülemez hale gelen fosil yakıt ve doğalgaz bağımlılığını azaltma.",
+          "en": "High Energy Prices for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Gauge",
+        "title": {
+          "tr": "Enerji Verimliliği",
+          "en": "Energy Efficiency"
+        },
+        "desc": {
+          "tr": "3-5 arası COP değerleriyle 1 birim elektrikten 3-5 birim ısı üretme, %75'e varan tasarruf.",
+          "en": "Energy Efficiency for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "ThermometerSun",
+        "title": {
+          "tr": "Tek Sistem",
+          "en": "Single System"
+        },
+        "desc": {
+          "tr": "Isıtma, soğutma ve sıcak su ihtiyacını tek sistem üzerinden yönetme.",
+          "en": "Single System for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Leaf",
+        "title": {
+          "tr": "Çevrecilik",
+          "en": "Sustainability"
+        },
+        "desc": {
+          "tr": "Karbon ayak izini azaltma, yeşil bina sertifikaları ve ESG hedeflerine uyum sağlama.",
+          "en": "Sustainability for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Wind",
+        "title": {
+          "tr": "Yüksek HVAC Yükü",
+          "en": "High HVAC Load"
+        },
+        "desc": {
+          "tr": "7/24 havalandırma ve iklimlendirme ihtiyacını tek verimli sistemle karşılama.",
+          "en": "High HVAC Load for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      }
+    ],
+    "products": [
+      {
+        "eyebrow": {
+          "tr": "Enerji Depolama",
+          "en": "Energy Storage"
+        },
+        "title": {
+          "tr": "Inspur Sıvı Soğutmalı Kabinet BESS",
+          "en": "Inspur Liquid-Cooled Cabinet BESS"
+        },
+        "desc": {
+          "tr": "Sanayi ve ticari işletmeler için tak-çalıştır, tek kabinde entegre, paralel bağlantıyla büyüyen çözüm.",
+          "en": "A plug-and-play single-cabinet solution for industrial and commercial facilities, expandable through parallel connection."
+        },
+        "href": "/bess/sivi-sogutmali-kabinet-bess",
+        "image": "/images/products/bess-kabinet.png"
+      },
+      {
+        "eyebrow": {
+          "tr": "Isı Pompası",
+          "en": "Heat Pump"
+        },
+        "title": {
+          "tr": "Thermaplus Endüstriyel Seriler",
+          "en": "Thermaplus Heat Pump Series"
+        },
+        "desc": {
+          "tr": "80 °C'ye kadar proses suyu, kaskad sistemler ve ticari sıcak su için yüksek verimli ısı pompaları.",
+          "en": "Efficient heat pump solutions for residential, pool, commercial hot water, and industrial process water needs."
+        },
+        "href": "/isi-pompasi#urunler",
+        "image": "/images/777.png"
+      }
+    ]
+  },
+  {
+    "slug": "konutlar",
+    "order": 4,
+    "published": true,
+    "title": {
+      "tr": "Konutlar",
+      "en": "Residential"
+    },
+    "navTitle": {
+      "tr": "Konutlar",
+      "en": "Residential"
+    },
+    "icon": "Home",
+    "image": "/images/residential-solutions.png",
+    "shortDesc": {
+      "tr": "Villa ve siteler için elektrik, ısıtma, soğutma, sıcak su ve havuz ihtiyacını karşılayan entegre enerji çözümü.",
+      "en": "Integrated energy solutions for villas and housing sites: electricity, heating, cooling, hot water, and pool heating."
+    },
+    "intro": {
+      "tr": "Yenilenebilir enerji çözümlerinin erişilebilir hale gelmesiyle, yeni konut projelerinin kendi enerjisini kendisinin karşıladığı bir yapıya kavuşması mümkün hale geldi.\n\nİster müstakil bir villa ister bir site olsun; BESS ve ısı pompasının kurulduğu noktalarda elektrik enerjisi ekonomik şekilde depolanabilir, konutların elektrik, ısıtma, soğutma ve sıcak su gibi tüm ihtiyaçları karşılanabilir.",
+      "en": "As renewable energy solutions become more accessible, homes can produce, store, and use their own energy more effectively.\n\nWith BESS and heat pumps, residential projects can manage electricity, heating, cooling, and domestic hot water from one efficient infrastructure."
+    },
+    "highlight": {
+      "tr": "Havuzlu konutlarda havuz ısıtması da sağlanarak yılın büyük bölümünde sıcak havuz konforu sunulur.",
+      "en": "For homes with pools, heat pump systems can extend the pool season and provide comfortable warm water for much of the year."
+    },
+    "segmentsTitle": {
+      "tr": "",
+      "en": ""
+    },
+    "segments": [],
+    "whyBess": [
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Arbitraj ile Tasarruf",
+          "en": "Savings Through Energy Arbitrage"
+        },
+        "desc": {
+          "tr": "Elektriği düşük fiyatlı saatlerde depolayıp pahalı saatlerde kullanarak fatura yükünü azaltma.",
+          "en": "Savings Through Energy Arbitrage for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Sun",
+        "title": {
+          "tr": "Çatı GES Tamamlayıcısı",
+          "en": "Rooftop Solar Complement"
+        },
+        "desc": {
+          "tr": "Gündüz üretilen güneş enerjisini akşam tüketimiyle eşleştirerek öz tüketimi artırma.",
+          "en": "Rooftop Solar Complement for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "ShieldCheck",
+        "title": {
+          "tr": "Kesinti Önleme",
+          "en": "Outage Protection"
+        },
+        "desc": {
+          "tr": "Şebeke kesintilerinde kritik ev yüklerini besleyerek konfor ve güvenliği koruma.",
+          "en": "Outage Protection for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Zap",
+        "title": {
+          "tr": "Jeneratör İkamesi",
+          "en": "Generator Replacement"
+        },
+        "desc": {
+          "tr": "Yakıt, bakım ve gürültü kaynağı jeneratör yerine sessiz, temiz yedek güç.",
+          "en": "Generator Replacement for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Gauge",
+        "title": {
+          "tr": "Pik Yük Dengeleme",
+          "en": "Peak Load Balancing"
+        },
+        "desc": {
+          "tr": "Aynı anda çalışan cihazların oluşturduğu yüksek güç ihtiyacını dengeleme.",
+          "en": "Peak Load Balancing for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "BatteryCharging",
+        "title": {
+          "tr": "Kapasite Esnekliği",
+          "en": "Capacity Flexibility"
+        },
+        "desc": {
+          "tr": "Mevcut bağlantı kapasitesi içinde elektrikli araç şarjı dahil daha esnek kullanım.",
+          "en": "Capacity Flexibility for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      }
+    ],
+    "whyHeatPump": [
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Yüksek Enerji Fiyatları",
+          "en": "High Energy Prices"
+        },
+        "desc": {
+          "tr": "Fiyatı öngörülemez hale gelen fosil yakıt ve doğalgaz bağımlılığını azaltma.",
+          "en": "High Energy Prices for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Gauge",
+        "title": {
+          "tr": "Enerji Verimliliği",
+          "en": "Energy Efficiency"
+        },
+        "desc": {
+          "tr": "3-5 arası COP değerleriyle 1 birim elektrikten 3-5 birim ısı üretme, %75'e varan tasarruf.",
+          "en": "Energy Efficiency for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "ThermometerSun",
+        "title": {
+          "tr": "Tek Sistem",
+          "en": "Single System"
+        },
+        "desc": {
+          "tr": "Isıtma, soğutma ve sıcak su ihtiyacını tek sistem üzerinden yönetme.",
+          "en": "Single System for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Leaf",
+        "title": {
+          "tr": "Çevrecilik",
+          "en": "Sustainability"
+        },
+        "desc": {
+          "tr": "Karbon ayak izini azaltma, yeşil bina sertifikaları ve ESG hedeflerine uyum sağlama.",
+          "en": "Sustainability for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Waves",
+        "title": {
+          "tr": "Havuz Isıtması",
+          "en": "Pool Heating"
+        },
+        "desc": {
+          "tr": "Havuz sezonunu uzatan, villa ve site havuzlarına özel sessiz ısı pompası serileri.",
+          "en": "Pool Heating for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "BatteryCharging",
+        "title": {
+          "tr": "Entegre Çözüm",
+          "en": "Integrated Solution"
+        },
+        "desc": {
+          "tr": "GES ve BESS ile entegre, düşük karbonlu ve verimli konut enerji altyapısı.",
+          "en": "Integrated Solution for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      }
+    ],
+    "products": [
+      {
+        "eyebrow": {
+          "tr": "Enerji Depolama",
+          "en": "Energy Storage"
+        },
+        "title": {
+          "tr": "Inspur Ev Tipi Enerji Depolama",
+          "en": "Inspur Home Energy Storage"
+        },
+        "desc": {
+          "tr": "Çatı GES, elektrikli araç şarjı ve kritik ev yükleriyle entegre çalışan 5-10 kWh modüler ev bataryası.",
+          "en": "A 5-10 kWh modular home battery integrated with rooftop solar, EV charging, and critical home loads."
+        },
+        "href": "/bess/ev-tipi-bess",
+        "image": "/images/products/bess-ev-tipi.png"
+      },
+      {
+        "eyebrow": {
+          "tr": "Isı Pompası",
+          "en": "Heat Pump"
+        },
+        "title": {
+          "tr": "Thermaplus Konut ve Havuz Serileri",
+          "en": "Thermaplus Heat Pump Series"
+        },
+        "desc": {
+          "tr": "Isıtma, soğutma, sıcak su ve havuz ısıtmasını tek verimli sistemle çözen ısı pompası ailesi.",
+          "en": "Efficient heat pump solutions for residential, pool, commercial hot water, and industrial process water needs."
+        },
+        "href": "/isi-pompasi#urunler",
+        "image": "/images/2.png"
+      }
+    ]
+  },
+  {
+    "slug": "veri-merkezleri",
+    "order": 5,
+    "published": true,
+    "title": {
+      "tr": "Veri Merkezleri",
+      "en": "Data Centers"
+    },
+    "navTitle": {
+      "tr": "Veri Merkezleri",
+      "en": "Data Centers"
+    },
+    "icon": "Server",
+    "image": "/images/data-center-real.png",
+    "shortDesc": {
+      "tr": "Milisaniyeler içinde devreye giren depolama ve hassas iklimlendirme ile 7/24 kesintisiz operasyon.",
+      "en": "24/7 operation with fast-response storage and precise, efficient climate control."
+    },
+    "intro": {
+      "tr": "Teknolojinin hayatımıza her geçen gün daha fazla girmesiyle veri merkezlerine olan ihtiyaç da artıyor. 7/24 elektrik tüketen ve kesintiye tahammülü olmayan bu tesisler için yüksek güç, yüksek güvenlik ve milisaniyeler içinde devreye giren batarya sistemleri gereklidir.",
+      "en": "Data centers run around the clock and cannot tolerate power interruptions.\n\nHigh-power battery systems and efficient heat pump solutions support uptime, energy quality, and controlled cooling loads."
+    },
+    "highlight": {
+      "tr": "7/24 hassas, verimli ve çevreci iklimlendirme yapan ısı pompası çözümleri, veri merkezlerinin operasyonel sürekliliğini destekler.",
+      "en": "BESS and heat pump solutions support operational continuity while lowering energy cost and carbon impact."
+    },
+    "segmentsTitle": {
+      "tr": "",
+      "en": ""
+    },
+    "segments": [],
+    "whyBess": [
+      {
+        "icon": "ShieldCheck",
+        "title": {
+          "tr": "Kesinti Önleme",
+          "en": "Outage Protection"
+        },
+        "desc": {
+          "tr": "UPS ile paralel çalışabilen, milisaniyeler içinde devreye giren batarya sistemiyle süreklilik.",
+          "en": "Outage Protection for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Cpu",
+        "title": {
+          "tr": "Güç Kalitesi",
+          "en": "Power Quality"
+        },
+        "desc": {
+          "tr": "Hassas teknolojik cihazları koruyan stabil, dengeli ve güvenilir enerji aktarımı.",
+          "en": "Power Quality for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Arbitraj ile Tasarruf",
+          "en": "Savings Through Energy Arbitrage"
+        },
+        "desc": {
+          "tr": "7/24 tüketimde düşük fiyatlı saatlerden yararlanarak enerji maliyetini düşürme.",
+          "en": "Savings Through Energy Arbitrage for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Waves",
+        "title": {
+          "tr": "Harmonik Kompanzasyonu",
+          "en": "Harmonic Compensation"
+        },
+        "desc": {
+          "tr": "Aktif harmonik filtreleme ile ekipman ömrünü ve enerji kalitesini koruma.",
+          "en": "Harmonic Compensation for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Zap",
+        "title": {
+          "tr": "Jeneratör İkamesi",
+          "en": "Generator Replacement"
+        },
+        "desc": {
+          "tr": "Yakıt, bakım ve emisyon yükü oluşturan jeneratör kullanımını azaltma.",
+          "en": "Generator Replacement for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "BatteryCharging",
+        "title": {
+          "tr": "Kapasite Kısıtını Aşma",
+          "en": "Overcoming Capacity Limits"
+        },
+        "desc": {
+          "tr": "Mevcut bağlantı kapasitesi içinde büyüme ve yedeklilik esnekliği sağlama.",
+          "en": "Overcoming Capacity Limits for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      }
+    ],
+    "whyHeatPump": [
+      {
+        "icon": "Wind",
+        "title": {
+          "tr": "Hassas İklimlendirme",
+          "en": "Precision Climate Control"
+        },
+        "desc": {
+          "tr": "7/24 steril ve çift yönlü havalandırma ihtiyacını verimli şekilde karşılama.",
+          "en": "Precision Climate Control for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Factory",
+        "title": {
+          "tr": "Atık Isı Değerlendirme",
+          "en": "Waste Heat Recovery"
+        },
+        "desc": {
+          "tr": "Sunucu ekipmanından açığa çıkan atık ısıyı uygun projelerde yeniden kullanarak toplam enerji verimliliğini artırma.",
+          "en": "Waste Heat Recovery for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Yüksek Enerji Fiyatları",
+          "en": "High Energy Prices"
+        },
+        "desc": {
+          "tr": "Fiyatı öngörülemez hale gelen fosil yakıt ve doğalgaz bağımlılığını azaltma.",
+          "en": "High Energy Prices for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Gauge",
+        "title": {
+          "tr": "Enerji Verimliliği",
+          "en": "Energy Efficiency"
+        },
+        "desc": {
+          "tr": "3-5 arası COP değerleriyle 1 birim elektrikten 3-5 birim ısı üretme, %75'e varan tasarruf.",
+          "en": "Energy Efficiency for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "ThermometerSun",
+        "title": {
+          "tr": "Tek Sistem",
+          "en": "Single System"
+        },
+        "desc": {
+          "tr": "Isıtma, soğutma ve sıcak su ihtiyacını tek sistem üzerinden yönetme.",
+          "en": "Single System for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Leaf",
+        "title": {
+          "tr": "Çevrecilik",
+          "en": "Sustainability"
+        },
+        "desc": {
+          "tr": "Karbon ayak izini azaltma, yeşil bina sertifikaları ve ESG hedeflerine uyum sağlama.",
+          "en": "Sustainability for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      }
+    ],
+    "products": [
+      {
+        "eyebrow": {
+          "tr": "Enerji Depolama",
+          "en": "Energy Storage"
+        },
+        "title": {
+          "tr": "Inspur 20 ft Konteyner Tipi BESS",
+          "en": "Inspur 20 ft Container BESS"
+        },
+        "desc": {
+          "tr": "Santral, şebeke ve sanayi ölçeği için sıvı soğutmalı, MWh sınıfı, modüler enerji depolama çözümü.",
+          "en": "Liquid-cooled, MWh-class modular energy storage for power plants, grids, and industrial-scale projects."
+        },
+        "href": "/bess/konteyner-tipi-bess",
+        "image": "/images/products/bess-konteyner.png"
+      },
+      {
+        "eyebrow": {
+          "tr": "Enerji Depolama",
+          "en": "Energy Storage"
+        },
+        "title": {
+          "tr": "Inspur Sıvı Soğutmalı Kabinet BESS",
+          "en": "Inspur Liquid-Cooled Cabinet BESS"
+        },
+        "desc": {
+          "tr": "Sanayi ve ticari işletmeler için tak-çalıştır, tek kabinde entegre, paralel bağlantıyla büyüyen çözüm.",
+          "en": "A plug-and-play single-cabinet solution for industrial and commercial facilities, expandable through parallel connection."
+        },
+        "href": "/bess/sivi-sogutmali-kabinet-bess",
+        "image": "/images/products/bess-kabinet.png"
+      },
+      {
+        "eyebrow": {
+          "tr": "Isı Pompası",
+          "en": "Heat Pump"
+        },
+        "title": {
+          "tr": "Thermaplus Endüstriyel Seriler",
+          "en": "Thermaplus Heat Pump Series"
+        },
+        "desc": {
+          "tr": "80 °C'ye kadar proses suyu, kaskad sistemler ve ticari sıcak su için yüksek verimli ısı pompaları.",
+          "en": "Efficient heat pump solutions for residential, pool, commercial hot water, and industrial process water needs."
+        },
+        "href": "/isi-pompasi#urunler",
+        "image": "/images/777.png"
+      }
+    ]
+  },
+  {
+    "slug": "arac-sarj-noktalari",
+    "order": 6,
+    "published": true,
+    "title": {
+      "tr": "Araç Şarj Noktaları",
+      "en": "EV Charging Locations"
+    },
+    "navTitle": {
+      "tr": "Araç Şarj Noktaları",
+      "en": "EV Charging"
+    },
+    "icon": "PlugZap",
+    "image": "/images/limited-grid-ev-charging.png",
+    "shortDesc": {
+      "tr": "Şebeke kapasitesinin yetersiz kaldığı lokasyonlarda hızlı şarj altyapısını BESS ile gecikmeden ve daha düşük yatırımla devreye alın.",
+      "en": "Deploy fast charging where grid capacity is limited, with lower infrastructure cost and faster rollout."
+    },
+    "intro": {
+      "tr": "Ultra hızlı araç şarjı artık sürücülerin her lokasyonda beklediği temel bir hizmet. Ancak mevcut şebeke kapasitesi çoğu noktada yüksek güçlü şarj ünitelerinin ani enerji talebini karşılamıyor; bu durum hem elektrik altyapısını zorluyor hem de yatırımcıyı ilave trafo yatırımı, bağlantı izinleri ve uzun bekleme süreleriyle karşı karşıya bırakıyor.\n\nBESS destekli şarj altyapısı, şebekeden gelen sınırlı gücü depolayıp ihtiyaç anında şarj ünitelerine yüksek güç olarak aktarır. Böylece ağır ve geri alınamaz bir trafo yatırımına kıyasla daha düşük başlangıç maliyetiyle çözüm hızla devreye alınır; modüler sistem ihtiyaçla birlikte büyür ve lokasyon değiştiğinde başka bir noktaya taşınarak yatırım değerini korur.",
+      "en": "Ultra-fast charging is becoming a basic expectation, but many locations do not have enough grid capacity for sudden high-power demand.\n\nBESS-supported charging stores limited grid power and delivers high power to chargers when needed."
+    },
+    "highlight": {
+      "tr": "Şarj ağınızı bağlantı kapasitesini beklemeden yaygınlaştırın; ilk yatırım anından itibaren altyapı maliyetinden, zamandan ve işletme giderlerinden tasarruf edin.",
+      "en": "Expand your charging network without waiting for grid upgrades, while reducing infrastructure cost and rollout time."
+    },
+    "segmentsTitle": {
+      "tr": "",
+      "en": ""
+    },
+    "segments": [],
+    "whyBess": [
+      {
+        "icon": "PlugZap",
+        "title": {
+          "tr": "Ultra Hızlı Şarj Gücü",
+          "en": "Ultra-Fast Charging Power"
+        },
+        "desc": {
+          "tr": "Şebekenin tek başına karşılayamadığı ani yüksek güç talebini bataryadan sağlayarak ultra hızlı şarj hizmeti sunma.",
+          "en": "Ultra-Fast Charging Power for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Cable",
+        "title": {
+          "tr": "Şebeke Kısıtını Aşma",
+          "en": "Overcoming Grid Limits"
+        },
+        "desc": {
+          "tr": "Mevcut bağlantı kapasitesini yükseltmeyi beklemeden şarj noktasını hızla devreye alma.",
+          "en": "Overcoming Grid Limits for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Daha Düşük İlk Yatırım",
+          "en": "Lower Initial Investment"
+        },
+        "desc": {
+          "tr": "İlave trafo ve ağır şebeke altyapısı yerine modüler BESS ile yatırım maliyetini azaltma.",
+          "en": "Lower Initial Investment for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "MapPin",
+        "title": {
+          "tr": "Taşınabilir Yatırım",
+          "en": "Portable Investment"
+        },
+        "desc": {
+          "tr": "Lokasyon ihtiyacı değiştiğinde sistemi başka bir şarj noktasına taşıyarak yatırım değerini koruma.",
+          "en": "Portable Investment for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Gauge",
+        "title": {
+          "tr": "Pik Güç Yönetimi",
+          "en": "Peak Power Management"
+        },
+        "desc": {
+          "tr": "Eş zamanlı şarj taleplerini dengeleyerek şebeke üzerindeki baskıyı ve güç aşım maliyetlerini düşürme.",
+          "en": "Peak Power Management for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Sun",
+        "title": {
+          "tr": "GES Entegrasyonu",
+          "en": "Solar PV Integration"
+        },
+        "desc": {
+          "tr": "Güneş enerjisini depolayıp araç şarjında kullanarak enerji maliyetini ve karbon ayak izini azaltma.",
+          "en": "Solar PV Integration for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      }
+    ],
+    "whyHeatPump": [],
+    "products": [
+      {
+        "eyebrow": {
+          "tr": "Enerji Depolama",
+          "en": "Energy Storage"
+        },
+        "title": {
+          "tr": "Inspur Sıvı Soğutmalı Kabinet BESS",
+          "en": "Inspur Liquid-Cooled Cabinet BESS"
+        },
+        "desc": {
+          "tr": "Sanayi ve ticari işletmeler için tak-çalıştır, tek kabinde entegre, paralel bağlantıyla büyüyen çözüm.",
+          "en": "A plug-and-play single-cabinet solution for industrial and commercial facilities, expandable through parallel connection."
+        },
+        "href": "/bess/sivi-sogutmali-kabinet-bess",
+        "image": "/images/products/bess-kabinet.png"
+      },
+      {
+        "eyebrow": {
+          "tr": "Enerji Depolama",
+          "en": "Limited Grid and Off-Grid"
+        },
+        "title": {
+          "tr": "Inspur FlexCube Konteyner BESS",
+          "en": "FlexCube Container BESS"
+        },
+        "desc": {
+          "tr": "Şebeke olmayan veya kısıtlı noktalar için 10 ft, şarj et & taşı yapısına uygun off-grid çözüm.",
+          "en": "A 10 ft integrated, portable, plug-and-play off-grid solution for weak-grid or no-grid locations."
+        },
+        "href": "/bess/flexcube-konteyner-bess",
+        "image": "/images/products/bess-flexcube.png"
+      }
+    ]
+  },
+  {
+    "slug": "sinirli-sebeke",
+    "order": 7,
+    "published": true,
+    "title": {
+      "tr": "Sınırlı Şebeke Noktaları",
+      "en": "Limited Grid Locations"
+    },
+    "navTitle": {
+      "tr": "Sınırlı Şebeke",
+      "en": "Limited Grid"
+    },
+    "icon": "WifiOff",
+    "image": "/images/limited-grid-quarry.png",
+    "shortDesc": {
+      "tr": "Şebekenin olmadığı veya yetersiz kaldığı noktalarda hızlı kurulan, taşınabilir ve modüler güç çözümleri.",
+      "en": "Fast-deployed, portable, and modular power solutions for locations with no grid or weak grid access."
+    },
+    "intro": {
+      "tr": "Enerji ihtiyacının arttığı günümüzde her noktada talep edilen şebeke gücü karşılanamayabiliyor. Bu durum, ilgili noktalarda enerji ihtiyacını tamamlayabilecek batarya çözümlerini daha da değerli kılıyor.",
+      "en": "Remote or grid-limited sites need reliable power without heavy infrastructure delays.\n\nPortable and modular BESS systems can support operations, events, charging points, and field equipment with clean and quiet power."
+    },
+    "highlight": {
+      "tr": "Şebeke bağlantısını beklemeden, ağır altyapı yatırımı yapmadan; modüler ve taşınabilir depolama ile operasyonunuzu bugün başlatın.",
+      "en": "Battery storage makes operations possible where grid access is weak, delayed, or unavailable."
+    },
+    "segmentsTitle": {
+      "tr": "Sahada kanıtlanmış kullanım senaryoları",
+      "en": "Reliable power for grid-limited use cases"
+    },
+    "segments": [
+      {
+        "icon": "Factory",
+        "title": {
+          "tr": "Maden ve Taş Ocakları",
+          "en": "Mines and Quarries"
+        },
+        "desc": {
+          "tr": "Şebekeye erişimin zor olduğu sahalarda GES entegre veya taşınabilir BESS ile jeneratöre kıyasla ekonomik ve çevreci güç.",
+          "en": "Mines and Quarries for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "/images/limited-grid-quarry.png",
+        "thumbnail": ""
+      },
+      {
+        "icon": "Music",
+        "title": {
+          "tr": "Konserler ve Kamp Alanları",
+          "en": "Concerts and Campsites"
+        },
+        "desc": {
+          "tr": "Şebekeye uzak etkinlik alanlarında taşınabilir depolama ile sessiz, kesintisiz ve temiz güç.",
+          "en": "Concerts and Campsites for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "/images/limited-grid-event.png",
+        "thumbnail": ""
+      },
+      {
+        "icon": "Server",
+        "title": {
+          "tr": "Telekom Sistemleri",
+          "en": "Telecom Systems"
+        },
+        "desc": {
+          "tr": "Şebekenin bulunmadığı veya kesintili olduğu baz istasyonu ve telekom sahalarında haberleşme altyapısını kesintisiz besleyen güvenilir enerji depolama.",
+          "en": "Telecom Systems for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        },
+        "image": "/images/telecom-tower-v2.png",
+        "thumbnail": ""
+      }
+    ],
+    "whyBess": [
+      {
+        "icon": "WifiOff",
+        "title": {
+          "tr": "Şebeke Kısıtlarını Aşma",
+          "en": "Overcoming Grid Constraints"
+        },
+        "desc": {
+          "tr": "Talep edilen gücün sağlanamadığı noktalarda batarya ile güç desteği oluşturma.",
+          "en": "Overcoming Grid Constraints for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Cable",
+        "title": {
+          "tr": "Bağlantı Sürecini Beklememe",
+          "en": "No Waiting for Grid Connection"
+        },
+        "desc": {
+          "tr": "Şebeke bağlantısını beklemeden hızlı kurulum ve güç artırma imkânı.",
+          "en": "No Waiting for Grid Connection for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "LineChart",
+        "title": {
+          "tr": "Yatırım Maliyetini Azaltma",
+          "en": "Lower Investment Cost"
+        },
+        "desc": {
+          "tr": "Ağır altyapı yatırımı yerine modüler depolama ile kapasite ihtiyacını karşılama.",
+          "en": "Lower Investment Cost for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Gauge",
+        "title": {
+          "tr": "Pik Talep Yönetimi",
+          "en": "Peak Demand Management"
+        },
+        "desc": {
+          "tr": "Hızlı şarj, saha ekipmanı veya etkinlik yüklerinde ani güç ihtiyacını dengeleme.",
+          "en": "Peak Demand Management for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "Zap",
+        "title": {
+          "tr": "Jeneratör Maliyetinden Tasarruf",
+          "en": "Lower Generator Cost"
+        },
+        "desc": {
+          "tr": "Yakıt, bakım ve lojistik maliyetlerini azaltan sessiz ve temiz güç alternatifi.",
+          "en": "Lower Generator Cost for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      },
+      {
+        "icon": "MapPin",
+        "title": {
+          "tr": "Güç Olmayan Noktada Faaliyet",
+          "en": "Operation Without Grid Power"
+        },
+        "desc": {
+          "tr": "Şebekeye uzak sahalarda taşınabilir depolama ile operasyonu mümkün kılma.",
+          "en": "Operation Without Grid Power for lower energy costs, stronger operational continuity, and cleaner infrastructure."
+        }
+      }
+    ],
+    "whyHeatPump": [],
+    "products": [
+      {
+        "eyebrow": {
+          "tr": "Sınırlı Şebeke ve Off-Grid",
+          "en": "Limited Grid and Off-Grid"
+        },
+        "title": {
+          "tr": "FlexCube Konteyner Tipi BESS",
+          "en": "FlexCube Container BESS"
+        },
+        "desc": {
+          "tr": "Şebeke olmayan veya ani güç isteyen noktalar için 10 ft entegre, şarj et & taşı yapısına uygun tak-çalıştır çözüm.",
+          "en": "A 10 ft integrated, portable, plug-and-play off-grid solution for weak-grid or no-grid locations."
+        },
+        "href": "/bess/flexcube-konteyner-bess",
+        "image": "/images/limited-grid-quarry.png"
+      },
+      {
+        "eyebrow": {
+          "tr": "Mobil Güç Çözümleri",
+          "en": "Mobile Power Solutions"
+        },
+        "title": {
+          "tr": "Taşınabilir Enerji Depolama",
+          "en": "Portable Energy Storage"
+        },
+        "desc": {
+          "tr": "Dış mekân etkinlikleri ve acil durum senaryoları için kompakt, hafif ve çok işlevli taşınabilir güç kaynağı.",
+          "en": "A compact and lightweight portable power source for outdoor events and emergency scenarios."
+        },
+        "href": "/bess/tasinabilir-bess",
+        "image": "/images/limited-grid-event.png"
+      }
+    ]
+  }
+]

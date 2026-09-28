@@ -1,16 +1,98 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useActionState, useRef, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import Image from "next/image";
-import { useLanguage } from "@/lib/i18n";
+import { usePageContent } from "@/lib/content/context";
+import { Highlight, telHref } from "@/lib/content/format";
+import { submitContactMessage, type ContactFormState } from "./actions";
+
+const inputClass =
+  "w-full bg-gray-50 border-none px-6 py-5 rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#ea580c]/20 transition-all text-gray-800";
+
+function ContactForm({ onReset }: { onReset: () => void }) {
+  const c = usePageContent("contact");
+  const [state, formAction, pending] = useActionState<ContactFormState, FormData>(submitContactMessage, { status: "idle" });
+
+  if (state.status === "success") {
+    return (
+      <div className="space-y-8 text-center py-8">
+        <CheckCircle2 className="w-16 h-16 text-[#ea580c] mx-auto" />
+        <p className="text-xl text-gray-600 font-light leading-relaxed">{c.text("successMessage")}</p>
+        <button type="button" onClick={onReset} className="font-bold text-[#1e3a8a] hover:text-[#ea580c] transition-colors">
+          {c.text("sendAnotherButton")}
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form action={formAction} className="space-y-8">
+      <div className="space-y-3">
+        <label htmlFor="contact-name" className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-4">
+          {c.text("nameLabel")}
+        </label>
+        <input id="contact-name" name="name" type="text" required maxLength={120} className={inputClass} placeholder={c.text("namePlaceholder")} />
+      </div>
+
+      <div className="space-y-3">
+        <label htmlFor="contact-email" className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-4">
+          {c.text("emailFieldLabel")}
+        </label>
+        <input id="contact-email" name="email" type="email" required maxLength={200} className={inputClass} placeholder="ornek@sirket.com" />
+      </div>
+
+      <div className="space-y-3">
+        <label htmlFor="contact-message" className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-4">
+          {c.text("messageLabel")}
+        </label>
+        <textarea
+          id="contact-message"
+          name="message"
+          required
+          maxLength={5000}
+          className={`${inputClass} h-40 resize-none`}
+          placeholder={c.text("messagePlaceholder")}
+        ></textarea>
+      </div>
+
+      {/* Spam trap: hidden from people, filled in by bots. */}
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+
+      {state.status === "error" && (
+        <p className="rounded-2xl bg-red-50 px-6 py-4 text-sm text-red-600">
+          {state.error === "invalid" ? c.text("invalidMessage") : c.text("serverErrorMessage")}
+        </p>
+      )}
+
+      <button
+        type="submit"
+        disabled={pending}
+        className="w-full group bg-[#ea580c] text-white py-6 rounded-3xl font-bold text-lg hover:bg-[#c2410c] transition-all flex items-center justify-center gap-4 disabled:opacity-60"
+      >
+        {pending ? (
+          <>
+            <Loader2 className="w-5 h-5 animate-spin" /> {c.text("sendingLabel")}
+          </>
+        ) : (
+          <>
+            {c.text("submitButton")}
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+          </>
+        )}
+      </button>
+    </form>
+  );
+}
 
 export default function ContactPage() {
-  const { lang } = useLanguage();
-  const isEnglish = lang === "en";
+  const c = usePageContent("contact");
+  const contact = usePageContent("layout");
+  // Bumping the key remounts the form so "send another" starts from a clean state.
+  const [formKey, setFormKey] = useState(0);
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -29,8 +111,8 @@ export default function ContactPage() {
         <section className="relative h-[80vh] w-full flex items-center justify-center overflow-hidden bg-[#1e3a8a]">
           <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 opacity-45">
             <Image
-              src="/images/e9551124-2722-4454-bf42-e6d7ff187aec.png"
-              alt={isEnglish ? "Inspur BESS field installation" : "Inspur BESS saha kurulumu"}
+              src={c.text("heroImage")}
+              alt={c.text("heroEyebrow")}
               fill
               className="object-cover"
               priority
@@ -46,11 +128,11 @@ export default function ContactPage() {
               transition={{ duration: 1, ease: "easeOut" }}
             >
               <span className="text-[#f97316] text-xs font-bold uppercase tracking-[0.5em] mb-6 block">
-                {isEnglish ? "Contact" : "İletişim"}
+                {c.text("heroEyebrow")}
               </span>
               <h1 className="text-6xl md:text-9xl font-medium text-white tracking-tighter leading-none">
-                {isEnglish ? "Get in" : "Bize"} <br />
-                <span className="text-gray-400">{isEnglish ? "Touch" : "Ulaşın"}</span>
+                {c.text("heroTitleLine1")} <br />
+                <span className="text-gray-400">{c.text("heroTitleLine2")}</span>
               </h1>
             </motion.div>
           </div>
@@ -68,27 +150,18 @@ export default function ContactPage() {
                   viewport={{ once: true }}
                 >
                   <h2 className="text-5xl md:text-7xl font-medium text-[#020817] tracking-tighter mb-8 leading-tight">
-                    {isEnglish ? "Contact" : "Bizimle"} <br /> <span className="text-[#ea580c]">{isEnglish ? "Our Team" : "İletişime Geçin"}</span>
+                    {c.text("infoTitleLine1")} <br /> <span className="text-[#ea580c]">{c.text("infoTitleLine2")}</span>
                   </h2>
                   <p className="text-xl text-gray-500 font-light leading-relaxed max-w-md">
-                    {isEnglish
-                      ? "Contact our expert team for BESS and heat pump projects, technical support requests, or business partnerships."
-                      : "BESS ve ısı pompası projeleriniz, teknik destek talepleriniz veya iş ortaklığı için uzman ekibimizle iletişime geçin."}
+                    {c.text("infoText")}
                   </p>
                 </motion.div>
 
                 <div className="space-y-16">
                   {[
-                    {
-                      icon: MapPin,
-                      title: isEnglish ? "Head Office" : "Genel Merkez",
-                      desc: isEnglish
-                        ? "Yildizhan Avenue, Saray Business Center No. 4, Kose Street, 34887 Sancaktepe/Istanbul"
-                        : "Yıldızhan Cad. Saray İş Merkezi No:4, Köşe Sk., 34887 Sancaktepe/İstanbul",
-                      href: "https://www.google.com/maps/place/data=!4m2!3m1!1s0x14cad3c555555555:0xc12bb9adc218764f?sa=X&ved=1t:8290&ictx=111",
-                    },
-                    { icon: Phone, title: isEnglish ? "Phone" : "Telefon", desc: "0 216 311 00 67", href: "tel:+902163110067" },
-                    { icon: Mail, title: isEnglish ? "Email" : "E-posta", desc: "info@newstag.com.tr", href: "mailto:info@newstag.com.tr" },
+                    { icon: MapPin, title: c.text("addressLabel"), desc: contact.text("address"), href: contact.text("addressMapUrl") },
+                    { icon: Phone, title: c.text("phoneLabel"), desc: contact.text("phone"), href: telHref(contact.text("phone")) },
+                    { icon: Mail, title: c.text("emailLabel"), desc: contact.text("email"), href: `mailto:${contact.text("email")}` },
                   ].map((item, i) => (
                     <motion.div
                       key={item.title}
@@ -124,48 +197,11 @@ export default function ContactPage() {
                   className="relative z-10 rounded-[28px] border border-gray-100 bg-white p-6 shadow-2xl shadow-[#ea580c]/10 sm:rounded-[40px] md:p-16"
                 >
                   <div className="mb-12">
-                    <h3 className="text-3xl font-bold text-[#020817] mb-4">{isEnglish ? "Send a Message" : "Mesaj Gönderin"}</h3>
+                    <h3 className="text-3xl font-bold text-[#020817] mb-4">{c.text("formTitle")}</h3>
                     <div className="w-12 h-1 bg-[#ea580c]" />
                   </div>
 
-                  <form className="space-y-8">
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-4">
-                        {isEnglish ? "Full Name" : "Ad Soyad"}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full bg-gray-50 border-none px-6 py-5 rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#ea580c]/20 transition-all text-gray-800"
-                        placeholder={isEnglish ? "Your full name" : "Adınız ve soyadınız"}
-                      />
-                    </div>
-
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-4">
-                        {isEnglish ? "Email" : "E-posta"}
-                      </label>
-                      <input
-                        type="email"
-                        className="w-full bg-gray-50 border-none px-6 py-5 rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#ea580c]/20 transition-all text-gray-800"
-                        placeholder="ornek@sirket.com"
-                      />
-                    </div>
-
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-4">
-                        {isEnglish ? "Your Message" : "Mesajınız"}
-                      </label>
-                      <textarea
-                        className="w-full bg-gray-50 border-none px-6 py-5 rounded-3xl h-40 focus:outline-none focus:ring-2 focus:ring-[#ea580c]/20 transition-all text-gray-800 resize-none"
-                        placeholder={isEnglish ? "How can we help you?" : "Size nasıl yardımcı olabiliriz?"}
-                      ></textarea>
-                    </div>
-
-                    <button className="w-full group bg-[#ea580c] text-white py-6 rounded-3xl font-bold text-lg hover:bg-[#c2410c] transition-all flex items-center justify-center gap-4">
-                      {isEnglish ? "Send" : "Gönder"}
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-                    </button>
-                  </form>
+                  <ContactForm key={formKey} onReset={() => setFormKey((k) => k + 1)} />
                 </motion.div>
 
                 <motion.div
@@ -185,17 +221,15 @@ export default function ContactPage() {
               transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
               className="text-[20rem] font-black text-white tracking-tighter uppercase whitespace-nowrap"
             >
-              {isEnglish ? "NEWSTAG ENERGY • CONTACT •" : "NEWSTAG ENERJI • ILETISIM •"}
+              {c.text("marquee")}
             </motion.span>
           </div>
           <div className="container mx-auto px-6 text-center relative z-10">
             <h2 className="text-4xl md:text-6xl font-medium text-white mb-8">
-              {isEnglish ? "Let Us Build the" : "Geleceği Birlikte"} <span className="text-[#f97316]">{isEnglish ? "Future Together" : "İnşa Edelim"}</span>
+              <Highlight text={c.text("bottomTitle")} className="text-[#f97316]" />
             </h2>
             <p className="text-xl text-white/70 max-w-2xl mx-auto font-light">
-              {isEnglish
-                ? "We are with you throughout your energy transformation journey, from project design to service. Contact us to explore our solutions."
-                : "Enerji dönüşüm yolculuğunuzda projelendirmeden servise kadar yanınızdayız. Çözümlerimizi keşfetmek için bize ulaşın."}
+              {c.text("bottomText")}
             </p>
           </div>
         </section>

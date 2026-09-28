@@ -1,0 +1,1154 @@
+[
+  {
+    "slug": "ev-tipi-bess",
+    "type": "bess",
+    "order": 1,
+    "published": true,
+    "title": {
+      "tr": "Ev Tipi Enerji Depolama",
+      "en": "Home Energy Storage"
+    },
+    "category": {
+      "tr": "Konut çözümleri",
+      "en": "Residential Solutions"
+    },
+    "summary": {
+      "tr": "Güneş panelinden veya ucuz tarifeden depolanan enerjiyle elektrik maliyetini düşüren, kesintilere karşı koruyan modüler ev bataryası.",
+      "en": "A modular home battery that stores solar or low-tariff grid energy, lowers electricity costs, and protects critical loads during outages."
+    },
+    "description": {
+      "tr": "Ev tipi Inspur enerji depolama cihazları; çatı GES üretimini veya düşük tarifeli saatlerde şebekeden alınan enerjiyi depolayarak konutların elektrik maliyetini azaltır, kesinti anında kritik yükleri besler. Estetik ve kompakt gövdesi, modüler büyütülebilir tasarımı sayesinde hem iç hem dış mekân kurulumuna uygundur; mobil uygulama üzerinden uzaktan izlenir ve yönetilir.",
+      "en": "Inspur home energy storage systems store rooftop solar generation or low-tariff grid energy to reduce residential electricity costs and power critical loads during outages. Their compact, aesthetic enclosure and modular expandable design make them suitable for indoor and outdoor installation, with remote monitoring and management through a mobile app."
+    },
+    "specs": [
+      {
+        "tr": "Estetik ve kompakt tasarım",
+        "en": "Aesthetic and compact design"
+      },
+      {
+        "tr": "Modüler büyütülebilir yapı",
+        "en": "Modular expandable architecture"
+      },
+      {
+        "tr": "İç ve dış mekân kurulumuna uygunluk",
+        "en": "Suitable for indoor and outdoor installation"
+      },
+      {
+        "tr": "Wi-Fi ve Bluetooth desteği",
+        "en": "Wi-Fi and Bluetooth support"
+      },
+      {
+        "tr": "Mobil uygulamadan kontrol",
+        "en": "Mobile app control"
+      },
+      {
+        "tr": "Entegre kendini ısıtma fonksiyonu",
+        "en": "Integrated self-heating function"
+      },
+      {
+        "tr": "Şebeke ve PV ile hibrit çalışma",
+        "en": "Hybrid operation with grid and PV"
+      }
+    ],
+    "options": [
+      "5 kWh",
+      "10 kWh",
+      "15 kWh",
+      "20 kWh"
+    ],
+    "image": "/images/products/bess-ev-tipi.png",
+    "imageFit": "contain",
+    "cardImage": "/images/residential-solutions.png",
+    "detailImage": "",
+    "detailImageFit": "",
+    "technicalTable": null,
+    "solutions": [
+      {
+        "title": {
+          "tr": "Konutlar",
+          "en": "Residential"
+        },
+        "href": "/cozumlerimiz/konutlar"
+      }
+    ]
+  },
+  {
+    "slug": "tasinabilir-bess",
+    "type": "bess",
+    "order": 2,
+    "published": true,
+    "title": {
+      "tr": "Taşınabilir Enerji Depolama",
+      "en": "Portable Energy Storage"
+    },
+    "category": {
+      "tr": "Mobil güç çözümleri",
+      "en": "Mobile Power Solutions"
+    },
+    "summary": {
+      "tr": "Dış mekân etkinlikleri ve acil durum senaryoları için kompakt, hafif ve çok işlevli taşınabilir güç kaynağı.",
+      "en": "A compact, lightweight, multi-purpose portable power source for outdoor events, field work, and emergency scenarios."
+    },
+    "description": {
+      "tr": "Taşınabilir Inspur enerji depolama cihazları, elektriğe erişimin olmadığı her noktada temiz ve sessiz güç sağlar. Kompakt ve hafif tasarımı ile kamp, etkinlik, saha çalışması ve acil durum senaryoları için idealdir; güvenli ve stabil çalışma yapısı ile çok işlevli arayüz sunar.",
+      "en": "Inspur portable energy storage systems provide clean and quiet power wherever electricity is unavailable. Their compact and lightweight design is ideal for camping, events, field work, and emergency scenarios, while the safe and stable operating structure offers a versatile interface."
+    },
+    "specs": [
+      {
+        "tr": "Kompakt ve hafif tasarım",
+        "en": "Compact and lightweight design"
+      },
+      {
+        "tr": "Dış mekân etkinlikleri için ideal",
+        "en": "Ideal for outdoor events"
+      },
+      {
+        "tr": "Acil durum yedek gücü",
+        "en": "Emergency backup power"
+      },
+      {
+        "tr": "Çevre dostu ve sessiz çalışma",
+        "en": "Environmentally friendly and quiet operation"
+      },
+      {
+        "tr": "Güvenli ve stabil güç çıkışı",
+        "en": "Safe and stable power output"
+      },
+      {
+        "tr": "Çok işlevli arayüz",
+        "en": "Multi-function interface"
+      }
+    ],
+    "options": [
+      "1 kWh",
+      "2 kWh"
+    ],
+    "image": "/images/limited-grid-event.png",
+    "imageFit": "cover",
+    "cardImage": "/images/limited-grid-event.png",
+    "detailImage": "/images/User attachment.png",
+    "detailImageFit": "contain",
+    "technicalTable": null,
+    "solutions": [
+      {
+        "title": {
+          "tr": "Sınırlı Şebeke Noktaları",
+          "en": "Limited Grid Locations"
+        },
+        "href": "/cozumlerimiz/sinirli-sebeke"
+      }
+    ]
+  },
+  {
+    "slug": "sivi-sogutmali-kabinet-bess",
+    "type": "bess",
+    "order": 3,
+    "published": true,
+    "title": {
+      "tr": "Dış Mekân Sıvı Soğutmalı Kabinet BESS",
+      "en": "Outdoor Liquid-Cooled Cabinet BESS"
+    },
+    "category": {
+      "tr": "Sanayi ve ticari işletmeler",
+      "en": "Industrial and Commercial Facilities"
+    },
+    "summary": {
+      "tr": "Sanayi ve ticari tesisler için tak-çalıştır, tek kabinde entegre, paralel bağlantıyla sınırsız büyüyen enerji depolama.",
+      "en": "A plug-and-play single-cabinet energy storage system for industrial and commercial sites, expandable through parallel connection."
+    },
+    "description": {
+      "tr": "Dış mekân sıvı soğutmalı Inspur kabinet BESS; batarya, BMS, EMS, PCS, yangın koruma, güç dağıtım ve termal yönetim sistemlerini tek kabinde birleştiren tak-çalıştır bir enerji depolama çözümüdür. Güç tüketiminize, fiziksel alanınıza ve kullanım ihtiyaçlarınıza göre ölçeklenir; paralel bağlantı ile kapasite sınırsız artırılabilir. 8.000'in üzerinde çevrim ömrü ve 314 Ah yeni nesil pil teknolojisiyle operasyonel süreklilik ve tasarruf sunar.",
+      "en": "The outdoor liquid-cooled Inspur cabinet BESS combines battery, BMS, EMS, PCS, fire protection, power distribution, and thermal management systems in a single plug-and-play cabinet. It scales according to your power consumption, available space, and operating needs, and capacity can be expanded through parallel connection. With more than 8,000 cycles and next-generation 314 Ah battery technology, it supports operational continuity and savings."
+    },
+    "specs": [
+      {
+        "tr": "Tak-çalıştır entegre tasarım: batarya, BMS, EMS, PCS, yangın koruma, güç dağıtımı ve termal yönetim tek kabinde",
+        "en": "Plug-and-play integrated design: battery, BMS, EMS, PCS, fire protection, power distribution, and thermal management in one cabinet"
+      },
+      {
+        "tr": "Paralel bağlantı ile sınırsız kapasite artırımı",
+        "en": "Capacity expansion through parallel connection"
+      },
+      {
+        "tr": "8.000+ çevrim ile uzun yaşam ömrü",
+        "en": "Long service life with 8,000+ cycles"
+      },
+      {
+        "tr": "314 Ah yeni nesil pil teknolojisi",
+        "en": "Next-generation 314 Ah battery technology"
+      },
+      {
+        "tr": "Akıllı yönetim sistemi ile maksimum verim, minimum kesinti",
+        "en": "Smart management system for maximum efficiency and minimum downtime"
+      },
+      {
+        "tr": "İnsansız çalışma olanağı",
+        "en": "Unattended operation capability"
+      },
+      {
+        "tr": "Geniş uygulama alanı",
+        "en": "Wide application range"
+      }
+    ],
+    "options": [
+      "50 kW / 100 kWh",
+      "100 kW / 233 kWh",
+      "125 kW / 261 kWh"
+    ],
+    "image": "/images/products/bess-kabinet.png",
+    "imageFit": "contain",
+    "cardImage": "/images/car.png",
+    "detailImage": "",
+    "detailImageFit": "",
+    "technicalTable": null,
+    "solutions": [
+      {
+        "title": {
+          "tr": "Sanayi Tesisleri",
+          "en": "Industrial Facilities"
+        },
+        "href": "/cozumlerimiz/sanayi-tesisleri"
+      },
+      {
+        "title": {
+          "tr": "Ticari İşletmeler",
+          "en": "Commercial Facilities"
+        },
+        "href": "/cozumlerimiz/ticari-isletmeler"
+      },
+      {
+        "title": {
+          "tr": "Veri Merkezleri",
+          "en": "Data Centers"
+        },
+        "href": "/cozumlerimiz/veri-merkezleri"
+      },
+      {
+        "title": {
+          "tr": "Araç Şarj Noktaları",
+          "en": "EV Charging Locations"
+        },
+        "href": "/cozumlerimiz/arac-sarj-noktalari"
+      }
+    ]
+  },
+  {
+    "slug": "flexcube-konteyner-bess",
+    "type": "bess",
+    "order": 4,
+    "published": true,
+    "title": {
+      "tr": "FlexCube Konteyner Tipi BESS",
+      "en": "FlexCube Container BESS"
+    },
+    "category": {
+      "tr": "Sınırlı şebeke ve off-grid",
+      "en": "Limited Grid and Off-Grid"
+    },
+    "summary": {
+      "tr": "Şebeke olmayan veya ani güç isteyen noktalar için 10 ft entegre, şarj et & taşı yapısına uygun tak-çalıştır çözüm.",
+      "en": "A 10 ft integrated, portable, plug-and-play storage solution for locations with weak grid, no grid, or sudden high-power demand."
+    },
+    "description": {
+      "tr": "FlexCube, şebekenin olmadığı veya yetersiz kaldığı noktalarda devreye giren 10 ft entegre ve hafif tasarımlı bir konteyner BESS çözümüdür. İnşaat alanları, maden sahaları, petrol/gaz sahaları ve etkinlik alanları için idealdir; modüler tasarımı ile sınırsız genişler, jeneratör yakıt maliyetinden tasarruf sağlar ve zorlu dış koşullara karşı yüksek koruma sunar.",
+      "en": "FlexCube is a 10 ft integrated and lightweight container BESS solution for locations where the grid is unavailable or insufficient. It is ideal for construction sites, mining sites, oil and gas fields, and event areas. Its modular design expands with demand, reduces generator fuel costs, and provides high protection against harsh outdoor conditions."
+    },
+    "specs": [
+      {
+        "tr": "10 ft entegre hafif tasarım",
+        "en": "10 ft integrated lightweight design"
+      },
+      {
+        "tr": "Modüler tasarım ile sınırsız genişleme",
+        "en": "Modular design for expandable capacity"
+      },
+      {
+        "tr": "Şebeke olmayan noktalarda off-grid çözüm",
+        "en": "Off-grid solution for locations without grid access"
+      },
+      {
+        "tr": "İnşaat, maden, petrol/gaz sahaları ve etkinlikler için ideal",
+        "en": "Ideal for construction, mining, oil and gas sites, and events"
+      },
+      {
+        "tr": "Jeneratör yakıt maliyetinden tasarruf",
+        "en": "Generator fuel cost savings"
+      },
+      {
+        "tr": "Şarj et & taşı yapısına uygunluk",
+        "en": "Suitable for charge-and-move operation"
+      },
+      {
+        "tr": "Zorlu dış koşullara karşı yüksek koruma",
+        "en": "High protection against harsh outdoor conditions"
+      },
+      {
+        "tr": "Entegre tasarım: batarya, BMS, EMS, PCS, yangın koruma, güç dağıtımı ve termal yönetim",
+        "en": "Integrated design: battery, BMS, EMS, PCS, fire protection, power distribution, and thermal management"
+      }
+    ],
+    "options": [
+      "250 kW (286 kWh / 143 kWh)",
+      "500 kW (430 kWh / 234 kWh)"
+    ],
+    "image": "/images/products/bess-flexcube.png",
+    "imageFit": "contain",
+    "cardImage": "/images/limited-grid-quarry.png",
+    "detailImage": "",
+    "detailImageFit": "",
+    "technicalTable": null,
+    "solutions": [
+      {
+        "title": {
+          "tr": "Sınırlı Şebeke Noktaları",
+          "en": "Limited Grid Locations"
+        },
+        "href": "/cozumlerimiz/sinirli-sebeke"
+      },
+      {
+        "title": {
+          "tr": "Araç Şarj Noktaları",
+          "en": "EV Charging Locations"
+        },
+        "href": "/cozumlerimiz/arac-sarj-noktalari"
+      }
+    ]
+  },
+  {
+    "slug": "konteyner-tipi-bess",
+    "type": "bess",
+    "order": 5,
+    "published": true,
+    "title": {
+      "tr": "20 ft Konteyner Tipi BESS",
+      "en": "20 ft Container BESS"
+    },
+    "category": {
+      "tr": "Enerji santralleri ve şebeke ölçeği",
+      "en": "Power Plants and Grid Scale"
+    },
+    "summary": {
+      "tr": "Santral, şebeke ve yüksek güç ihtiyacı olan tesisler için MWh sınıfı, sıvı soğutmalı, modüler enerji depolama.",
+      "en": "A liquid-cooled, MWh-class modular energy storage system for power plants, grids, and high-power industrial facilities."
+    },
+    "description": {
+      "tr": "20 ft (6 metre) konteyner boyutundaki Inspur BESS, yüksek güç ihtiyacı olan üretim tesisleri, santraller ve şebeke ölçekli projeler için enerji güvenliği ve tasarruf sağlar. Ürün ömrünü %15'e kadar artıran sıvı soğutma, 8.000'in üzerinde çevrim ömrü ve 314 Ah yeni nesil pil teknolojisiyle (600+ Ah teknolojisine uygun altyapı) modüler paralel tasarım sayesinde sınırsız genişleyebilir. Batarya, BMS, EMS, PCS, yükseltici trafo, yangın koruma, güç dağıtım ve termal yönetim sistemleri tek yapıda entegre edilmiştir.",
+      "en": "The 20 ft (6 meter) Inspur BESS provides energy security and savings for production facilities, power plants, and grid-scale projects with high power demand. Liquid cooling can increase product lifetime by up to 15%, while 8,000+ cycles and next-generation 314 Ah battery technology, with infrastructure ready for 600+ Ah technology, support expansion through a modular parallel design. Battery, BMS, EMS, PCS, step-up transformer, fire protection, power distribution, and thermal management systems are integrated in a single structure."
+    },
+    "specs": [
+      {
+        "tr": "20 ft (6 metre) konteyner boyutu",
+        "en": "20 ft (6 meter) container size"
+      },
+      {
+        "tr": "Santral, şebeke ve sanayi için ideal çözüm",
+        "en": "Ideal solution for power plants, grid, and industrial applications"
+      },
+      {
+        "tr": "Modüler paralel tasarım ile sınırsız genişleme",
+        "en": "Modular parallel design for expandable capacity"
+      },
+      {
+        "tr": "Ürün ömrünü %15'e kadar artıran sıvı soğutma",
+        "en": "Liquid cooling that can increase product lifetime by up to 15%"
+      },
+      {
+        "tr": "8.000+ çevrim ile uzun yaşam ömrü",
+        "en": "Long service life with 8,000+ cycles"
+      },
+      {
+        "tr": "314 Ah yeni nesil pil teknolojisi (600+ Ah'e uygun)",
+        "en": "Next-generation 314 Ah battery technology, ready for 600+ Ah"
+      },
+      {
+        "tr": "Zorlu dış koşullara uygun yüksek koruma",
+        "en": "High protection for harsh outdoor conditions"
+      },
+      {
+        "tr": "Entegre tasarım: batarya, BMS, EMS, PCS, yükseltici trafo, yangın koruma, güç dağıtımı ve termal yönetim",
+        "en": "Integrated design: battery, BMS, EMS, PCS, step-up transformer, fire protection, power distribution, and thermal management"
+      }
+    ],
+    "options": [
+      "2,5 MW / 5 MWh (0,5C)",
+      "2,6 MW / 2,6 MWh (1C)"
+    ],
+    "image": "/images/products/bess-konteyner.png",
+    "imageFit": "contain",
+    "cardImage": "/images/12121.png",
+    "detailImage": "",
+    "detailImageFit": "",
+    "technicalTable": null,
+    "solutions": [
+      {
+        "title": {
+          "tr": "Enerji Santralleri",
+          "en": "Power Plants"
+        },
+        "href": "/cozumlerimiz/enerji-santralleri"
+      },
+      {
+        "title": {
+          "tr": "Sanayi Tesisleri",
+          "en": "Industrial Facilities"
+        },
+        "href": "/cozumlerimiz/sanayi-tesisleri"
+      },
+      {
+        "title": {
+          "tr": "Veri Merkezleri",
+          "en": "Data Centers"
+        },
+        "href": "/cozumlerimiz/veri-merkezleri"
+      }
+    ]
+  },
+  {
+    "slug": "thermaplus-up-serisi",
+    "type": "heat-pump",
+    "order": 1,
+    "published": true,
+    "title": {
+      "tr": "Thermaplus Up Serisi",
+      "en": "Thermaplus Up Series"
+    },
+    "category": {
+      "tr": "Konut Serileri",
+      "en": "Residential Series"
+    },
+    "summary": {
+      "tr": "8-35 kW kapasite, R32 soğutucu akışkan, DC inverter kontrol ve Wi-Fi desteği.",
+      "en": "8-35 kW capacity, R32 refrigerant, DC inverter control, and Wi-Fi support."
+    },
+    "description": {
+      "tr": "Thermaplus Up Serisi; ev, villa ve küçük ticari alanlarda dört mevsim verimli ısıtma ve soğutma için geliştirilmiştir. R32 soğutucu akışkan, DC inverter kontrol ve Wi-Fi destekli akıllı kullanım altyapısıyla konforu dengeli enerji tüketimiyle bir araya getirir.",
+      "en": "Thermaplus Up Series is designed for efficient year-round heating and cooling in homes, villas, and small commercial spaces. R32 refrigerant, DC inverter control, and Wi-Fi supported smart control combine comfort with balanced energy consumption."
+    },
+    "specs": [
+      {
+        "tr": "8-35 kW kapasite aralığı",
+        "en": "8-35 kW capacity range"
+      },
+      {
+        "tr": "Isıtma, soğutma ve kullanım sıcak suyu desteği",
+        "en": "Heating, cooling, and domestic hot water support"
+      },
+      {
+        "tr": "R32 soğutucu akışkan ve DC inverter kompresör",
+        "en": "R32 refrigerant and DC inverter compressor"
+      },
+      {
+        "tr": "-30~43 °C çalışma sıcaklığı",
+        "en": "-30~43 °C operating temperature"
+      },
+      {
+        "tr": "COP 4,2-4,9",
+        "en": "COP 4.2-4.9"
+      },
+      {
+        "tr": "Wi-Fi destekli akıllı kontrol",
+        "en": "Wi-Fi supported smart control"
+      },
+      {
+        "tr": "IPX4 koruma sınıfı",
+        "en": "IPX4 protection class"
+      }
+    ],
+    "options": [
+      "8 kW",
+      "13 kW",
+      "16 kW",
+      "18 kW",
+      "23 kW",
+      "28 kW",
+      "35 kW"
+    ],
+    "image": "/images/2.png",
+    "imageFit": "contain",
+    "cardImage": "",
+    "detailImage": "",
+    "detailImageFit": "",
+    "technicalTable": {
+      "columns": [
+        "8 kW",
+        "13 kW",
+        "16 kW",
+        "18 kW",
+        "23 kW",
+        "28 kW",
+        "35 kW"
+      ],
+      "rows": [
+        {
+          "label": {
+            "tr": "Isıtma kapasitesi (kW)",
+            "en": "Heating capacity (kW)"
+          },
+          "values": [
+            "1,57-8,40",
+            "4,40-13,00",
+            "5,8-15,5",
+            "5,9-18,2",
+            "7,5-23,0",
+            "10,2-28,0",
+            "12,8-35,0"
+          ]
+        },
+        {
+          "label": {
+            "tr": "COP aralığı",
+            "en": "COP range"
+          },
+          "values": [
+            "4,49-4,91",
+            "4,30-4,90",
+            "4,23-4,75",
+            "4,43-4,92",
+            "4,28-4,66",
+            "4,27-4,70",
+            "4,27-4,72"
+          ]
+        },
+        {
+          "label": {
+            "tr": "Güç kaynağı",
+            "en": "Power supply"
+          },
+          "values": [
+            "230V / 1Ph",
+            "230V / 1Ph",
+            "230V / 1Ph",
+            "230V / 1Ph",
+            "380V / 3Ph",
+            "380V / 3Ph",
+            "380V / 3Ph"
+          ]
+        }
+      ]
+    },
+    "solutions": [
+      {
+        "title": {
+          "tr": "Konutlar",
+          "en": "Residential"
+        },
+        "href": "/cozumlerimiz/konutlar"
+      }
+    ]
+  },
+  {
+    "slug": "thermaplus-boost-serisi",
+    "type": "heat-pump",
+    "order": 2,
+    "published": true,
+    "title": {
+      "tr": "Thermaplus Boost Serisi",
+      "en": "Thermaplus Boost Series"
+    },
+    "category": {
+      "tr": "Konut Serileri",
+      "en": "Residential Series"
+    },
+    "summary": {
+      "tr": "8-22 kW kapasite, doğal R290 akışkan, yüksek sıcaklık desteği ve Wi-Fi kontrol.",
+      "en": "8-22 kW capacity, natural R290 refrigerant, high-temperature support, and Wi-Fi control."
+    },
+    "description": {
+      "tr": "Thermaplus Boost Serisi; ev, villa ve küçük ticari alanlarda yüksek sıcaklık ihtiyacına uygun verimli ısıtma, soğutma ve kullanım sıcak suyu için geliştirilmiştir. R290 soğutucu akışkan, DC inverter kontrol ve Wi-Fi desteğiyle güçlü performansı dengeli enerji tüketimiyle sunar.",
+      "en": "Thermaplus Boost Series is developed for efficient heating, cooling, and domestic hot water in homes, villas, and small commercial spaces with high-temperature needs. R290 refrigerant, DC inverter control, and Wi-Fi support deliver strong performance with balanced energy use."
+    },
+    "specs": [
+      {
+        "tr": "8, 11, 15 ve 22 kW model seçenekleri",
+        "en": "8, 11, 15, and 22 kW model options"
+      },
+      {
+        "tr": "R290 doğal soğutucu akışkan",
+        "en": "Natural R290 refrigerant"
+      },
+      {
+        "tr": "Isıtma, soğutma ve kullanım sıcak suyu",
+        "en": "Heating, cooling, and domestic hot water"
+      },
+      {
+        "tr": "-25~43 °C çalışma sıcaklığı",
+        "en": "-25~43 °C operating temperature"
+      },
+      {
+        "tr": "Isıtmada 70 °C'ye kadar çalışma suyu",
+        "en": "Up to 70 °C heating water"
+      },
+      {
+        "tr": "Wi-Fi destekli akıllı kontrol",
+        "en": "Wi-Fi supported smart control"
+      },
+      {
+        "tr": "IPX4 koruma sınıfı",
+        "en": "IPX4 protection class"
+      }
+    ],
+    "options": [
+      "8 kW",
+      "11 kW",
+      "15 kW",
+      "22 kW"
+    ],
+    "image": "/images/6.png",
+    "imageFit": "contain",
+    "cardImage": "",
+    "detailImage": "",
+    "detailImageFit": "",
+    "technicalTable": {
+      "columns": [
+        "8 kW",
+        "11 kW",
+        "15 kW",
+        "22 kW"
+      ],
+      "rows": [
+        {
+          "label": {
+            "tr": "Isıtma kapasitesi (kW)",
+            "en": "Heating capacity (kW)"
+          },
+          "values": [
+            "3,3-8,3",
+            "4,5-11,4",
+            "5,9-14,8",
+            "8,8-22,0"
+          ]
+        },
+        {
+          "label": {
+            "tr": "COP aralığı",
+            "en": "COP range"
+          },
+          "values": [
+            "2,85-5,17",
+            "2,86-5,29",
+            "3,88-5,22",
+            "3,81-5,24"
+          ]
+        },
+        {
+          "label": {
+            "tr": "Güç kaynağı",
+            "en": "Power supply"
+          },
+          "values": [
+            "230V / 1Ph",
+            "230V / 1Ph",
+            "230V / 1Ph",
+            "380V / 3Ph"
+          ]
+        },
+        {
+          "label": {
+            "tr": "Ses seviyesi, 1 m",
+            "en": "Sound level, 1 m"
+          },
+          "values": [
+            "44 dB(A)",
+            "43 dB(A)",
+            "45 dB(A)",
+            "45 dB(A)"
+          ]
+        }
+      ]
+    },
+    "solutions": [
+      {
+        "title": {
+          "tr": "Konutlar",
+          "en": "Residential"
+        },
+        "href": "/cozumlerimiz/konutlar"
+      }
+    ]
+  },
+  {
+    "slug": "thermaplus-all",
+    "type": "heat-pump",
+    "order": 3,
+    "published": true,
+    "title": {
+      "tr": "Thermaplus All Serisi",
+      "en": "Thermaplus All Series"
+    },
+    "category": {
+      "tr": "Konut Serileri",
+      "en": "Residential Series"
+    },
+    "summary": {
+      "tr": "200 ve 300 L tank, R290 akışkan, Wi-Fi kontrol ve 75 °C'ye kadar sıcak su desteği.",
+      "en": "200 and 300 L tank, R290 refrigerant, Wi-Fi control, and hot water support up to 75 °C."
+    },
+    "description": {
+      "tr": "Thermaplus All Serisi; konut, villa, otel ve işletmelerin kullanım sıcak suyu ihtiyacı için geliştirilmiştir. 200 ve 300 litre tank seçenekleri, R290 soğutucu akışkan, Wi-Fi kontrol ve yedek ısıtıcıyla 75 °C'ye kadar sıcak su desteği sunar.",
+      "en": "Thermaplus All Series is designed for domestic hot water needs in homes, villas, hotels, and businesses. With 200 and 300 liter tank options, R290 refrigerant, Wi-Fi control, and backup heater support, it provides hot water up to 75 °C."
+    },
+    "specs": [
+      {
+        "tr": "200 ve 300 litre tank seçenekleri",
+        "en": "200 and 300 liter tank options"
+      },
+      {
+        "tr": "R290 doğal soğutucu akışkan",
+        "en": "Natural R290 refrigerant"
+      },
+      {
+        "tr": "A+ enerji sınıfı",
+        "en": "A+ energy class"
+      },
+      {
+        "tr": "COP 3,65-3,75",
+        "en": "COP 3.65-3.75"
+      },
+      {
+        "tr": "Yedek ısıtıcıyla 75 °C'ye kadar sıcak su",
+        "en": "Hot water up to 75 °C with backup heater"
+      },
+      {
+        "tr": "Wi-Fi destekli kontrol",
+        "en": "Wi-Fi supported control"
+      },
+      {
+        "tr": "-7~45 °C çalışma aralığı",
+        "en": "-7~45 °C operating range"
+      }
+    ],
+    "options": [
+      "200 L",
+      "300 L"
+    ],
+    "image": "/images/4.png",
+    "imageFit": "contain",
+    "cardImage": "",
+    "detailImage": "",
+    "detailImageFit": "",
+    "technicalTable": {
+      "columns": [
+        "200 L",
+        "300 L"
+      ],
+      "rows": [
+        {
+          "label": {
+            "tr": "Nominal ısıtma kapasitesi",
+            "en": "Nominal heating capacity"
+          },
+          "values": [
+            "1,6 kW",
+            "1,6 kW"
+          ]
+        },
+        {
+          "label": {
+            "tr": "COP (20/15 °C)",
+            "en": "COP (20/15 °C)"
+          },
+          "values": [
+            "3,65",
+            "3,75"
+          ]
+        },
+        {
+          "label": {
+            "tr": "Enerji sınıfı",
+            "en": "Energy class"
+          },
+          "values": [
+            "A+",
+            "A+"
+          ]
+        },
+        {
+          "label": {
+            "tr": "Net ağırlık",
+            "en": "Net weight"
+          },
+          "values": [
+            "93 kg",
+            "117 kg"
+          ]
+        }
+      ]
+    },
+    "solutions": [
+      {
+        "title": {
+          "tr": "Konutlar",
+          "en": "Residential"
+        },
+        "href": "/cozumlerimiz/konutlar"
+      }
+    ]
+  },
+  {
+    "slug": "thermaplus-silent-pool-serisi",
+    "type": "heat-pump",
+    "order": 4,
+    "published": true,
+    "title": {
+      "tr": "Thermaplus Silent Pool Serisi",
+      "en": "Thermaplus Silent Pool Series"
+    },
+    "category": {
+      "tr": "Havuz Serileri",
+      "en": "Pool Series"
+    },
+    "summary": {
+      "tr": "10-33 kW kapasite, R32 akışkan, sessiz çalışma ve Wi-Fi kontrollü dört mevsim havuz konforu.",
+      "en": "10-33 kW capacity, R32 refrigerant, silent operation, and Wi-Fi controlled pool comfort."
+    },
+    "description": {
+      "tr": "Thermaplus Silent Pool Serisi; villa, bahçe ve açık havuz projelerinde su sıcaklığını dengeli biçimde korumak için geliştirilmiştir. R32 soğutucu akışkan, sessiz çalışma karakteri, titanyum eşanjör ve Wi-Fi destekli kontrol yapısıyla dört mevsim havuz konforu sağlar.",
+      "en": "Thermaplus Silent Pool Series is designed to keep water temperature balanced in villa, garden, and outdoor pool projects. R32 refrigerant, quiet operation, titanium heat exchanger, and Wi-Fi supported control provide pool comfort across seasons."
+    },
+    "specs": [
+      {
+        "tr": "10-33 kW kapasite aralığı",
+        "en": "10-33 kW capacity range"
+      },
+      {
+        "tr": "20-130 m³ havuz hacimleri",
+        "en": "20-130 m³ pool volumes"
+      },
+      {
+        "tr": "Isıtma ve soğutma desteği",
+        "en": "Heating and cooling support"
+      },
+      {
+        "tr": "R32 soğutucu akışkan",
+        "en": "R32 refrigerant"
+      },
+      {
+        "tr": "Titanyum eşanjör ve ABS kasa",
+        "en": "Titanium heat exchanger and ABS casing"
+      },
+      {
+        "tr": "Wi-Fi destekli kontrol",
+        "en": "Wi-Fi supported control"
+      }
+    ],
+    "options": [
+      "10 kW",
+      "11 kW",
+      "14 kW",
+      "17 kW",
+      "20 kW",
+      "24 kW",
+      "28 kW",
+      "33 kW"
+    ],
+    "image": "/images/3.png",
+    "imageFit": "contain",
+    "cardImage": "",
+    "detailImage": "",
+    "detailImageFit": "",
+    "technicalTable": {
+      "columns": [
+        "10 kW",
+        "11 kW",
+        "14 kW",
+        "17 kW",
+        "20 kW",
+        "24 kW",
+        "28 kW",
+        "33 kW"
+      ],
+      "rows": [
+        {
+          "label": {
+            "tr": "Tavsiye edilen havuz (m³)",
+            "en": "Recommended pool volume (m³)"
+          },
+          "values": [
+            "20-40",
+            "25-50",
+            "30-60",
+            "40-75",
+            "55-100",
+            "70-130",
+            "60-120",
+            "70-130"
+          ]
+        },
+        {
+          "label": {
+            "tr": "COP (27 °C)",
+            "en": "COP (27 °C)"
+          },
+          "values": [
+            "6,5-5,0",
+            "6,0-4,7",
+            "6,5-5,0",
+            "6,5-5,0",
+            "6,0-4,8",
+            "6,0-5,0",
+            "6,0-5,0",
+            "6,0-5,0"
+          ]
+        }
+      ]
+    },
+    "solutions": [
+      {
+        "title": {
+          "tr": "Konutlar",
+          "en": "Residential"
+        },
+        "href": "/cozumlerimiz/konutlar"
+      }
+    ]
+  },
+  {
+    "slug": "thermaplus-commercial-pool",
+    "type": "heat-pump",
+    "order": 5,
+    "published": true,
+    "title": {
+      "tr": "Thermaplus Commercial Pool Serisi",
+      "en": "Thermaplus Commercial Pool Series"
+    },
+    "category": {
+      "tr": "Havuz Serileri",
+      "en": "Pool Series"
+    },
+    "summary": {
+      "tr": "26-145 kW kapasite, titanyum eşanjör ve 43 °C'ye kadar ticari havuz suyu.",
+      "en": "26-145 kW capacity, titanium heat exchanger, and commercial pool water up to 43 °C."
+    },
+    "description": {
+      "tr": "Thermaplus Commercial Pool Serisi; otel, spor tesisi, sosyal tesis ve yüksek hacimli havuz projeleri için geliştirilmiştir. Altı kapasite seçeneği, R410A soğutucu akışkan ve PVC kabuk içinde titanyum eşanjör yapısıyla havuz suyunu kontrollü ve verimli biçimde ısıtır.",
+      "en": "Thermaplus Commercial Pool Series is developed for hotels, sports facilities, social facilities, and large-volume pool projects. Six capacity options, R410A refrigerant, and a titanium heat exchanger inside a PVC shell heat pool water in a controlled and efficient way."
+    },
+    "specs": [
+      {
+        "tr": "R410A soğutucu akışkan",
+        "en": "R410A refrigerant"
+      },
+      {
+        "tr": "26-145 kW kapasite aralığı",
+        "en": "26-145 kW capacity range"
+      },
+      {
+        "tr": "43 °C'ye kadar havuz suyu",
+        "en": "Pool water up to 43 °C"
+      },
+      {
+        "tr": "PVC kabuk içinde titanyum eşanjör",
+        "en": "Titanium heat exchanger inside PVC shell"
+      },
+      {
+        "tr": "IPX4 koruma sınıfı",
+        "en": "IPX4 protection class"
+      },
+      {
+        "tr": "-7~43 °C çalışma ortamı",
+        "en": "-7~43 °C operating environment"
+      }
+    ],
+    "options": [
+      "26 kW",
+      "52 kW",
+      "75 kW",
+      "100 kW",
+      "121 kW",
+      "145 kW"
+    ],
+    "image": "/images/5.png",
+    "imageFit": "contain",
+    "cardImage": "",
+    "detailImage": "",
+    "detailImageFit": "",
+    "technicalTable": {
+      "columns": [
+        "26 kW",
+        "52 kW",
+        "75 kW",
+        "100 kW",
+        "121 kW",
+        "145 kW"
+      ],
+      "rows": [
+        {
+          "label": {
+            "tr": "Nominal ısıtma kapasitesi",
+            "en": "Nominal heating capacity"
+          },
+          "values": [
+            "26 kW",
+            "51,5 kW",
+            "75 kW",
+            "100 kW",
+            "121 kW",
+            "145 kW"
+          ]
+        },
+        {
+          "label": {
+            "tr": "COP",
+            "en": "COP"
+          },
+          "values": [
+            "6,2",
+            "6,1",
+            "6,2",
+            "6,0",
+            "6,0",
+            "6,1"
+          ]
+        },
+        {
+          "label": {
+            "tr": "Gürültü",
+            "en": "Noise level"
+          },
+          "values": [
+            "56 dB(A)",
+            "58 dB(A)",
+            "60 dB(A)",
+            "62 dB(A)",
+            "64 dB(A)",
+            "66 dB(A)"
+          ]
+        }
+      ]
+    },
+    "solutions": [
+      {
+        "title": {
+          "tr": "Ticari İşletmeler",
+          "en": "Commercial Facilities"
+        },
+        "href": "/cozumlerimiz/ticari-isletmeler"
+      }
+    ]
+  },
+  {
+    "slug": "thermaplus-commercial-duo",
+    "type": "heat-pump",
+    "order": 6,
+    "published": true,
+    "title": {
+      "tr": "Thermaplus Commercial Duo Serisi",
+      "en": "Thermaplus Commercial Duo Series"
+    },
+    "category": {
+      "tr": "Endüstriyel Seriler",
+      "en": "Industrial Series"
+    },
+    "summary": {
+      "tr": "50 ve 92 kW kapasite, R290 akışkan, yüksek sıcaklık ve Wi-Fi kontrollü ticari performans.",
+      "en": "50 and 92 kW capacity, R290 refrigerant, high temperature, and Wi-Fi controlled commercial performance."
+    },
+    "description": {
+      "tr": "Thermaplus Commercial Duo Serisi; otel, apartman, ticari tesis ve merkezi sistem projelerinde yüksek kapasiteli ısıtma, soğutma ve kullanım sıcak suyu ihtiyacı için geliştirilmiştir. R290 soğutucu akışkan, Wi-Fi kontrol ve 78 °C'ye kadar çalışma suyu desteğiyle güçlü ticari performans sunar.",
+      "en": "Thermaplus Commercial Duo Series is developed for high-capacity heating, cooling, and domestic hot water in hotels, apartments, commercial facilities, and central system projects. R290 refrigerant, Wi-Fi control, and water temperatures up to 78 °C deliver strong commercial performance."
+    },
+    "specs": [
+      {
+        "tr": "50 ve 92 kW model seçenekleri",
+        "en": "50 and 92 kW model options"
+      },
+      {
+        "tr": "R290 doğal soğutucu akışkan",
+        "en": "Natural R290 refrigerant"
+      },
+      {
+        "tr": "Isıtma, soğutma ve kullanım sıcak suyu",
+        "en": "Heating, cooling, and domestic hot water"
+      },
+      {
+        "tr": "20-78 °C çalışma suyu desteği",
+        "en": "20-78 °C operating water support"
+      },
+      {
+        "tr": "-25~43 °C çalışma ortamı",
+        "en": "-25~43 °C operating environment"
+      },
+      {
+        "tr": "Wi-Fi destekli kontrol",
+        "en": "Wi-Fi supported control"
+      },
+      {
+        "tr": "380-415V / 3Ph güç beslemesi",
+        "en": "380-415V / 3Ph power supply"
+      }
+    ],
+    "options": [
+      "50 kW",
+      "92 kW"
+    ],
+    "image": "/images/1.png",
+    "imageFit": "contain",
+    "cardImage": "",
+    "detailImage": "",
+    "detailImageFit": "",
+    "technicalTable": {
+      "columns": [
+        "50 kW",
+        "92 kW"
+      ],
+      "rows": [
+        {
+          "label": {
+            "tr": "Isıtma kapasitesi (kW)",
+            "en": "Heating capacity (kW)"
+          },
+          "values": [
+            "18,4-49,25",
+            "35,2-92"
+          ]
+        },
+        {
+          "label": {
+            "tr": "COP aralığı",
+            "en": "COP range"
+          },
+          "values": [
+            "3,8-4,3",
+            "3,86-5,02"
+          ]
+        },
+        {
+          "label": {
+            "tr": "Sıcak su kapasitesi (kW)",
+            "en": "Hot water capacity (kW)"
+          },
+          "values": [
+            "23,8-68",
+            "40-120"
+          ]
+        },
+        {
+          "label": {
+            "tr": "Ses basınç seviyesi",
+            "en": "Sound pressure level"
+          },
+          "values": [
+            "≤62 dB(A)",
+            "≤65 dB(A)"
+          ]
+        }
+      ]
+    },
+    "solutions": [
+      {
+        "title": {
+          "tr": "Sanayi Tesisleri",
+          "en": "Industrial Facilities"
+        },
+        "href": "/cozumlerimiz/sanayi-tesisleri"
+      },
+      {
+        "title": {
+          "tr": "Ticari İşletmeler",
+          "en": "Commercial Facilities"
+        },
+        "href": "/cozumlerimiz/ticari-isletmeler"
+      }
+    ]
+  }
+]

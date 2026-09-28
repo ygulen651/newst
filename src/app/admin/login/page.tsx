@@ -1,12 +1,6 @@
-import { login } from './actions'
-import { ArrowRight, Lock, Mail } from 'lucide-react'
+import LoginForm from './LoginForm'
 
-export default async function LoginPage(props: {
-  searchParams: Promise<{ error?: string }>
-}) {
-  const searchParams = await props.searchParams;
-  const error = searchParams.error
-
+export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[#020817] flex items-center justify-center p-6 relative overflow-hidden">
       {/* Background Orbs */}
@@ -20,48 +14,7 @@ export default async function LoginPage(props: {
         </div>
 
         <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-8 rounded-[32px] shadow-2xl">
-          <form action={login} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-400 ml-1">E-posta</label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                <input
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="admin@newstag.com"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-400 ml-1">Şifre</label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                <input
-                  name="password"
-                  type="password"
-                  required
-                  placeholder="••••••••"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
-                />
-              </div>
-            </div>
-
-            {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-4 rounded-xl text-center">
-                {error}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 group"
-            >
-              Giriş Yap <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </form>
+          <LoginForm />
         </div>
 
         <p className="mt-8 text-center text-gray-500 text-sm">

@@ -1,0 +1,28 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /news-media/{fileName} {
+      allow read: if true;
+      allow create, update: if request.auth != null
+        && request.auth.token.admin == true
+        && request.resource.size < 500 * 1024 * 1024;
+      allow delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Images uploaded from the admin panel for site content (products, pages).
+    match /site-media/{path=**} {
+      allow read: if true;
+      allow create, update: if request.auth != null
+        && request.auth.token.admin == true
+        && request.resource.size < 50 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*|video/.*');
+      allow delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Written only by the migration script (Admin SDK); public read.
+    match /brand-logos/{fileName} {
+      allow read: if true;
+    }
+  }
+}

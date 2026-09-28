@@ -3,56 +3,16 @@
 import React, { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Award, BatteryCharging, Factory, Globe2, Zap } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n";
-
-const stats = [
-  {
-    value: "65",
-    unit: "YIL",
-    label: "Saray Holding Kurumsal Mirası",
-    icon: Award,
-  },
-  {
-    value: "15",
-    unit: "YIL",
-    label: "Enerji Sektöründe Üretim Deneyimi",
-    icon: Factory,
-  },
-  {
-    value: "1",
-    unit: "GWh",
-    label: "Yaklaşan Inspur BESS Kurulum Deneyimi",
-    icon: BatteryCharging,
-  },
-  {
-    value: "400",
-    unit: "MWh",
-    label: "Tek Projede Kurulum",
-    icon: Zap,
-  },
-  {
-    value: "120",
-    unit: "+",
-    label: "Ülkede Aktif Global Teknoloji Ortağı",
-    icon: Globe2,
-  },
-];
-
-const statsEn = [
-  { value: "65", unit: "YEARS", label: "Saray Holding Corporate Heritage", icon: Award },
-  { value: "15", unit: "YEARS", label: "Production Experience in Energy", icon: Factory },
-  { value: "1", unit: "GWh", label: "Inspur BESS Installation Experience", icon: BatteryCharging },
-  { value: "400", unit: "MWh", label: "Single Project Installation", icon: Zap },
-  { value: "120", unit: "+", label: "Countries with Active Global Partner Operations", icon: Globe2 },
-];
+import { usePageContent } from "@/lib/content/context";
+import { getIcon } from "@/lib/icons";
 
 export default function Trust() {
   const ref = useRef(null);
-  const { lang } = useLanguage();
-  const isEnglish = lang === "en";
-  const pageStats = isEnglish ? statsEn : stats;
+  const { t } = useLanguage();
+  const c = usePageContent("home");
+  const pageStats = c.list("trustStats");
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -88,12 +48,12 @@ export default function Trust() {
           <span className="inline-flex items-center gap-3 rounded-full border border-gray-200 bg-white px-6 py-3 shadow-sm mb-12">
             <span className="h-2 w-2 rounded-full bg-[#ea580c]" />
             <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#1e3a8a]">
-              {isEnglish ? "A Saray Holding Brand" : "Bir Saray Holding Markası"}
+              {t.hero.badge}
             </span>
           </span>
 
           <Image
-            src="/images/image5.png"
+            src={c.text("trustLogo")}
             alt="Newstag Energy Solutions"
             width={1155}
             height={255}
@@ -101,28 +61,26 @@ export default function Trust() {
           />
 
           <h2 className="text-[#ea580c] text-3xl md:text-5xl font-medium mb-12">
-            {isEnglish ? "Your Partner in Energy Transformation" : "Enerji Dönüşümünüzün Çözüm Ortağı"}
+            {c.text("trustTitle")}
           </h2>
 
           <div className="w-px h-24 bg-[#f97316] mx-auto mb-14 opacity-30" />
 
           <p className="text-gray-600 text-lg md:text-2xl leading-relaxed mb-24 max-w-4xl mx-auto font-light">
-            {isEnglish
-              ? "Newstag combines Saray Holding's 65-year corporate heritage, 15 years of production experience in the energy sector, and global technology partnerships to become your solution partner in energy transformation."
-              : "Saray Holding'in 65 yıllık kurumsal mirasını ve gücünü, enerji sektöründeki 15 yıllık üretim deneyimini ve global ortaklıklarını bir araya getiren Newstag, enerji dönüşümünüzün çözüm ortağı olmak için sizleri bekliyor."}
+            {c.text("trustText")}
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-12 mb-24">
             {pageStats.map((stat, i) => (
               <motion.div
-                key={stat.label}
+                key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 className="flex flex-col items-center"
               >
-                <stat.icon className="w-8 h-8 text-[#ea580c] mb-6" />
+                {React.createElement(getIcon(stat.icon), { className: "w-8 h-8 text-[#ea580c] mb-6" })}
                 <div className="flex items-baseline gap-1 mb-2">
                   <span className="text-4xl md:text-5xl font-bold text-[#1e3a8a] tracking-tight">
                     {stat.value}
@@ -150,7 +108,7 @@ export default function Trust() {
               href="/hakkimizda"
               className="inline-block px-12 py-4 border border-[#ea580c] text-[#ea580c] rounded-full hover:bg-[#ea580c] hover:text-white transition-all duration-300 text-lg font-medium"
             >
-              {isEnglish ? "Discover Who We Are" : "Kim Olduğumuzu Keşfedin"}
+              {c.text("trustButton")}
             </Link>
           </motion.div>
         </motion.div>

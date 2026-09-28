@@ -5,10 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { usePageContent } from "@/lib/content/context";
 
 export default function Footer() {
-  const { lang, t } = useLanguage();
-  const isEnglish = lang === "en";
+  const { t } = useLanguage();
+  const layout = usePageContent("layout");
 
   const footerLinks = [
     {
@@ -19,7 +20,7 @@ export default function Footer() {
         { name: t.nav.service, href: "/servis", external: false },
         {
           name: t.footer.sarayHolding,
-          href: "https://www.sarayholding.com.tr/",
+          href: layout.text("sarayHoldingUrl"),
           external: true,
         },
       ],
@@ -33,14 +34,7 @@ export default function Footer() {
     },
     {
       title: t.footer.solutions,
-      links: [
-        { name: isEnglish ? "Power Plants" : "Enerji Santralleri", href: "/cozumlerimiz/enerji-santralleri", external: false },
-        { name: isEnglish ? "Industrial Facilities" : "Sanayi Tesisleri", href: "/cozumlerimiz/sanayi-tesisleri", external: false },
-        { name: isEnglish ? "Commercial Facilities" : "Ticari İşletmeler", href: "/cozumlerimiz/ticari-isletmeler", external: false },
-        { name: isEnglish ? "Residential" : "Konutlar", href: "/cozumlerimiz/konutlar", external: false },
-        { name: isEnglish ? "Data Centers" : "Veri Merkezleri", href: "/cozumlerimiz/veri-merkezleri", external: false },
-        { name: isEnglish ? "Limited Grid Locations" : "Sınırlı Şebeke Noktaları", href: "/cozumlerimiz/sinirli-sebeke", external: false },
-      ],
+      links: layout.list("footerSolutionLinks").map((link) => ({ name: link.title, href: link.href, external: false })),
     },
   ];
 
@@ -52,7 +46,7 @@ export default function Footer() {
             <Link href="/" className="inline-block mb-12">
               <div className="relative h-16 lg:h-24 w-[200px] sm:w-[250px] lg:w-[350px]">
                 <Image
-                  src="/images/image5.png"
+                  src={layout.text("logo")}
                   alt="NEWSTAG Logo"
                   fill
                   className="object-contain object-left"
@@ -63,7 +57,7 @@ export default function Footer() {
               {t.footer.tagline}
             </p>
             <a
-              href="https://www.sarayholding.com.tr/"
+              href={layout.text("sarayHoldingUrl")}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.2em] text-gray-500 hover:text-[#ea580c] hover:border-[#ea580c] transition-all"
@@ -111,22 +105,22 @@ export default function Footer() {
         <div className="pt-12 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-wrap justify-center md:justify-start gap-8 text-sm text-gray-400">
             <a
-              href="https://www.google.com/maps/place/data=!4m2!3m1!1s0x14cad3c555555555:0xc12bb9adc218764f?sa=X&ved=1t:8290&ictx=111"
+              href={layout.text("addressMapUrl")}
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2 hover:text-[#ea580c] transition-colors"
             >
-              <MapPin className="w-4 h-4" /> Yıldızhan Cad. Saray İş Merkezi No:4, Köşe Sk., 34887 Sancaktepe/İstanbul
+              <MapPin className="w-4 h-4" /> {layout.text("address")}
             </a>
             <span className="flex items-center gap-2">
-              <Phone className="w-4 h-4" /> 0 216 311 00 67
+              <Phone className="w-4 h-4" /> {layout.text("phone")}
             </span>
             <span className="flex items-center gap-2">
-              <Mail className="w-4 h-4" /> info@newstag.com.tr
+              <Mail className="w-4 h-4" /> {layout.text("email")}
             </span>
           </div>
           <p className="text-xs text-gray-400 font-light">
-            © {new Date().getFullYear()} {isEnglish ? "Newstag Energy." : "Newstag Enerji."}{" "}
+            © {new Date().getFullYear()} {layout.text("copyrightName")}{" "}
             <span className="font-medium text-gray-600">{t.footer.brandNote}</span>
           </p>
         </div>

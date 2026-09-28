@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { usePageContent } from "@/lib/content/context";
 
 type Banner = {
   eyebrow: string;
@@ -81,6 +82,7 @@ function BannerCard({
 export default function StackedVisuals() {
   const container = useRef(null);
   const { t } = useLanguage();
+  const c = usePageContent("home");
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start start", "end end"],
@@ -88,19 +90,19 @@ export default function StackedVisuals() {
 
   const banners: Banner[] = [
     {
-      eyebrow: "Inspur BESS",
+      eyebrow: c.text("bannerBessEyebrow"),
       title: t.banners.bessTitle,
       cta: t.common.exploreProducts,
       href: "/bess",
-      image: "/images/12121.png",
+      image: c.text("bannerBessImage"),
       imagePosition: "object-center",
     },
     {
-      eyebrow: "Thermaplus",
+      eyebrow: c.text("bannerHeatPumpEyebrow"),
       title: t.banners.heatPumpTitle,
       cta: t.common.exploreProducts,
       href: "/isi-pompasi",
-      image: "/images/heat-pump-branded.png",
+      image: c.text("bannerHeatPumpImage"),
       imagePosition: "object-center",
     },
   ];

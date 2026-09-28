@@ -6,8 +6,14 @@ import Scenarios from "@/components/home/Scenarios";
 import WhyUs from "@/components/home/WhyUs";
 import Brands from "@/components/home/Brands";
 import Footer from "@/components/layout/Footer";
+import { getSolutions } from "@/lib/firebase/solutions";
 
-export default function Home() {
+// Rendered per request so content edits from the admin panel show up without a rebuild.
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const solutions = await getSolutions();
+
   return (
     <>
       <Navbar />
@@ -15,7 +21,7 @@ export default function Home() {
         <Hero />
         <StackedVisuals />
         <Trust />
-        <Scenarios />
+        <Scenarios solutions={solutions} />
         <Brands />
         <WhyUs />
       </main>

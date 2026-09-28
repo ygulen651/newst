@@ -1,0 +1,17 @@
+# Firebase App Hosting settings: https://firebase.google.com/docs/app-hosting/configure
+runConfig:
+  minInstances: 0
+
+env:
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: AIzaSyC4DTB3rHmeiq9KYQ537vwZnoCrOV_ZkKQ
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: saray-ce90e.firebaseapp.com
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: saray-ce90e
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: saray-ce90e.firebasestorage.app
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "576986275117"
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: 1:576986275117:web:e158e482a48c4ec0c407a4

@@ -5,10 +5,12 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { usePageContent } from "@/lib/content/context";
 
 export default function Hero() {
   const container = useRef(null);
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
+  const c = usePageContent("home");
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start start", "end start"],
@@ -27,7 +29,7 @@ export default function Hero() {
         >
           <motion.div style={{ y: videoY }} className="absolute inset-0 z-0">
             <video
-              src="/images/1500.mp4"
+              src={c.text("heroVideo")}
               className="h-full w-full object-cover"
               autoPlay
               loop
@@ -81,14 +83,14 @@ export default function Hero() {
                 href="/bess"
                 className="inline-flex items-center gap-3 rounded-full bg-[#1e3a8a] px-8 py-4 font-bold text-white shadow-2xl transition-colors hover:bg-[#172554]"
               >
-                Inspur BESS
+                {c.text("heroBessButton")}
                 <ArrowRight className="h-5 w-5" />
               </Link>
               <Link
                 href="/isi-pompasi"
                 className="inline-flex items-center gap-3 rounded-full bg-[#ea580c] px-8 py-4 font-bold text-white shadow-2xl transition-colors hover:bg-[#c2410c]"
               >
-                {lang === "en" ? "Thermaplus Heat Pump" : "Thermaplus Isı Pompası"}
+                {c.text("heroHeatPumpButton")}
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </motion.div>

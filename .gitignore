@@ -44,3 +44,9 @@ next-env.d.ts
 /newstag-main.zip
 /public/images/HPSupportSolutionsFramework-13.0.1.131.exe
 /public/images/sp158405.exe
+
+# firebase
+firebase-service-account.json
+*-firebase-adminsdk-*.json
+.firebase/
+firebase-debug.log

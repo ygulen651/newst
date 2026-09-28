@@ -1,11 +1,9 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { solutions } from "@/lib/solutions-data";
+import { getSolutions } from "@/lib/firebase/solutions";
 import SolutionDetail from "./SolutionDetail";
 
-export function generateStaticParams() {
-  return solutions.map((solution) => ({ slug: solution.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function SolutionPage({
   params,
@@ -13,11 +11,12 @@ export default async function SolutionPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const solutions = await getSolutions();
   const solution = solutions.find((item) => item.slug === slug);
 
   if (!solution) {
     notFound();
   }
 
-  return <SolutionDetail slug={slug} />;
+  return <SolutionDetail solution={solution} others={solutions.filter((item) => item.slug !== slug)} />;
 }
