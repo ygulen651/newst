@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { adminDb } from "./admin";
 import type { Product, ProductType } from "@/lib/products";
+import productsSeed from "../../../scripts/data/products.seed.json";
 
 export const PRODUCTS_TAG = "products";
 export const productsCollection = () => adminDb.collection("products");
@@ -21,5 +22,13 @@ const cachedPublishedProducts = unstable_cache(
 );
 
 export async function getProducts(type: ProductType) {
-  return (await cachedPublishedProducts()).filter((product) => product.type === type);
+  let products: Product[];
+  try {
+    products = await cachedPublishedProducts();
+  } catch (error) {
+    // Keep the public site up with the bundled catalogue if Firestore is unreachable.
+    console.error("Ürünler Firestore'dan okunamadı, yedek veri kullanılıyor:", error);
+    products = productsSeed as Product[];
+  }
+  return products.filter((product) => product.type === type);
 }

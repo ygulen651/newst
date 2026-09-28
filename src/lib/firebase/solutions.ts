@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { adminDb } from "./admin";
 import type { Solution } from "@/lib/solutions";
+import solutionsSeed from "../../../scripts/data/solutions.seed.json";
 
 export const SOLUTIONS_TAG = "solutions";
 export const solutionsCollection = () => adminDb.collection("solutions");
@@ -14,8 +15,18 @@ async function fetchSolutions(): Promise<Solution[]> {
 export const listAllSolutions = fetchSolutions;
 
 // Published solutions for the public site, cached until an admin edit invalidates the tag.
-export const getSolutions = unstable_cache(
+const cachedPublishedSolutions = unstable_cache(
   async () => (await fetchSolutions()).filter((solution) => solution.published),
   ["published-solutions"],
   { tags: [SOLUTIONS_TAG] }
 );
+
+export async function getSolutions(): Promise<Solution[]> {
+  try {
+    return await cachedPublishedSolutions();
+  } catch (error) {
+    // Keep the public site up with the bundled solutions if Firestore is unreachable.
+    console.error("Çözümler Firestore'dan okunamadı, yedek veri kullanılıyor:", error);
+    return solutionsSeed as Solution[];
+  }
+}
